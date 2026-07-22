@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ninkoro — 做点喜欢的东西</title>
+<meta name="description" content="Ninkoro 的个人网站：作品、想法、书影音与工具。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="page-enter" data-page="home">
+<div class="grain"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Ninkoro<em>.com</em></a>
+    <div class="nav-links">
+      <a href="works.html">作品集</a>
+      <a href="about.html">关于我</a>
+      <a href="thoughts.html">想法</a>
+      <a href="shares.html">分享</a>
+      <a href="links.html">导航</a>
+      <a href="tools.html">工具</a>
+      <a href="https://lifeos.ninkoro.com">LifeOS 官网</a>
+    </div>
+    <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html"><span class="idx">01</span>首页</a>
+  <a href="works.html"><span class="idx">02</span>作品集</a>
+  <a href="about.html"><span class="idx">03</span>关于我</a>
+  <a href="thoughts.html"><span class="idx">04</span>想法</a>
+  <a href="shares.html"><span class="idx">05</span>分享</a>
+  <a href="links.html"><span class="idx">06</span>导航</a>
+      <a href="tools.html"><span class="idx">07</span>工具</a>
+      <a href="https://lifeos.ninkoro.com"><span class="idx">08</span>LifeOS 官网</a>
+    </div>
+
+<header class="hero wrap">
+  <p class="hero-eyebrow" id="hero-eyebrow"></p>
+  <h1 class="hero-title" id="hero-title"></h1>
+  <p class="hero-sub" id="hero-sub"></p>
+  <div class="hero-actions">
+    <a href="works.html" class="btn solid">看看作品 <span class="arrow">→</span></a>
+    <a href="about.html" class="btn">认识一下 <span class="arrow">→</span></a>
+  </div>
+  <div class="hero-ornament">✳</div>
+  <div class="scroll-hint">SCROLL</div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head row reveal">
+      <div>
+        <p class="sec-label">SELECTED WORKS</p>
+        <h2 class="sec-title">精选作品 <span class="thin">/ Works</span></h2>
+      </div>
+      <a class="more" href="works.html">全部作品 →</a>
+    </div>
+    <div class="works-grid" id="home-works"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="sec-label">MANIFESTO</p>
+      <h2 class="sec-title">一点信条</h2>
+    </div>
+    <div class="works-grid" id="home-manifesto"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head row reveal">
+      <div>
+        <p class="sec-label">LATEST THOUGHTS</p>
+        <h2 class="sec-title">最近在想 <span class="thin">/ Thoughts</span></h2>
+      </div>
+      <a class="more" href="thoughts.html">全部想法 →</a>
+    </div>
+    <div id="home-thoughts"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <div class="footer-links">
+        <div>
+          <h4>站点</h4>
+          <ul>
+            <li><a href="works.html">作品集</a></li>
+            <li><a href="thoughts.html">想法</a></li>
+            <li><a href="shares.html">分享</a></li>
+            <li><a href="links.html">导航</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>别处</h4>
+          <ul>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a data-mailto href="mailto:hi@ninkoro.com">邮箱</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> NINKORO.COM</span>
+      <span>HANDCRAFTED</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/db.js"></script>
+<script src="assets/js/content.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/edit.js"></script>
+</body>
+</html>

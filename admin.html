@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>登录 — Ninkoro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="login-body">
+<div class="grain"></div>
+
+<div class="login-card" id="card">
+  <h1>登录</h1>
+  <p class="sub">登录后即可在页面上直接编辑内容</p>
+  <div id="form">
+    <div class="adm-field">
+      <label>邮箱</label>
+      <input type="email" class="adm-input" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="adm-field">
+      <label>密码</label>
+      <input type="password" class="adm-input" id="pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="btn">登录</button>
+    <p class="err" id="err"></p>
+    <p class="tip">账号在 Supabase 控制台 Authentication → Users 中创建。<br>没有密码找回通道，请妥善保管。</p>
+  </div>
+  <div id="logged" style="display:none;">
+    <p class="sub" style="margin-bottom:24px;">已登录，可以开始编辑了。</p>
+    <a href="index.html" class="login-btn" style="display:flex;align-items:center;text-decoration:none;">进入网站 →</a>
+    <button class="login-btn" id="btn-out" style="margin-top:12px;background:transparent;color:var(--ink-dim);border:1px solid var(--line-strong);">退出登录</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/db.js"></script>
+<script>
+(function () {
+  var err = document.getElementById("err");
+  var btn = document.getElementById("btn");
+
+  function showLogged() {
+    document.getElementById("form").style.display = "none";
+    document.getElementById("logged").style.display = "block";
+    document.querySelector(".login-card h1").textContent = "欢迎回来";
+  }
+
+  if (!window.NINKORO_DB.isOnline()) {
+    err.textContent = "尚未配置 Supabase，请先在 assets/js/supabase-config.js 填入 URL 和 anon key。";
+    btn.disabled = true;
+    return;
+  }
+
+  window.NINKORO_DB.session().then(function (s) { if (s) showLogged(); });
+
+  function go() {
+    var email = document.getElementById("email").value.trim();
+    var pass = document.getElementById("pass").value;
+    if (!email || !pass) { err.textContent = "邮箱和密码都要填。"; return; }
+    btn.disabled = true;
+    btn.textContent = "登录中…";
+    window.NINKORO_DB.signIn(email, pass).then(function (r) {
+      if (r.ok) { location.href = "index.html"; }
+      else {
+        err.textContent = "登录失败：" + (r.error || "请检查账号密码");
+        btn.disabled = false;
+        btn.textContent = "登录";
+      }
+    });
+  }
+  btn.addEventListener("click", go);
+  document.getElementById("pass").addEventListener("keydown", function (e) { if (e.key === "Enter") go(); });
+  document.getElementById("email").addEventListener("keydown", function (e) { if (e.key === "Enter") go(); });
+  document.getElementById("btn-out").addEventListener("click", function () {
+    window.NINKORO_DB.signOut().then(function () { location.reload(); });
+  });
+})();
+</script>
+</body>
+</html>
