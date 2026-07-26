@@ -168,9 +168,23 @@
   .toc-mobile { display: none; }
   .article-body { max-width: 720px; }
 }
+/* 移动端适配加固：杜绝整页横向滚动（iOS / 微信 WebKit 边界处理） */
+/* html 加 clip 防整页横拖；旧引擎忽略 clip 时由 body 既有 overflow-x:hidden 兜底 */
+html { overflow-x: clip; }
+/* 网格项默认 min-width:auto 会顶宽，必须归零，长串才能被容器约束 */
+.article-layout, .article-body { min-width: 0; }
+.article-body,
+.article-body p, .article-body li, .article-body blockquote,
+.article-body td, .article-body th,
+.article-body h2, .article-body h3, .article-body h4 {
+  overflow-wrap: break-word; word-break: break-word;
+}
+.article-body pre.code { max-width: 100%; }
+
 @media (max-width: 760px) {
   .article-body p { line-height: 1.88; }
-  .article-body table { font-size: 13px; }
+  .article-body table { font-size: 13px; min-width: 0; }
+  .article-body th, .article-body td { white-space: normal; }
   .article-body pre.code { font-size: 12px; padding: 14px 16px; }
   .article-meta { font-size: 11px; gap: 8px; }
 }

@@ -17,7 +17,6 @@
 | `shares.html` | 我的分享 — 读书 / 电影 / 音乐（Tab 切换 + 评分） |
 | `links.html` | 网址导航 — 分类收藏（设计 / 开发 / 阅读 / 效率） |
 | `tools.html` | 常用工具 — 硬件、日常工具、常用手艺、选工具三原则 |
-| `admin.html` | 登录页（管理员入口，普通访客无导航链接） |
 
 ## 技术栈
 
@@ -29,62 +28,21 @@
 - 响应式：PC / 平板 / 手机（760px 以下汉堡全屏菜单）
 - 尊重 `prefers-reduced-motion` / `prefers-reduced-transparency`
 
-## 内容管理（Supabase 轻后台 + 可视化编辑）
+## 内容管理
 
-全站内容由 `assets/js/content.js` 单一内容源驱动：`DEFAULTS` 默认内容 → 远端 Supabase 覆盖。
-编辑采用**可视化直编**：登录后在页面上直接点文字改、拖动条目排序，无需进任何表单后台。
+全站内容由 `assets/js/content.js` 单一内容源驱动，`DEFAULTS` 即默认内容。
+内容维护方式：**直接编辑 `content.js` 的 `DEFAULTS`**，或由 AI Agent 在对话中改写该文件——无需任何后台或登录入口。
 
-### 1. 一次性搭建 Supabase
+- 公开页仅加载 `content.js` + `main.js`（均 `defer`），零外部依赖、零阻塞脚本。
+- `content.js`：默认内容 + 渲染 + 暴露 `window.NINKORO_CMS`
+- `main.js`：导航、移动端菜单、滚动揭示等全局交互
 
-1. 在 Supabase 新建项目，打开 **SQL Editor**，粘贴运行 `supabase-setup.sql`
-   （建 `public.site_content` 表 + 公开读 / 登录写 的 RLS 策略）。
-2. **Authentication → Users** 新建一个用户（邮箱 + 密码），这就是编辑账号。
-3. 打开 **Project Settings → API**，复制 `Project URL` 与 `anon public key`，
-   填入 `assets/js/supabase-config.js`：
-
-   ```js
-   window.NINKORO_SUPABASE = {
-     URL: "https://xxxx.supabase.co",
-     ANON_KEY: "eyJhbGciOi..."
-   };
-   ```
-
-### 2. 可视化编辑
-
-1. 浏览器打开 `admin.html`，用上面的账号登录 → 自动跳回首页。
-2. 页面底部浮出编辑工具条，点「**编辑**」进入编辑态：
-   - **改文字**：直接点任意带虚线框的文字，输入即改。
-   - **排序**：拖动条目左上角手柄（⠿）重排，仅限同列表内。
-   - **增删**：每个列表底部「+ 添加一条」，条目右上角「×」删除。
-   - 支持 `**双星号**` 加粗（在支持富文本的字段内）。
-3. 点「**保存**」→ 内容写入 Supabase `site_content` 表（单行 id=`content`）。
-
-### 3. 离线降级
-
-- 未配置 Supabase 时：站点照常运行（显示 `DEFAULTS`），但**编辑工具条不出现**，内容只读。
-- 已配置但拉取失败时：自动读取 localStorage 缓存，保证页面不空白。
-
-### 渲染标记约定（供 `edit.js` 收割）
-
-- 单值文本：`[data-edit="home.sub"]`
-- 列表容器：`[data-list-path="works"][data-kind="works"]`
-- 列表条目：`[data-item]` + 隐藏 `[data-meta]`（非文本字段 JSON）
-- 文本字段：`[data-field="title"]` / `[data-field="0"]`（数组项）
-- 嵌套列表：`[data-list-key="items"][data-kind="linkItem"]`
-
-保存时 `edit.js` 按 DOM 顺序 + 这些标记把改动收割回内容对象再写库。
-
-## 脚本加载顺序（每个内容页，V2 起）
+## 脚本加载顺序（每个内容页）
 
 ```html
 <script src="assets/js/content.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 ```
-
-- 公开页**不再加载 Supabase / db.js / edit.js**：默认内容即 `content.js` 的 `DEFAULTS`，零外部依赖、零阻塞脚本。
-- `content.js`：默认内容 + 渲染 + 暴露 `window.NINKORO_CMS`
-- `main.js`：导航、移动端菜单、滚动揭示等全局交互
-- 编辑态（`edit.js` + Supabase）仅在 `admin.html` 登录后由 `admin-login.js` 拉起，公开访客完全不接触。
 
 ## 本地预览
 

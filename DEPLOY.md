@@ -43,9 +43,8 @@ git push -u origin main
 - 响应头含 `Content-Security-Policy` / `X-Frame-Options: DENY` / `X-Content-Type-Options: nosniff`（DevTools → Network 校验）
 - 社交分享：各页 `og:` / `twitter:` meta + 根目录 `og.png`（运行 `python make_og.py` 生成）
 
-### 5. 可选：可视化编辑
-- Supabase 建项目 → 跑 `supabase-setup.sql` → 填 `assets/js/supabase-config.js`。
-- 不填则站点只读静态页（内容走 `content.js` 默认值），不影响展示。编辑入口为 `admin.html`（仅在登录后加载 Supabase，公开访客不接触）。
+### 5. 内容维护
+- 直接编辑 `assets/js/content.js` 的 `DEFAULTS`，或由 AI Agent 改写，无需后台 / 登录入口。
 
 ## 二、LifeOS 产品页（lifeos.ninkoro.com）
 同架构可复用到 `website/`：GitHub 仓库 `ninkoro-ai/lifeos` + Cloudflare Pages（output `website`）+ 子域 CNAME。DNS 在同一次 Cloudflare 托管内添加即可，无需再切 NS。

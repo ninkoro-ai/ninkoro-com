@@ -1,12 +1,7 @@
 /* ============================================================
    NINKORO.COM — 内容系统 v3
-   单一内容源：DEFAULTS → localStorage 缓存 → Supabase 远端
-   渲染标记约定（供 edit.js 可视化编辑收割）：
-   - 单值文本：  [data-edit="home.sub"]
-   - 列表容器：  [data-list-path="works"][data-kind="works"]
-   - 列表条目：  [data-item] + 隐藏属性 [data-meta]（非文本字段 JSON）
-   - 文本字段：  [data-field="title"]
-   - 嵌套列表：  [data-list-key="items"][data-kind="linkItem"]
+   单一内容源：DEFAULTS（直接在本文件维护，或由 AI Agent 改写）
+   渲染标记（data-field / data-item / data-meta）仅用于结构化渲染，无运行时依赖。
    ============================================================ */
 (function () {
   "use strict";
@@ -196,7 +191,7 @@
     idea: { label: "构思中", cls: "idea" }
   };
 
-  /* ---------- 条目渲染（edit.js 新增条目时复用） ---------- */
+  /* ---------- 条目渲染（在 DEFAULTS 中新增条目时复用） ---------- */
   var ITEM_RENDER = {
     works: function (w, delay, href) {
       var st = STATUS[w.status] || STATUS.idea;
@@ -366,19 +361,10 @@
     document.dispatchEvent(new CustomEvent("ninkoro:rendered", { detail: { state: c } }));
   }
 
-  /* 先用默认内容首屏渲染，再异步拉远端覆盖 */
+  /* 首屏用默认内容渲染（内容维护：直接编辑本文件 DEFAULTS，或由 AI Agent 改写） */
   var page = document.body.getAttribute("data-page");
   if (page) {
     render(state);
-    if (window.NINKORO_DB) {
-      window.NINKORO_DB.load().then(function (remote) {
-        if (remote && remote.works) {
-          render(merge(DEFAULTS, remote));
-          /* 远端覆盖：跳过二次动画，直接显示 */
-          document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
-        }
-      });
-    }
   }
 
   window.NINKORO_CMS = {
