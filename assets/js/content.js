@@ -15,11 +15,11 @@
   var DEFAULTS = {
     site: { email: "hi@ninkoro.com" },
     home: {
-      eyebrow: "MAKER · CRAFT",
+      eyebrow: "AI BUILDER · PERSONAL LAB",
       titleMain: "你好，我是 ",
       titleAccent: "Ninkoro",
-      titleThin: "做点喜欢的东西。",
-      sub: "相信好东西都是慢慢打磨出来的——这里收集我做的作品、想过的问题、读过的书和听过的音乐。一个普通人把自己的审美和偏见，一件件变成现实的地方。",
+      titleThin: "一个 AI Builder 的个人实验室。",
+      sub: "在这里，我把想法做成东西——从 LifeOS 这样的个人生活系统，到《AI Agent 产品设计实战手册》这样的产品方法论。相信好东西都是慢慢打磨出来的，也相信 AI Builder 这代人，值得拥有自己的实验室。",
       manifesto: [
         { title: "少即是多", body: "工具越轻，想法越重。能用一张白纸说清的事，不开十个应用。这个网站没有框架、没有构建步骤，打开记事本就能改。" },
         { title: "做出来再说", body: "完美是完成的敌人。先把东西做出来放到阳光下，再慢慢打磨。想法不值钱，做出来才算数。" },
@@ -50,6 +50,7 @@
       }
     ],
     thoughts: [
+      { date: "2026.07", title: "新书｜《AI Agent 产品设计实战手册》", body: "一本写给产品经理和 AI 创业者的实战手册：从 0 到 1 覆盖设计、构建、验证、运营全链路。五章、三十多个可复用 Checklist 与决策矩阵，附 LifeOS 真实案例拆解。", href: "ai-agent-handbook.html" },
       { date: "2026.07", title: "工具越快，越要把时间留给审美", body: "当实现一件事的成本越来越低，人剩下的工作恰恰是最值钱的部分：判断什么该做、什么不该做，以及把它做成什么样子。" },
       { date: "2026.06", title: "一周写完一个生产级后端的体会", body: "10 个实体、12 条路由、零漂移。关键不是技巧，而是动手之前先想清楚：模型定不下来，代码写得越快返工越多。" },
       { date: "2026.06", title: "分寸感比能力更重要", body: "LifeOS 里有一条硬边界：系统可以把订单下到\"待付款\"，但绝不自动扣款。自动与打扰之间只有一线之隔，好的系统知道什么时候该停下来问人。" },
@@ -212,11 +213,15 @@
       return "<div" + attrs + ">" + inner + "</div>";
     },
     thought: function (t, linked) {
+      var hasHref = !!(t.href && String(t.href).trim());
+      var go = (linked || hasHref) ? "↗" : "·";
       var inner =
         '<span class="date" data-field="date">' + esc(t.date) + "</span>" +
         "<div><h3 data-field=\"title\">" + esc(t.title) + "</h3><p data-field=\"body\">" + md(t.body) + "</p></div>" +
-        '<span class="go">' + (linked ? "↗" : "·") + "</span>";
-      var attrs = ' data-item' + metaAttr({}) + ' class="list-row"' + (linked ? "" : ' style="cursor:default;"');
+        '<span class="go">' + go + "</span>";
+      /* href 存入 data-meta，可视化编辑收割时可保留，不破坏现有字段 */
+      var attrs = ' data-item' + metaAttr({ href: t.href || "" }) + ' class="list-row"' + (linked || hasHref ? "" : ' style="cursor:default;"');
+      if (hasHref) return '<a href="' + esc(t.href) + '"' + attrs + ">" + inner + "</a>";
       if (linked) return '<a href="thoughts.html"' + attrs + ">" + inner + "</a>";
       return "<article" + attrs + ">" + inner + "</article>";
     },

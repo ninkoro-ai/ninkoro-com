@@ -1,7 +1,8 @@
 # Ninkoro.com
 
-Ninkoro 的个人网站 —— 作品、想法与审美的集合地。
+一个 AI Builder 的个人实验室 —— 把想法做成东西的地方。作品、想法与审美的集合地。
 
+> 定位：AI Builder · Personal Lab。
 > 风格基调：暗色暖调、衬线中文大标题、材质分层、Apple 式交互动效。
 > 全站不刻意强调「开发者 / Vibe Coding」标签，而是把重点放在「做了什么、怎么想」上。
 
@@ -73,20 +74,17 @@ Ninkoro 的个人网站 —— 作品、想法与审美的集合地。
 
 保存时 `edit.js` 按 DOM 顺序 + 这些标记把改动收割回内容对象再写库。
 
-## 脚本加载顺序（每个内容页）
+## 脚本加载顺序（每个内容页，V2 起）
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="assets/js/supabase-config.js"></script>
-<script src="assets/js/db.js"></script>
-<script src="assets/js/content.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/edit.js"></script>
+<script src="assets/js/content.js" defer></script>
+<script src="assets/js/main.js" defer></script>
 ```
 
-- `db.js`：Supabase 数据层（`load` / `save` / `session` / `signIn` / `signOut`，离线降级）
+- 公开页**不再加载 Supabase / db.js / edit.js**：默认内容即 `content.js` 的 `DEFAULTS`，零外部依赖、零阻塞脚本。
 - `content.js`：默认内容 + 渲染 + 暴露 `window.NINKORO_CMS`
-- `edit.js`：仅当存在有效会话时浮出编辑工具条
+- `main.js`：导航、移动端菜单、滚动揭示等全局交互
+- 编辑态（`edit.js` + Supabase）仅在 `admin.html` 登录后由 `admin-login.js` 拉起，公开访客完全不接触。
 
 ## 本地预览
 
@@ -96,15 +94,18 @@ python -m http.server 8080
 # 打开 http://localhost:8080
 ```
 
-## 部署
+## 部署（Cloudflare Pages，0 服务器成本）
 
-任意静态托管（根目录直接指到本文件夹）：
+1. 在 GitHub 建仓库（如 `ninkoro-ai/ninkoro-com`），把本目录作为仓库根推送。
+2. Cloudflare Pages → **Create a project** → 连接该仓库：
+   - Build command：**留空**（纯静态，无构建步骤）
+   - Build output directory：`ninkoro.com`（即本目录）
+   - 根目录的 `_headers` 会被 Cloudflare 自动读取，落地 CSP / X-Frame-Options / X-Content-Type-Options / Referrer-Policy / 缓存策略。
+3. **自定义域**：在 Cloudflare 添加 `ninkoro.com` 与 `www.ninkoro.com`，按提示把域名 NS 从原注册商（腾讯云）切到 Cloudflare——**此 NS 切换需在域名注册商后台操作，Agent 无法代切**。
+4. 任意**静态托管**也都可用（Vercel / Netlify / Nginx），但 `_headers` 的安全头与缓存策略是 Cloudflare Pages 专属语法，换平台需改用对应机制（如 Netlify 兼容 `_headers`、Nginx 的 `add_header`）。
+5. 生成社交分享图：`python make_og.py`（产出根目录 `og.png`，被各页 OG/Twitter meta 引用）。
 
-- **Vercel / Netlify**：导入仓库，Root Directory 设为 `ninkoro.com`
-- **GitHub Pages**：推到独立仓库，Settings → Pages → `main` / root
-- **Nginx / CDN**：`root` 指向本目录即可
-
-绑定 `ninkoro.com` 域名时在托管平台添加 CNAME / A 记录。
+> DNS 与 NS 切换属于域名注册商操作，需你本人在后台完成；本步骤仅改文档与代码。
 
 ## 许可
 
