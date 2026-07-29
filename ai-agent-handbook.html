@@ -57,7 +57,6 @@
   padding-bottom: clamp(56px, 9vw, 110px);
 }
 .toc-side { display: none; }
-.toc-mobile { display: none; } /* 旧底部折叠目录已弃用，迁移到文章顶部 .toc-inline */
 .toc-inline {
   display: block;
   width: min(720px, calc(100% - 48px));
@@ -89,18 +88,6 @@
 }
 .toc-sub a:hover { color: var(--accent); }
 .toc-nav a.active { color: var(--accent); }
-
-.toc-mobile > summary {
-  list-style: none; cursor: pointer; user-select: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 13px; letter-spacing: .1em; color: var(--ink);
-  padding: 12px 18px; border: 1px solid var(--line-strong); border-radius: 999px;
-  background: var(--bg-card); backdrop-filter: blur(12px);
-}
-.toc-mobile > summary::-webkit-details-marker { display: none; }
-.toc-mobile > summary::before { content: "\2261"; color: var(--accent); font-size: 16px; }
-.toc-mobile[open] > summary { color: var(--accent); }
-.toc-mobile .toc-nav { margin-top: 16px; }
 
 .article-body p {
   font-size: clamp(16px, 2.3vw, 17px); line-height: 1.92; color: var(--ink-dim);
@@ -175,7 +162,7 @@
 @media (min-width: 1024px) {
   .article-layout { grid-template-columns: 232px minmax(0, 1fr); gap: 56px; align-items: start; }
   .toc-side { display: block; position: sticky; top: calc(var(--nav-h) + 28px); }
-  .toc-mobile, .toc-inline { display: none; }
+  .toc-inline { display: none; }
   .article-body { max-width: 720px; }
 }
 /* 移动端适配加固：杜绝整页横向滚动（iOS / 微信 WebKit 边界处理） */
@@ -303,10 +290,6 @@ Notification Provider
   </main>
 </div>
 
-<details class="toc-mobile">
-  <summary>目录</summary>
-  <nav class="toc-nav"><ul class='toc-list'><li><a href='#ch1'>第一章　AI Agent 产品的本质与设计范式</a><ul class='toc-sub'><li><a href='#s1_1'>1.1　从 Chatbot 到 Agent：一条不可逆的演进路径</a></li><li><a href='#s1_2'>1.2　Agent 的五层架构模型</a></li><li><a href='#s1_3'>1.3　真实案例拆解：四款 Agent 产品的设计哲学</a></li><li><a href='#s1_4'>1.4　Agent 产品设计四原则</a></li><li><a href='#s1_5'>1.5　Agent 产品可行性评估 Checklist</a></li><li><a href='#s1_6'>1.6　本章小结与行动建议</a></li></ul><li><a href='#ch2'>第二章　用户意图理解与多轮对话设计</a><ul class='toc-sub'><li><a href='#s2_1'>2.1　意图理解：Agent 产品最难的"第一步"</a></li><li><a href='#s2_2'>2.2　多轮对话的四种模式</a></li><li><a href='#s2_3'>2.3　上下文管理：让 Agent "记住"用户</a></li><li><a href='#s2_4'>2.4　Agent 交互设计的七大模式</a></li><li><a href='#s2_5'>2.5　对话设计实战：从需求到流程</a></li><li><a href='#s2_6'>2.6　本章小结与行动建议</a></li></ul><li><a href='#ch3'>第三章　Skill 生态与插件化架构设计</a><ul class='toc-sub'><li><a href='#s3_1'>3.1　为什么 Agent 需要 Skill 生态</a></li><li><a href='#s3_2'>3.2　插件化架构的设计原则</a></li><li><a href='#s3_3'>3.3　Skill 生态的分层架构</a></li><li><a href='#s3_4'>3.4　框架选择：LangChain vs CrewAI vs 自研</a></li><li><a href='#s3_5'>3.5　LifeOS 的 Provider 架构实战拆解</a></li><li><a href='#s3_6'>3.6　Skill 生态的冷启动策略</a></li><li><a href='#s3_7'>3.7　本章小结与行动建议</a></li></ul><li><a href='#ch4'>第四章　安全合规与边界设计</a><ul class='toc-sub'><li><a href='#s4_1'>4.1　为什么 Agent 产品的安全比传统软件更难</a></li><li><a href='#s4_2'>4.2　四层防护体系</a></li><li><a href='#s4_3'>4.3　HITL 边界设计：Agent 安全的核心</a></li><li><a href='#s4_4'>4.4　权限模型设计</a></li><li><a href='#s4_5'>4.5　合规框架与监管趋势</a></li><li><a href='#s4_6'>4.6　安全事件响应：当 Agent 出错时</a></li><li><a href='#s4_7'>4.7　本章小结与行动建议</a></li></ul><li><a href='#ch5'>第五章　从 MVP 到规模化运营</a><ul class='toc-sub'><li><a href='#s5_1'>5.1　Agent 产品的 MVP 定义</a></li><li><a href='#s5_2'>5.2　Agent 产品的核心指标体系</a></li><li><a href='#s5_3'>5.3　从 MVP 到 PMF 的路径</a></li><li><a href='#s5_4'>5.4　规模化阶段的核心挑战</a></li><li><a href='#s5_5'>5.5　运营体系搭建</a></li><li><a href='#s5_6'>5.6　商业模型设计</a></li><li><a href='#s5_7'>5.7　规模化检查清单</a></li><li><a href='#s5_8'>5.8　本章小结与行动建议</a></li><li><a href='#s5_9'>结语</a></li></ul></ul></nav>
-</details>
 
 <footer class="footer">
   <div class="wrap">
