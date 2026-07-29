@@ -185,6 +185,58 @@ html { overflow-x: clip; }
   .article-body pre.code { font-size: 12px; padding: 14px 16px; }
   .article-meta { font-size: 11px; gap: 8px; }
 }
+
+/* 悬浮球：可拖动 reposition + 点击展开章节菜单 + 一键回到顶部（移动端） */
+.fab-wrap {
+  position: fixed;
+  right: 18px;
+  bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  z-index: 70;
+  touch-action: none;
+  -webkit-user-select: none; user-select: none;
+}
+.fab {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: none; cursor: grab; padding: 0;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .30);
+  opacity: .92; transition: opacity .2s, transform .15s;
+}
+.fab:active { cursor: grabbing; transform: scale(.94); }
+.fab svg { display: block; }
+.fab-menu {
+  position: absolute; right: 0; bottom: calc(100% + 12px);
+  width: 264px; max-width: 80vw; max-height: 62vh; overflow-y: auto;
+  background: var(--bg-card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .28);
+  padding: 10px; display: none;
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+.fab-menu.open { display: block; animation: fabPop .16s ease; }
+@keyframes fabPop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.fab-top {
+  width: 100%; text-align: left; border: none; background: transparent;
+  font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--accent);
+  padding: 10px 12px; border-radius: 10px; cursor: pointer;
+}
+.fab-top:hover { background: rgba(211, 162, 74, .14); }
+.fab-toc { display: flex; flex-direction: column; }
+.fab-toc a {
+  display: block; padding: 9px 12px; border-radius: 10px;
+  font-family: var(--sans); font-size: 13px; line-height: 1.4;
+  color: var(--ink-dim); text-decoration: none;
+}
+.fab-toc a.fab-ch { font-weight: 700; color: var(--ink); font-size: 14px; margin-top: 4px; }
+.fab-toc a:hover { background: rgba(211, 162, 74, .14); color: var(--accent); }
+.fab-toc a.active { color: var(--accent); }
+/* 桌面已有 sticky 侧栏目录，悬浮球仅在移动/平板显示，避免重复与干扰阅读 */
+@media (min-width: 1024px) { .fab-wrap { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .fab-menu.open { animation: none; }
+  .fab { transition: none; }
+}
 </style>
 </head>
 <body class="page-enter" data-page="article">
@@ -320,6 +372,19 @@ Notification Provider
     </div>
   </div>
 </footer>
+
+<!-- 悬浮球：拖动可 reposition；轻点展开章节菜单；内含「回到顶部」 -->
+<div class="fab-wrap" id="fabWrap">
+  <div class="fab-menu" id="fabMenu" role="menu" aria-label="章节快速跳转">
+    <button class="fab-top" id="fabTop" type="button">↑ 回到顶部</button>
+    <nav class="fab-toc" id="fabToc" aria-label="章节列表"></nav>
+  </div>
+  <button class="fab" id="fab" type="button" aria-label="回到顶部 / 打开目录" aria-expanded="false">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+      <path d="M7 14l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 <script src="assets/js/main.js" defer></script>
 <script src="assets/js/handbook.js" defer></script>
