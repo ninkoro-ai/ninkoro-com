@@ -208,48 +208,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   font-size: clamp(42px, 7.4vw, 88px);
   line-height: 1.14; font-weight: 700;
   letter-spacing: -0.02em;
-  /* 自动播放的流光：微光扫过「你好，我是 Ninkoro」 */
-  background: linear-gradient(100deg,
-    var(--ink) 0%, var(--ink) 40%,
-    #fff3d6 50%,
-    var(--ink) 60%, var(--ink) 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: heroShine 6s ease-in-out infinite;
+  /* 自动播放的流光：金色光晕从左到右扫过标题（移动端兼容） */
+  animation: heroShine 4.5s ease-in-out infinite;
 }
-.hero-title .thin {
-  font-weight: 400;
-  color: var(--ink-dim);
-  -webkit-text-fill-color: var(--ink-dim);
-}
-.hero-title .accent {
-  color: var(--accent);
-  -webkit-text-fill-color: transparent;
-  background: linear-gradient(100deg,
-    var(--accent) 0%, var(--accent) 40%,
-    #ffe6ad 50%,
-    var(--accent) 60%, var(--accent) 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: heroShine 6s ease-in-out infinite;
-}
+.hero-title .thin { font-weight: 400; color: var(--ink-dim); }
+.hero-title .accent { color: var(--accent); }
 @keyframes heroShine {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0%   { text-shadow: -100px 0 30px rgba(211, 162, 74, 0); }
+  45%  { text-shadow:   30px 0 48px rgba(211, 162, 74, 0.38); }
+  55%  { text-shadow:   30px 0 48px rgba(211, 162, 74, 0.38); }
+  100% { text-shadow:  160px 0 30px rgba(211, 162, 74, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-title, .hero-title .accent {
-    animation: none;
-    background: none;
-    -webkit-text-fill-color: currentColor;
-  }
-  .hero-title { color: var(--ink); }
-  .hero-title .accent { color: var(--accent); }
-  .hero-title .thin { color: var(--ink-dim); -webkit-text-fill-color: var(--ink-dim); }
+  .hero-title { animation: none; }
 }
 .hero-sub {
   margin-top: 30px;
@@ -911,13 +882,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   padding: 10px 12px; border-radius: 10px; cursor: pointer;
 }
 .fab-top:hover { background: rgba(211, 162, 74, .14); }
-.fab-toc { display: flex; flex-direction: column; }
+.fab-toc { display: block; min-width: 0; }
 .fab-toc a {
-  display: block; padding: 9px 12px; border-radius: 10px;
+  display: block !important;
+  width: 100%;
+  padding: 9px 12px; border-radius: 10px;
   font-family: var(--sans); font-size: 13px; line-height: 1.4;
   color: var(--ink-dim); text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .fab-toc a.fab-ch { font-weight: 700; color: var(--ink); font-size: 14px; margin-top: 4px; }
+.fab-toc a.fab-sec { padding-left: 22px; }
 .fab-toc a:hover { background: rgba(211, 162, 74, .14); color: var(--accent); }
 .fab-toc a.active { color: var(--accent); }
 /* 仅移动端：桌面已有 sticky 侧栏目录，悬浮球隐藏避免干扰阅读 */
