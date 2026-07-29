@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FitBuddy — Ninkoro Wiki</title>
+<meta name="description" content="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及背后「执行闭环 + 人工确认」的边界设计。">
+<meta name="keywords" content="FitBuddy, 自动约课, 自动点餐, AI 生活助手, 产品设计, Ninkoro Wiki">
+<meta name="theme-color" content="#0e0d0b">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ninkoro">
+<meta property="og:title" content="FitBuddy — Ninkoro Wiki">
+<meta property="og:description" content="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及人工确认边界。">
+<meta property="og:url" content="https://ninkoro.com/wiki/fitbuddy.html">
+<meta property="og:image" content="https://ninkoro.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FitBuddy — Ninkoro Wiki">
+<meta name="twitter:description" content="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及人工确认边界。">
+<meta name="twitter:image" content="https://ninkoro.com/og.png">
+<link rel="canonical" href="https://ninkoro.com/wiki/fitbuddy.html">
+<script type="application/ld+json" src="../assets/data/person.jsonld"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="page-enter" data-page="wiki-article">
+<div class="grain"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Ninkoro<em>.com</em></a>
+    <div class="nav-links">
+      <a href="../index.html">首页</a>
+      <a href="../projects.html">作品</a>
+      <a href="../knowledge.html">知识</a>
+      <a href="../thoughts.html">想法</a>
+      <a href="../about.html">关于</a>
+      <a href="https://lifeos.ninkoro.com">LifeOS 官网</a>
+    </div>
+    <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu">
+      <a href="../index.html"><span class="idx">01</span>首页</a>
+      <a href="../projects.html"><span class="idx">02</span>作品</a>
+      <a href="../knowledge.html"><span class="idx">03</span>知识</a>
+      <a href="../thoughts.html"><span class="idx">04</span>想法</a>
+      <a href="../about.html"><span class="idx">05</span>关于</a>
+      <a href="https://lifeos.ninkoro.com"><span class="idx">06</span>LifeOS 官网</a>
+</div>
+
+<article class="page-head wrap longread">
+  <a class="back-link" href="../knowledge.html">← 返回知识库</a>
+  <h1 class="article-title">FitBuddy</h1>
+  <p class="lede">LifeOS 的第一个落地场景：用 Agent 替你搞定「今天练什么、吃什么」这两件每天重复的决定，把认知带宽留给真正重要的事。</p>
+  <p class="updated">更新于 2026.07</p>
+  <nav class="toc-inline" id="tocInline" aria-label="目录"></nav>
+
+  <h2>产品定位</h2>
+  <p>FitBuddy 不是健身 App，也不是菜谱 App。它是一个<strong>主动的生活执行层</strong>：你定方向（想增肌、想控预算），它把「约课」「点餐」这类重复决策接过去，做成、并替你执行到「只差你点头」的那一步。</p>
+  <p>它的边界很清醒——<strong>系统可以下到待付款，但绝不自动扣款</strong>。这条线，是产品信任感的来源。</p>
+
+  <h2>自动约课</h2>
+  <p>用户给出偏好（时段、教练、频率），Agent 查询可约课程、比对冲突、生成约课计划，提交后等人确认即下单。核心是 Planner 把「这周想练三次」翻译成「周二/周四晚、周六上午」的具体动作。</p>
+  <ul>
+    <li><strong>输入</strong>：训练目标、可约时段、历史出勤。</li>
+    <li><strong>执行</strong>：查课表 → 选课 → 占位（待确认）。</li>
+    <li><strong>人确认</strong>：用户一键通过，或调整后再提交。</li>
+  </ul>
+
+  <h2>自动点餐</h2>
+  <p>根据训练日（练腿日要多吃蛋白）、预算和个人口味，Agent 规划一周餐单并在合作平台下单。难点不在「推荐」，而在<strong>把预算和口味做成硬约束</strong>——超预算的方案根本不该出现。</p>
+  <blockquote>人每天要做上百个决策，大多数都是重复的、低价值的。省下来的认知带宽，留给真正重要的事。</blockquote>
+
+  <h2>AI 生活助手</h2>
+  <p>约课和点餐是两个切口，底层是同一件事：<strong>把重复的生活决策交给系统，人保留方向权和确认权</strong>。FitBuddy 跑通之后，这个模式会复制到更多场景——它的价值不在某个功能，而在「执行闭环 + 人工确认」这套可复用的骨架。</p>
+
+  <section class="related">
+    <h4>相关文章</h4>
+    <a href="ai-agent.html">AI Agent：执行闭环背后的架构 →</a>
+    <a href="ninkoro-philosophy.html">Ninkoro Philosophy：为什么做这些 →</a>
+  </section>
+</article>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <div class="footer-links">
+        <div>
+          <h4>站点</h4>
+          <ul>
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="../projects.html">作品</a></li>
+            <li><a href="../knowledge.html">知识</a></li>
+            <li><a href="../thoughts.html">想法</a></li>
+            <li><a href="../about.html">关于</a></li>
+            <li><a href="../archive.html">归档</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>别处</h4>
+          <ul>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a data-mailto href="mailto:hi@ninkoro.com">邮箱</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> NINKORO.COM</span>
+      <span>HANDCRAFTED</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/content.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
+<script>
+(function () {
+  var body = document.querySelector(".longread");
+  if (!body) return;
+  var heads = body.querySelectorAll("h2, h3");
+  var toc = document.getElementById("tocInline");
+  if (!heads.length || !toc) return;
+  var ol = document.createElement("ol");
+  heads.forEach(function (h, i) {
+    if (!h.id) h.id = "s" + i;
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#" + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    ol.appendChild(li);
+  });
+  var label = document.createElement("div");
+  label.className = "toc-label";
+  label.textContent = "目录";
+  toc.appendChild(label);
+  toc.appendChild(ol);
+})();
+</script>
+</body>
+</html>

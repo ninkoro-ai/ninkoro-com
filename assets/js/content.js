@@ -163,7 +163,12 @@
         { title: "少换，多用", body: "频繁换工具是另一种拖延。选定一套，用到肌肉记忆里——顺手的键位、启动器的唤起，全是时间复利。" },
         { title: "数据在自己手里", body: "重要的东西用纯文本存，写在本地。服务会倒闭，格式会过时，纯文本永远能打开。" }
       ]
-    }
+    },
+    wiki: [
+      { title: "AI Agent", category: "AI", tags: ["AI", "Product"], description: "关于 AI Agent 架构、产品设计与实践记录：Planner、Memory、Tool、Execution。", updated: "2026.07", url: "wiki/ai-agent.html" },
+      { title: "FitBuddy", category: "产品", tags: ["Product", "Life"], description: "AI 自动约课与自动点餐的产品设计记录：产品定位、执行闭环与人工确认边界。", updated: "2026.07", url: "wiki/fitbuddy.html" },
+      { title: "Ninkoro Philosophy", category: "思想", tags: ["Philosophy", "Life"], description: "为什么建立 Ninkoro，Personal OS 理念，以及 AI 时代个人知识资产的意义。", updated: "2026.07", url: "wiki/ninkoro-philosophy.html" }
+    ]
   };
 
   /* ---------- 工具 ---------- */
@@ -219,6 +224,16 @@
       if (hasHref) return '<a href="' + esc(t.href) + '"' + attrs + ">" + inner + "</a>";
       if (linked) return '<a href="thoughts.html"' + attrs + ">" + inner + "</a>";
       return "<article" + attrs + ">" + inner + "</article>";
+    },
+    wikiCard: function (w, delay) {
+      var inner =
+        '<span class="cat" data-field="category">' + esc(w.category) + "</span>" +
+        '<h3><span data-field="title">' + esc(w.title) + '</span> <span class="arrow">→</span></h3>' +
+        '<p data-field="description">' + md(w.description) + "</p>" +
+        (w.updated ? '<span class="upd">更新 ' + esc(w.updated) + "</span>" : "");
+      var attrs = ' data-item' + metaAttr({ category: w.category, updated: w.updated || "" }) +
+        ' class="spot wiki-card reveal' + (delay ? '" data-delay="' + delay : '"');
+      return '<a href="' + esc(w.url) + '"' + attrs + ">" + inner + "</a>";
     },
     textCard: function (t, delay) {
       return '<div data-item' + metaAttr({}) + ' class="spot work-card reveal"' + (delay ? ' data-delay="' + delay + '"' : "") + ">" +
@@ -287,15 +302,19 @@
         '<span class="accent" data-edit="home.titleAccent">' + esc(h.titleAccent) + "</span><br>" +
         '<span class="thin" data-edit="home.titleThin">' + esc(h.titleThin) + "</span>";
       document.getElementById("hero-sub").innerHTML = '<span data-edit="home.sub">' + md(h.sub) + "</span>";
-      document.getElementById("home-works").innerHTML =
-        c.works.slice(0, 3).map(function (w, i) { return ITEM_RENDER.works(w, i || "", "works.html"); }).join("");
-      document.getElementById("home-works").setAttribute("data-list-path", "home.worksPreview");
-      document.getElementById("home-manifesto").innerHTML =
-        h.manifesto.map(function (m, i) { return ITEM_RENDER.textCard(m, i || ""); }).join("");
-      document.getElementById("home-manifesto").setAttribute("data-list-path", "home.manifesto");
-      document.getElementById("home-manifesto").setAttribute("data-kind", "textCard");
-      document.getElementById("home-thoughts").innerHTML =
-        c.thoughts.slice(0, 3).map(function (t) { return ITEM_RENDER.thought(t, true); }).join("");
+      var hw = document.getElementById("home-works");
+      if (hw) {
+        hw.innerHTML = c.works.slice(0, 3).map(function (w, i) { return ITEM_RENDER.works(w, i || "", "projects.html"); }).join("");
+        hw.setAttribute("data-list-path", "home.worksPreview");
+      }
+      var hm = document.getElementById("home-manifesto");
+      if (hm) {
+        hm.innerHTML = h.manifesto.map(function (m, i) { return ITEM_RENDER.textCard(m, i || ""); }).join("");
+        hm.setAttribute("data-list-path", "home.manifesto");
+        hm.setAttribute("data-kind", "textCard");
+      }
+      var ht = document.getElementById("home-thoughts");
+      if (ht) ht.innerHTML = c.thoughts.slice(0, 3).map(function (t) { return ITEM_RENDER.thought(t, true); }).join("");
     },
 
     works: function (c) {
@@ -303,9 +322,43 @@
       el.innerHTML = c.works.map(function (w, i) { return ITEM_RENDER.works(w, i % 4 || "", w.href || ""); }).join("");
     },
 
+    projects: function (c) {
+      var el = document.getElementById("projects-list");
+      if (el) el.innerHTML = c.works.map(function (w, i) { return ITEM_RENDER.works(w, i % 4 || "", w.href || ""); }).join("");
+    },
+
     thoughts: function (c) {
       var el = document.getElementById("thoughts-list");
       el.innerHTML = c.thoughts.map(function (t) { return ITEM_RENDER.thought(t, false); }).join("");
+    },
+
+    wiki: function (c) {
+      var root = document.getElementById("wiki-root");
+      if (!root || !c.wiki) return;
+      var order = ["AI", "产品", "商业", "思想"];
+      var groups = {};
+      c.wiki.forEach(function (w) {
+        (groups[w.category] = groups[w.category] || []).push(w);
+      });
+      var cats = Object.keys(groups).sort(function (a, b) {
+        var ia = order.indexOf(a), ib = order.indexOf(b);
+        if (ia < 0) ia = 99; if (ib < 0) ib = 99;
+        return ia - ib;
+      });
+      root.innerHTML = cats.map(function (cat) {
+        var cards = groups[cat].map(function (w, i) { return ITEM_RENDER.wikiCard(w, i % 4); }).join("");
+        return '<section class="section wiki-cat">' +
+          '<div class="wrap">' +
+          '<div class="sec-head row reveal"><div><p class="sec-label">' + esc(cat.toUpperCase()) + '</p>' +
+          '<h2 class="sec-title">' + esc(cat) + "</h2></div></div>" +
+          '<div class="wiki-grid">' + cards + "</div>" +
+          "</div></section>";
+      }).join("");
+    },
+
+    knowledge: function (c) {
+      /* knowledge.html 复用 wiki 渲染器，把 Wiki 卡片内联到 #wiki-root；其余分区为静态链接 */
+      R.wiki(c);
     },
 
     about: function (c) {

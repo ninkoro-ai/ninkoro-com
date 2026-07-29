@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Agent — Ninkoro Wiki</title>
+<meta name="description" content="关于 AI Agent 的架构、产品设计与实践记录：从 Planner、Memory、Tool 到 Execution 的完整拆解。">
+<meta name="keywords" content="AI Agent, Agent 架构, Planner, Memory, Tool Use, 产品设计, Ninkoro Wiki">
+<meta name="theme-color" content="#0e0d0b">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ninkoro">
+<meta property="og:title" content="AI Agent — Ninkoro Wiki">
+<meta property="og:description" content="关于 AI Agent 的架构、产品设计与实践记录：Planner、Memory、Tool、Execution。">
+<meta property="og:url" content="https://ninkoro.com/wiki/ai-agent.html">
+<meta property="og:image" content="https://ninkoro.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Agent — Ninkoro Wiki">
+<meta name="twitter:description" content="关于 AI Agent 的架构、产品设计与实践记录：Planner、Memory、Tool、Execution。">
+<meta name="twitter:image" content="https://ninkoro.com/og.png">
+<link rel="canonical" href="https://ninkoro.com/wiki/ai-agent.html">
+<script type="application/ld+json" src="../assets/data/person.jsonld"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="page-enter" data-page="wiki-article">
+<div class="grain"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Ninkoro<em>.com</em></a>
+    <div class="nav-links">
+      <a href="../index.html">首页</a>
+      <a href="../projects.html">作品</a>
+      <a href="../knowledge.html">知识</a>
+      <a href="../thoughts.html">想法</a>
+      <a href="../about.html">关于</a>
+      <a href="https://lifeos.ninkoro.com">LifeOS 官网</a>
+    </div>
+    <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu">
+      <a href="../index.html"><span class="idx">01</span>首页</a>
+      <a href="../projects.html"><span class="idx">02</span>作品</a>
+      <a href="../knowledge.html"><span class="idx">03</span>知识</a>
+      <a href="../thoughts.html"><span class="idx">04</span>想法</a>
+      <a href="../about.html"><span class="idx">05</span>关于</a>
+      <a href="https://lifeos.ninkoro.com"><span class="idx">06</span>LifeOS 官网</a>
+</div>
+
+<article class="page-head wrap longread">
+  <a class="back-link" href="../knowledge.html">← 返回知识库</a>
+  <h1 class="article-title">AI Agent</h1>
+  <p class="lede">一种能自己规划、调用工具、执行动作来完成目标的 AI 系统。这篇记录我对 Agent 架构的理解，以及做 LifeOS 时踩过的坑。</p>
+  <p class="updated">更新于 2026.07</p>
+  <nav class="toc-inline" id="tocInline" aria-label="目录"></nav>
+
+  <h2>什么是 Agent</h2>
+  <p>传统 chatbot 是「你问一句，它答一句」；Agent 的区别在于<strong>它手里有了动作</strong>。给它一个目标，它会自己拆步骤、决定调用什么工具、执行、看结果、再决定下一步，直到目标达成或主动停下来问人。</p>
+  <p>判断一个东西是不是 Agent，看三件事：有没有<strong>目标驱动</strong>的循环、能不能<strong>接触外部世界</strong>（工具/API）、以及是否有<strong>停下来求助</strong>的边界感。</p>
+
+  <h2>Agent 架构总览</h2>
+  <p>一个能用的 Agent 通常由四块组成，它们之间是依次咬合的关系：</p>
+  <table>
+    <thead><tr><th>模块</th><th>职责</th><th>关键问题</th></tr></thead>
+    <tbody>
+      <tr><td>Planner</td><td>把目标拆成可执行的计划</td><td>拆多细？何时重规划？</td></tr>
+      <tr><td>Memory</td><td>记住上下文与历史</td><td>记什么？忘什么？</td></tr>
+      <tr><td>Tool</td><td>把能力外接到世界</td><td>暴露哪些？如何防错？</td></tr>
+      <tr><td>Execution</td><td>从计划到动作并回收结果</td><td>谁来确认危险操作？</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Planner：把目标拆成可执行的计划</h2>
+  <p>Planner 不直接干活，它产出「下一步做什么」的清单。好的 Planner 不是一次拆到最细，而是<strong>拆到「能安全交给 Tool 执行」的粒度就停</strong>——太粗则 Tool 无从下手，太细则失去灵活性。</p>
+  <blockquote>模型定不下来，代码写得越快返工越多。Planner 的提示词和结构，值得花最多时间打磨。</blockquote>
+  <p>实践中我们让 Planner 输出带依赖关系的步骤，并在每步执行后判断是否要<strong>重规划</strong>：当真实结果偏离预期，重新生成后续步骤，而不是硬走原计划。</p>
+
+  <h2>Memory：让 Agent 记住上下文</h2>
+  <p>Memory 分两层：<strong>短期</strong>（本轮对话的上下文窗口）和<strong>长期</strong>（跨会话沉淀的事实、偏好、历史决策）。长期记忆是 Agent 从「一次性工具」变成「长期搭档」的关键。</p>
+  <ul>
+    <li><strong>写什么</strong>：用户的稳定偏好、已完成的任务、踩过的坑。</li>
+    <li><strong>忘什么</strong>：临时中间态、一次性的脏数据。</li>
+    <li><strong>怎么取</strong>：按相关性检索，而不是全量塞进上下文。</li>
+  </ul>
+
+  <h2>Tool：把能力外接到世界</h2>
+  <p>Tool 是 Agent 与真实世界之间的接口——查日历、下单、发消息、读数据库。暴露 Tool 时最该想清楚的是<strong>失败模式</strong>：每个 Tool 都可能出错、超时、或产生不可逆后果。</p>
+  <pre class="code"><code>// Tool 的最小契约
+{ name, description, input_schema,
+  execute(args) -&gt; { ok, data?, error? } }</code></pre>
+  <p>设计原则：只读操作可自动执行；<strong>写操作、涉及钱/隐私的操作，必须留给人确认</strong>。LifeOS 里系统可以把订单下到「待付款」，但绝不自动扣款——这条硬边界，决定了系统是帮手还是麻烦。</p>
+
+  <h2>Execution：从计划到动作</h2>
+  <p>Execution 是真正「动手」的环节：调用 Tool、拿到结果、把结果喂回 Planner 决定下一步。它最容易被忽略，却最决定体验——节奏、可读性、异常时的表达，全是产品问题。</p>
+  <p>Execution 循环要在「自动」与「打扰」之间找分寸：能自己搞定的不打扰人，该问人的绝不替人做主。这条线，决定了用户是信任它还是害怕它。</p>
+
+  <section class="related">
+    <h4>相关文章</h4>
+    <a href="fitbuddy.html">FitBuddy：Agent 在产品里的落地 →</a>
+    <a href="ninkoro-philosophy.html">Ninkoro Philosophy：为什么做这些 →</a>
+  </section>
+</article>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <div class="footer-links">
+        <div>
+          <h4>站点</h4>
+          <ul>
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="../projects.html">作品</a></li>
+            <li><a href="../knowledge.html">知识</a></li>
+            <li><a href="../thoughts.html">想法</a></li>
+            <li><a href="../about.html">关于</a></li>
+            <li><a href="../archive.html">归档</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>别处</h4>
+          <ul>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a data-mailto href="mailto:hi@ninkoro.com">邮箱</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> NINKORO.COM</span>
+      <span>HANDCRAFTED</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/content.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
+<script>
+(function () {
+  var body = document.querySelector(".longread");
+  if (!body) return;
+  var heads = body.querySelectorAll("h2, h3");
+  var toc = document.getElementById("tocInline");
+  if (!heads.length || !toc) return;
+  var ol = document.createElement("ol");
+  heads.forEach(function (h, i) {
+    if (!h.id) h.id = "s" + i;
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#" + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    ol.appendChild(li);
+  });
+  var label = document.createElement("div");
+  label.className = "toc-label";
+  label.textContent = "目录";
+  toc.appendChild(label);
+  toc.appendChild(ol);
+})();
+</script>
+</body>
+</html>
