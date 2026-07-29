@@ -198,7 +198,7 @@
       var tags = (w.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
       var inner =
         '<div class="top"><span class="year">' + esc(w.year) + '</span><span class="badge ' + st.cls + '">' + st.label + "</span></div>" +
-        '<h3><span data-field="title">' + esc(w.title) + "</span>" + (href ? ' <span class="arrow">→</span>' : "") + "</h3>" +
+        '<h3><span data-field="title">' + esc(w.title) + "</span>" + (href ? ' <span class="arrow"></span>' : "") + "</h3>" +
         '<p class="en" data-field="en">' + esc(w.en) + "</p>" +
         "<p data-field=\"desc\">" + md(w.desc) + "</p>" +
         '<ul class="tags">' + tags + "</ul>";
@@ -209,7 +209,7 @@
     },
     thought: function (t, linked) {
       var hasHref = !!(t.href && String(t.href).trim());
-      var go = (linked || hasHref) ? "↗" : "·";
+      var go = (linked || hasHref) ? '<span class="ico ico-ext"></span>' : "·";
       var inner =
         '<span class="date" data-field="date">' + esc(t.date) + "</span>" +
         "<div><h3 data-field=\"title\">" + esc(t.title) + "</h3><p data-field=\"body\">" + md(t.body) + "</p></div>" +
@@ -223,7 +223,7 @@
     wikiCard: function (w, delay) {
       var inner =
         '<span class="cat" data-field="category">' + esc(w.category) + "</span>" +
-        '<h3><span data-field="title">' + esc(w.title) + '</span> <span class="arrow">→</span></h3>' +
+        '<h3><span data-field="title">' + esc(w.title) + '</span> <span class="arrow"></span></h3>' +
         '<p data-field="description">' + md(w.description) + "</p>" +
         (w.updated ? '<span class="upd">更新 ' + esc(w.updated) + "</span>" : "");
       var attrs = ' data-item' + metaAttr({ category: w.category, updated: w.updated || "" }) +
@@ -242,7 +242,7 @@
     },
     share: function (s) {
       var stars = "";
-      for (var i = 1; i <= 5; i++) stars += i <= (s.stars || 0) ? "★" : '<span class="off">★</span>';
+      for (var i = 1; i <= 5; i++) stars += i <= (s.stars || 0) ? '<span class="star"></span>' : '<span class="star off"></span>';
       return '<div data-item' + metaAttr({ stars: s.stars, color: s.color }) + ' class="share-item">' +
         '<div class="share-cover" style="background:' + esc(s.color || "#d3a24a") + ';" data-field="cover">' + esc(s.cover || "?") + "</div>" +
         "<div><h3 data-field=\"title\">" + esc(s.title) + "</h3>" +

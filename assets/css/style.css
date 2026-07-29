@@ -232,11 +232,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .hero-actions { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; }
 .hero-ornament {
   position: absolute; right: 4%; bottom: 12%;
-  font-size: clamp(64px, 10vw, 110px);
-  color: var(--accent); opacity: 0.14;
-  font-family: var(--serif);
+  width: clamp(64px, 10vw, 110px); height: clamp(64px, 10vw, 110px);
+  opacity: 0.14; pointer-events: none; user-select: none;
   animation: spin 48s linear infinite;
-  pointer-events: none; user-select: none;
+}
+.hero-ornament::before {
+  content: ""; display: block; width: 100%; height: 100%;
+  background: var(--accent);
+  -webkit-mask: var(--ico-spark) center / contain no-repeat;
+  mask: var(--ico-spark) center / contain no-repeat;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -451,8 +455,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .share-item h3 { font-family: var(--serif); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
 .share-item .by { font-size: 13px; color: var(--ink-faint); margin: 2px 0 6px; }
 .share-item .note { font-size: 14px; color: var(--ink-dim); }
-.stars { color: var(--accent); font-size: 13px; letter-spacing: 3px; white-space: nowrap; }
-.stars .off { color: var(--ink-faint); opacity: 0.4; }
+.stars { display: inline-flex; gap: 2px; color: var(--accent); font-size: 14px; white-space: nowrap; }
+.stars .star { display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-star) center / contain no-repeat; mask: var(--ico-star) center / contain no-repeat; }
+.stars .off { background: var(--ink-faint); opacity: 0.35; }
 
 /* ---------- 导航站链接卡 ---------- */
 .links-group { margin-bottom: 52px; }
@@ -601,6 +606,46 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .back-link:hover { color: var(--accent); transform: translateX(-3px); }
 .page-head .back-link { margin-bottom: 18px; }
+/* ---------- 矢量图标系统：emoji → SVG mask（随文字颜色 currentColor，零额外请求，已随 style.css 缓存） ---------- */
+:root {
+  --ico-arrow-r: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M5%2012h13M13%206l6%206-6%206'/%3E%3C/svg%3E");
+  --ico-arrow-l: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M19%2012H6M11%206l-6%206%206%206'/%3E%3C/svg%3E");
+  --ico-ext: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M7%2017L17%207M9%207h8v8'/%3E%3C/svg%3E");
+  --ico-star: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='black'%3E%3Cpath%20d='M12%202.5l2.9%205.9%206.5.9-4.7%204.6%201.1%206.4L12%2017.8%206.2%2020.3l1.1-6.4L2.6%209.3l6.5-.9z'/%3E%3C/svg%3E");
+  --ico-book: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4%205a2%202%200%200%201%202-2h12v15H6a2%202%200%200%200-2%202V5zM20%205v15H6'/%3E%3C/svg%3E");
+  --ico-film: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4%204h16v16H4zM4%209h16M4%2014h16M9%204v16M15%204v16'/%3E%3C/svg%3E");
+  --ico-music: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M9%2018V5l10-2v13M9%2018a3%203%200%201%201-6%200%203%203%200%200%201%206%200zM19%2016a3%203%200%201%201-6%200%203%203%200%200%201%206%200z'/%3E%3C/svg%3E");
+  --ico-warn: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%203l9%2016H3L12%203zM12%209.5v4M12%2016.4v.02'/%3E%3C/svg%3E");
+  --ico-check: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4%2012l5%205L20%206'/%3E%3C/svg%3E");
+  --ico-x: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%206l12%2012M18%206L6%2018'/%3E%3C/svg%3E");
+  --ico-spark: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='black'%3E%3Cpath%20d='M12%203l1.8%205.2L19%2010l-5.2%201.8L12%2017l-1.8-5.2L5%2010l5.2-1.8z'/%3E%3C/svg%3E");
+}
+.ico { display: inline-block; width: 1.15em; height: 1.15em; flex: 0 0 auto; background: currentColor; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; vertical-align: -0.16em; }
+.ico-book { -webkit-mask-image: var(--ico-book); mask-image: var(--ico-book); }
+.ico-film { -webkit-mask-image: var(--ico-film); mask-image: var(--ico-film); }
+.ico-music { -webkit-mask-image: var(--ico-music); mask-image: var(--ico-music); }
+.ico-warn { -webkit-mask-image: var(--ico-warn); mask-image: var(--ico-warn); }
+.ico-check { -webkit-mask-image: var(--ico-check); mask-image: var(--ico-check); }
+.ico-x { -webkit-mask-image: var(--ico-x); mask-image: var(--ico-x); }
+.ico-spark { -webkit-mask-image: var(--ico-spark); mask-image: var(--ico-spark); }
+.ico-ext { -webkit-mask-image: var(--ico-ext); mask-image: var(--ico-ext); }
+
+/* 箭头：移除字面 →，改矢量箭头（颜色继承 currentColor） */
+.arrow { display: inline-block; width: 1em; height: 1em; overflow: hidden; background: currentColor; -webkit-mask: var(--ico-arrow-r) center / contain no-repeat; mask: var(--ico-arrow-r) center / contain no-repeat; vertical-align: -0.12em; }
+/* 返回链接：::before 矢量左箭头替换字面 ← */
+.back-link::before { content: ""; display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-arrow-l) center / contain no-repeat; mask: var(--ico-arrow-l) center / contain no-repeat; vertical-align: -0.14em; }
+/* “更多”链接：::after 矢量右箭头替换字面 → */
+.sec-head .more::after { content: ""; display: inline-block; width: 0.9em; height: 0.9em; margin-left: 6px; background: currentColor; -webkit-mask: var(--ico-arrow-r) center / contain no-repeat; mask: var(--ico-arrow-r) center / contain no-repeat; vertical-align: -0.12em; }
+.sec-head .more:hover::after { background: var(--accent); }
+/* 想法外链箭头 ↗ → 矢量 */
+.go .ico-ext { width: 0.95em; height: 0.95em; }
+/* 分享星级 ★ → 矢量金星 */
+.stars { display: inline-flex; gap: 2px; color: var(--accent); font-size: 14px; white-space: nowrap; }
+.stars .star { display: inline-block; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--ico-star) center / contain no-repeat; mask: var(--ico-star) center / contain no-repeat; }
+.stars .off { background: var(--ink-faint); opacity: 0.35; }
+/* Tab 内图标 */
+.tab .ico { width: 1.1em; height: 1.1em; margin-right: 7px; vertical-align: -0.18em; }
+
 /* ---------- 滚动显现（轻幅、临界阻尼） ---------- */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease); }
 .reveal.visible { opacity: 1; transform: none; }
