@@ -57,7 +57,17 @@
   padding-bottom: clamp(56px, 9vw, 110px);
 }
 .toc-side { display: none; }
-.toc-mobile { display: block; margin: 0 auto clamp(28px,5vw,40px); width: min(1080px, calc(100% - 48px)); }
+.toc-mobile { display: none; } /* 旧底部折叠目录已弃用，迁移到文章顶部 .toc-inline */
+.toc-inline {
+  display: block;
+  width: min(720px, calc(100% - 48px));
+  margin: 0 auto clamp(28px, 5vw, 40px);
+  padding: 22px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.toc-inline .toc-nav { margin-top: 14px; }
 .article-body { max-width: 720px; margin-inline: auto; width: 100%; }
 
 .toc-ttl {
@@ -165,7 +175,7 @@
 @media (min-width: 1024px) {
   .article-layout { grid-template-columns: 232px minmax(0, 1fr); gap: 56px; align-items: start; }
   .toc-side { display: block; position: sticky; top: calc(var(--nav-h) + 28px); }
-  .toc-mobile { display: none; }
+  .toc-mobile, .toc-inline { display: none; }
   .article-body { max-width: 720px; }
 }
 /* 移动端适配加固：杜绝整页横向滚动（iOS / 微信 WebKit 边界处理） */
@@ -229,6 +239,8 @@ html { overflow-x: clip; }
     <span>2026.07</span><span>·</span><span>约 50 分钟阅读</span><span>·</span><span><b>产品经理 · AI 创业者</b></span>
   </div>
 </header>
+
+<div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
 
 <div class="article-layout">
   <aside class="toc-side">
