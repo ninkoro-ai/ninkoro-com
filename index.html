@@ -101,6 +101,22 @@
   </div>
 </section>
 
+<section class="section" id="pan-search">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="sec-label">NETDISK SEARCH</p>
+      <h2 class="sec-title">网盘资源索引 <span class="thin">/ Pan Search</span></h2>
+    </div>
+    <p class="sec-desc">搜一搜公开分享的网盘资源（夸克 / 百度 / 阿里 / 迅雷）。本站仅为第三方公开搜索的中继入口，不抓取、不建索引、不托管任何文件；返回链接按不可信处理，请遵守当地法规与版权。</p>
+    <form class="pan-form" id="pan-form" autocomplete="off">
+      <input class="pan-input" id="pan-input" type="search" placeholder="输入关键词，如：庆余年 4K" />
+      <button class="btn solid" type="submit">搜索 <span class="arrow"></span></button>
+    </form>
+    <p class="pan-status" id="pan-status"></p>
+    <div class="pan-results" id="pan-results"></div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
@@ -115,5 +131,6 @@
 
 <script src="assets/js/content.js" defer></script>
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/pan-search.js" defer></script>
 </body>
 </html>
