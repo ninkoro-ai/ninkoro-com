@@ -17,7 +17,7 @@ const SAFETY_NOTE =
   "本站仅为第三方公开搜索的中继入口，不抓取、不建索引、不托管任何文件。" +
   "仅用于合法搜索，访问或分享前请遵守当地法规与版权。";
 
-const PAN_TYPES = ["夸克", "百度", "阿里", "迅雷", "UC", "天翼", "115", "移动"];
+const PAN_TYPES = ["夸克", "百度", "阿里", "迅雷", "UC", "天翼", "115", "移动", "磁力"];
 const DATE_RE = /\b(\d{4}-\d{2}-\d{2})\b/;
 const ESCAPED_BASE = BASE_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -26,22 +26,26 @@ function stripHtml(s) {
 }
 
 // 解析搜索页 HTML：抽取 /resource/<ID> 详情链接 + 标题，并尽力附带
-// 网盘类型、分类、更新时间。布局不匹配时自然得到 0 条。
+// 网盘类型、分类、更新时间。同时兼容绝对（含域名）与相对（/resource/<id>）链接。
+// 布局不匹配时自然得到 0 条。
 export function parseResults(html) {
   const results = [];
   const seen = new Set();
+  // 匹配：https://pan.xiaozi.cc/resource/<id>  或  /resource/<id>
   const linkRe = new RegExp(
-    'href=["\'](' + ESCAPED_BASE + SEARCH_PATH + "/([\\w-]+))[\"']",
+    'href=["\'](?:' + ESCAPED_BASE + ')?' + SEARCH_PATH + '/([\\w-]+)["\']',
     "g"
   );
   let m;
   while ((m = linkRe.exec(html)) !== null) {
-    const detailUrl = m[1];
+    const id = m[1];
+    const detailUrl = BASE_URL + SEARCH_PATH + "/" + id;
     if (seen.has(detailUrl)) continue;
+    seen.add(detailUrl);
 
     // 标题：取 <a> 内文本
     const gt = html.indexOf(">", m.index);
-    let title = "resource " + m[2];
+    let title = "resource " + id;
     let anchorEnd = gt;
     if (gt !== -1) {
       const lt = html.indexOf("</a>", gt);
@@ -71,7 +75,6 @@ export function parseResults(html) {
     );
     const category = catM ? stripHtml(catM[2]) : null;
 
-    seen.add(detailUrl);
     results.push({
       title,
       detail_url: detailUrl,
@@ -125,20 +128,32 @@ export async function onRequest(context) {
   try {
     const resp = await fetch(upstream, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; NinkoroRelay/1.0)",
-        Accept: "text/html,application/xhtml+xml",
+        // 浏览器化 UA / 语言，降低被基础反爬拦截的概率
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+          "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
       },
       signal: controller.signal,
     });
     if (!resp.ok) throw new Error("upstream " + resp.status);
     const html = await resp.text();
     const results = parseResults(html).slice(0, topK);
+
+    // 抓到了页面但一条都没解析出来：页面结构可能已变更
+    const error = results.length === 0 && html.length > 500
+      ? "parse_empty"
+      : undefined;
+
     return jsonResponse({
       query,
       total: results.length,
       results,
       mode: "real",
       safety_note: SAFETY_NOTE,
+      ...(error ? { error } : {}),
     });
   } catch {
     // 优雅降级：上游不可达或结构变化 -> 0 条，不报错

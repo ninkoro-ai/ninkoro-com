@@ -35,6 +35,11 @@
         '<p class="pan-empty">搜索服务暂时不可用（上游无响应），请稍后再试。</p>';
       return;
     }
+    if (error === "parse_empty") {
+      resultsEl.innerHTML =
+        '<p class="pan-empty">已获取搜索页，但未能解析到结果（页面结构可能已变更）。</p>';
+      return;
+    }
     if (!results || !results.length) {
       resultsEl.innerHTML = '<p class="pan-empty">没有找到相关资源。</p>';
       return;
