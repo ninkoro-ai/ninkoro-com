@@ -306,6 +306,39 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .sec-title .thin { color: var(--ink-dim); font-weight: 400; }
 .sec-desc { margin-top: 16px; color: var(--ink-dim); max-width: 560px; }
 
+/* ---------- 网盘搜索（首页区块） ---------- */
+.pan-form { display: flex; gap: 12px; max-width: 640px; margin: 24px 0 6px; flex-wrap: wrap; }
+.pan-input {
+  flex: 1 1 260px; min-width: 0;
+  background: rgba(237,232,222,.05); border: 1px solid var(--line);
+  color: var(--ink); border-radius: 12px; padding: 14px 16px;
+  font-size: 16px; font-family: var(--sans);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.pan-input::placeholder { color: var(--ink-faint); }
+.pan-input:focus { outline: none; border-color: var(--accent); background: rgba(237,232,222,.08); }
+.pan-form .btn { flex: 0 0 auto; }
+.pan-status { font-size: 14px; color: var(--ink-dim); margin: 10px 0 18px; min-height: 18px; }
+.pan-status.err { color: #e0a062; }
+.pan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.pan-item {
+  display: block; border: 1px solid var(--line); border-radius: 14px;
+  padding: 16px 18px; background: rgba(237,232,222,.03);
+  color: var(--ink); text-decoration: none;
+  transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.pan-item:hover { border-color: var(--accent); transform: translateY(-2px); background: rgba(237,232,222,.06); }
+.pan-item-title { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.pan-item-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+.pan-tag { font-size: 12px; color: var(--accent); border: 1px solid rgba(211,162,74,.35); border-radius: 999px; padding: 2px 10px; }
+.pan-item-meta { margin-top: 8px; font-size: 12px; color: var(--ink-faint); }
+.pan-empty { color: var(--ink-dim); }
+.pan-note { margin-top: 16px; font-size: 12px; color: var(--ink-faint); border-top: 1px solid var(--line); padding-top: 12px; }
+@media (max-width: 560px) {
+  .pan-form { flex-direction: column; }
+  .pan-form .btn { width: 100%; justify-content: center; }
+}
+
 .sec-head .more {
   margin-left: auto; align-self: flex-end;
   font-size: 14px; color: var(--ink-dim);
