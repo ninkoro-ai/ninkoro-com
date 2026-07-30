@@ -7,15 +7,13 @@
 // 设计约束（与 NINKORO pan-xiaozi-search skill 一致）：
 //   - 只读搜索，不下载、不绕过任何限制；
 //   - 上游不可达 / 接口变更 -> 优雅降级为 0 条结果（绝不抛错）；
-//   - 返回链接按不可信处理，调用方须在 UI 展示安全提醒。
+//   - 返回链接按不可信处理，UI 不额外提示（由站点整体说明承担）。
 
 const KKSO_BASE = "https://kkso.net";
 const API_PATH = "/api/search";
 
-const SAFETY_NOTE =
-  "返回链接直接指向夸克网盘等第三方页面，请核对域名、勿在其中输入账号密码；" +
-  "本站仅为第三方公开搜索的中继入口，不抓取、不建索引、不托管任何文件。" +
-  "仅用于合法搜索，访问或分享前请遵守当地法规与版权。";
+// 注：本站仅作第三方公开搜索的中继入口（不抓取、不建索引、不托管），
+// 法律 posture 由站点其余说明承担，本接口不向客户端回传额外提示文案。
 
 const PAN_HOST_MAP = [
   ["quark", "夸克"],
@@ -125,7 +123,6 @@ export async function onRequest(context) {
       total: results.length,
       results,
       mode: "real",
-      safety_note: SAFETY_NOTE,
       ...(error ? { error } : {}),
     });
   } catch {
@@ -135,7 +132,6 @@ export async function onRequest(context) {
       total: 0,
       results: [],
       mode: "real",
-      safety_note: SAFETY_NOTE,
       error: "upstream_unavailable",
     });
   } finally {

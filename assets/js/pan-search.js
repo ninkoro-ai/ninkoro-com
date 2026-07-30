@@ -28,46 +28,41 @@
     statusEl.className = "pan-status" + (isErr ? " err" : "");
   }
 
-  function renderResults(results, safetyNote, error) {
+  function renderResults(results, error) {
     if (error === "upstream_unavailable") {
-      resultsEl.innerHTML =
-        '<p class="pan-empty">搜索服务暂时不可用（上游无响应），请稍后再试。</p>';
-      return;
-    }
-    if (error === "parse_empty") {
-      resultsEl.innerHTML =
-        '<p class="pan-empty">已获取搜索结果，但解析为空（上游可能已变更）。</p>';
+      resultsEl.innerHTML = "";
+      setStatus("搜索服务暂不可用，请稍后重试。", true);
       return;
     }
     if (!results || !results.length) {
-      resultsEl.innerHTML = '<p class="pan-empty">没有找到相关资源。</p>';
+      resultsEl.innerHTML = '<p class="pan-empty">未找到相关资源。</p>';
+      setStatus("");
       return;
     }
+    setStatus("");
     var items = results
       .map(function (r) {
-        var tags = [r.pan_type, r.category]
-          .filter(Boolean)
-          .map(function (t) {
-            return '<span class="pan-tag">' + esc(t) + "</span>";
-          })
-          .join("");
-        var meta = [r.updated_at ? "更新 " + esc(r.updated_at) : ""]
-          .filter(Boolean)
-          .join(" · ");
+        var cat = r.pan_type || "网盘";
+        var tag = r.category
+          ? '<span class="pan-tag">' + esc(r.category) + "</span>"
+          : "";
+        var meta = r.updated_at
+          ? '<span class="pan-meta">更新 ' + esc(r.updated_at) + "</span>"
+          : "";
         return (
           '<a class="pan-item" href="' +
           esc(r.detail_url) +
           '" target="_blank" rel="noopener noreferrer">' +
+          '<span class="pan-cat">' + esc(cat) + "</span>" +
+          '<span class="pan-arrow arrow"></span>' +
           '<div class="pan-item-title">' + esc(r.title) + "</div>" +
-          (tags ? '<div class="pan-item-tags">' + tags + "</div>" : "") +
-          (meta ? '<div class="pan-item-meta">' + meta + "</div>" : "") +
+          tag +
+          meta +
           "</a>"
         );
       })
       .join("");
-    resultsEl.innerHTML =
-      '<div class="pan-grid">' + items + "</div>" +
-      (safetyNote ? '<p class="pan-note">' + esc(safetyNote) + "</p>" : "");
+    resultsEl.innerHTML = '<div class="pan-grid">' + items + "</div>";
   }
 
   form.addEventListener("submit", function (e) {
@@ -77,7 +72,7 @@
       setStatus("请输入关键词", true);
       return;
     }
-    setStatus("搜索中…");
+    setStatus("");
     resultsEl.innerHTML = "";
 
     var url =
@@ -97,8 +92,7 @@
         return resp.json();
       })
       .then(function (data) {
-        setStatus("找到 " + data.total + " 条结果");
-        renderResults(data.results, data.safety_note, data.error);
+        renderResults(data.results, data.error);
       })
       .catch(function (err) {
         setStatus("搜索失败：" + err.message, true);
