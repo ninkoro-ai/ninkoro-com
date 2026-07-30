@@ -90,8 +90,11 @@
       })
       .then(renderResults)
       .catch(function (err) {
+        var msg = /failed to fetch|networkerror|typeerror/i.test(err.message)
+          ? "搜索服务连接异常，请稍后重试"
+          : err.message;
         resultsEl.innerHTML =
-          '<p class="pan-empty">搜索失败：' + esc(err.message) + "</p>";
+          '<p class="pan-empty">搜索失败：' + esc(msg) + "</p>";
       });
   }
 

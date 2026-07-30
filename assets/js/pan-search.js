@@ -95,7 +95,10 @@
         renderResults(data.results, data.error);
       })
       .catch(function (err) {
-        setStatus("搜索失败：" + err.message, true);
+        var msg = /failed to fetch|networkerror|typeerror/i.test(err.message)
+          ? "搜索服务连接异常，请稍后重试"
+          : err.message;
+        setStatus("搜索失败：" + msg, true);
       });
   });
 })();
