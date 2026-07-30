@@ -94,7 +94,9 @@ export async function onRequest(context) {
   }
   topK = Math.min(Math.max(topK, 1), 30);
 
-  const upstream = `${KKSO_BASE}${API_PATH}?q=${encodeURIComponent(query)}&page=1`;
+  // 注意：kkso 的过滤参数名是 `title`（非 `q`）。用 `q` 会被忽略，
+  // 上游回吐全库最新列表（total 恒为全量），导致任何关键词都搜出无关结果。
+  const upstream = `${KKSO_BASE}${API_PATH}?title=${encodeURIComponent(query)}&page=1`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
 
