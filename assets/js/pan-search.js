@@ -1,15 +1,17 @@
 /* 网盘资源搜索（首页区块）
  *
- * 调用同源 Cloudflare Pages Function：GET /api/pan-search?q=KEYWORD&top_k=12
- *   - 该函数在 Cloudflare 边缘**服务端**中继 kkso.net 搜索 API，返回结构化结果；
- *   - 同源调用，无跨域 CORS、无后端依赖、无需部署任何服务器；
- *   - 结果直接指向夸克网盘等第三方分享链接；上游不可达时优雅提示。
+ * 直接调用 kkso.net 公开搜索 API（浏览器端，跨域由服务端 Access-Control-Allow-Origin: *
+ * 放行，无需 Cloudflare Function 中继）：
+ *   - kkso 返回夸克网盘等「直链」（pan.quark.cn/s/...），点击即直达真实分享页，
+ *     不再经过 zreso 中转接口（该接口返回二维码保存 JSON，浏览器直接打开会显示乱码）；
+ *   - 零成本、无服务器、无后端依赖；上游不可达时优雅降级为友好提示。
  */
 (function () {
   "use strict";
 
-  var API_BASE = ""; // 同源相对路径
-  var DEFAULT_TOP_K = 12;
+  var API = "https://kkso.net/api/search";
+  var TOP_K = 12;
+  var TIMEOUT = 8000;
 
   var form = document.getElementById("pan-form");
   var input = document.getElementById("pan-input");
@@ -28,13 +30,41 @@
     statusEl.className = "pan-status" + (isErr ? " err" : "");
   }
 
-  function renderResults(results, error) {
-    if (error === "upstream_unavailable") {
-      resultsEl.innerHTML = "";
-      setStatus("搜索服务暂不可用，请稍后重试。", true);
-      return;
+  function detectPanType(url) {
+    var u = String(url || "").toLowerCase();
+    if (u.indexOf("quark") > -1) return "夸克";
+    if (u.indexOf("baidu") > -1) return "百度";
+    if (u.indexOf("aliyun") > -1 || u.indexOf("alipan") > -1) return "阿里";
+    if (u.indexOf("xunlei") > -1) return "迅雷";
+    if (u.indexOf("tianyi") > -1 || u.indexOf("189") > -1) return "天翼";
+    if (u.indexOf("115") > -1) return "115";
+    if (u.indexOf("weiyun") > -1) return "微云";
+    if (u.indexOf("ctfile") > -1) return "城通";
+    return "网盘";
+  }
+
+  function parseItems(json) {
+    if (!json || json.code !== 200 || !json.data || !Array.isArray(json.data.items)) {
+      return [];
     }
-    if (!results || !results.length) {
+    return json.data.items
+      .map(function (it) {
+        var url = it.url || "";
+        if (!url) return null;
+        return {
+          title: it.title || it.name || "未命名资源",
+          detail_url: url,
+          pan_type: detectPanType(url),
+          category: it.category || null,
+          updated_at: it.times || null,
+        };
+      })
+      .filter(Boolean)
+      .slice(0, TOP_K);
+  }
+
+  function renderResults(results) {
+    if (!results.length) {
       resultsEl.innerHTML = '<p class="pan-empty">未找到相关资源。</p>';
       setStatus("");
       return;
@@ -73,32 +103,37 @@
       return;
     }
     setStatus("");
-    resultsEl.innerHTML = "";
+    resultsEl.innerHTML = '<p class="pan-empty">搜索中…</p>';
 
-    var url =
-      API_BASE +
-      "/api/pan-search?q=" +
-      encodeURIComponent(q) +
-      "&top_k=" +
-      DEFAULT_TOP_K;
+    var url = API + "?title=" + encodeURIComponent(q) + "&page=1";
+    var controller = new AbortController();
+    var timer = setTimeout(function () {
+      controller.abort();
+    }, TIMEOUT);
 
-    fetch(url, { method: "GET" })
+    fetch(url, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    })
       .then(function (resp) {
-        if (!resp.ok) {
-          return resp.json().catch(function () { return {}; }).then(function (err) {
-            throw new Error(err.error || "请求失败（" + resp.status + "）");
-          });
-        }
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
         return resp.json();
       })
-      .then(function (data) {
-        renderResults(data.results, data.error);
+      .then(function (json) {
+        clearTimeout(timer);
+        renderResults(parseItems(json));
       })
       .catch(function (err) {
-        var msg = /failed to fetch|networkerror|typeerror/i.test(err.message)
-          ? "搜索服务连接异常，请稍后重试"
-          : err.message;
+        clearTimeout(timer);
+        var msg =
+          err && err.name === "AbortError"
+            ? "搜索超时，请稍后重试"
+            : /failed to fetch|networkerror|typeerror/i.test(err.message)
+            ? "搜索服务连接异常，请稍后重试"
+            : err.message || "搜索失败";
         setStatus("搜索失败：" + msg, true);
+        resultsEl.innerHTML = "";
       });
   });
 })();
