@@ -386,6 +386,47 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .pan-input { padding: 4px 8px 10px; text-align: center; }
 }
 
+/* ---------- 网盘搜索页（search.html，panxiaozi 风格） ---------- */
+.search-hero {
+  text-align: center;
+  padding-top: clamp(70px, 13vh, 140px);
+  padding-bottom: 14px;
+}
+.search-hero .sec-label { margin-bottom: 14px; }
+.search-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(34px, 6vw, 58px); line-height: 1.08;
+  letter-spacing: -0.02em; color: var(--accent);
+}
+.search-title .thin { color: var(--ink-dim); font-weight: 400; }
+.search-sub { margin: 16px auto 0; max-width: 520px; color: var(--ink-dim); }
+.pan-form-lg { max-width: 680px; margin: 30px auto 10px; }
+.pan-suggest {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin-top: 10px;
+}
+.pan-suggest button {
+  font-family: var(--sans); font-size: 13px; color: var(--ink-dim);
+  background: rgba(237, 232, 222, 0.04);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 16px; cursor: pointer;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+.pan-suggest button:hover {
+  color: var(--accent); border-color: rgba(211, 162, 74, 0.35);
+  background: rgba(237, 232, 222, 0.07);
+}
+/* 首页区块指向完整搜索页的入口 */
+.pan-more {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 18px; font-size: 14px; color: var(--accent);
+  border-bottom: 1px solid rgba(211, 162, 74, 0.3); padding-bottom: 2px;
+  transition: gap var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.pan-more:hover { gap: 10px; border-color: var(--accent); }
+.pan-more .arrow { font-size: 13px; }
+
 .sec-head .more {
   margin-left: auto; align-self: flex-end;
   font-size: 14px; color: var(--ink-dim);

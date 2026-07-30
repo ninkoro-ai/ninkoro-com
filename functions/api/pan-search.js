@@ -73,15 +73,18 @@ export async function onRequest(context) {
 
   let query = "";
   let topK = 12;
+  let page = 1;
   try {
     if (request.method === "POST") {
       const body = await request.json().catch(() => ({}));
       query = String(body.query || "").trim();
       topK = parseInt(body.top_k, 10) || 12;
+      page = parseInt(body.page, 10) || 1;
     } else {
       const url = new URL(request.url);
       query = String(url.searchParams.get("q") || "").trim();
       topK = parseInt(url.searchParams.get("top_k"), 10) || 12;
+      page = parseInt(url.searchParams.get("page"), 10) || 1;
     }
   } catch {
     return jsonResponse({ error: "bad_request" }, 400);
@@ -91,10 +94,13 @@ export async function onRequest(context) {
     return jsonResponse({ error: "missing_query" }, 400);
   }
   topK = Math.min(Math.max(topK, 1), 30);
+  page = Math.max(page, 1);
 
   // 注意：kkso 的过滤参数名是 `title`（非 `q`）。用 `q` 会被忽略，
   // 上游回吐全库最新列表（total 恒为全量），导致任何关键词都搜出无关结果。
-  const upstream = `${KKSO_BASE}${API_PATH}?title=${encodeURIComponent(query)}&page=1`;
+  const upstream = `${KKSO_BASE}${API_PATH}?title=${encodeURIComponent(
+    query,
+  )}&page=${page}`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
 
@@ -118,9 +124,15 @@ export async function onRequest(context) {
         ? "parse_empty"
         : undefined;
 
+    const upstreamTotal =
+      json && json.data && typeof json.data.total_result === "number"
+        ? json.data.total_result
+        : results.length;
+
     return jsonResponse({
       query,
-      total: results.length,
+      page,
+      total: upstreamTotal,
       results,
       mode: "real",
       ...(error ? { error } : {}),
@@ -129,6 +141,7 @@ export async function onRequest(context) {
     // 优雅降级：上游不可达或结构变化 -> 0 条，不报错
     return jsonResponse({
       query,
+      page,
       total: 0,
       results: [],
       mode: "real",
