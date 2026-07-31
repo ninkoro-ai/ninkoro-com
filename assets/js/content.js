@@ -76,22 +76,20 @@
     },
     shares: {
       books: [
-        { title: "设计中的设计", by: "原研哉", note: "\"再设计\"——把日常之物重新审视一遍。做东西同理：把熟悉的东西未知化，创造就发生在那里。", stars: 5, cover: "设", color: "#d3a24a" },
-        { title: "黑客与画家", by: "Paul Graham · 阮一峰 译", note: "做东西是手艺活。每次重读都有新的理由坚持自己的审美偏见。", stars: 5, cover: "黑", color: "#a8756b" },
-        { title: "悉达多", by: "赫尔曼·黑塞 · 姜乙 译", note: "知识可以传授，智慧不能。所有的弯路都得自己走一遍。", stars: 4, cover: "悉", color: "#7c8a6e" },
-        { title: "银河系边缘的小失常", by: "埃特加·凯雷特", note: "短篇集的教科书：荒诞里全是温柔。累了的时候读一篇，脑子会松快很多。", stars: 4, cover: "银", color: "#8a7a9e" }
+        { title: "置身事内", by: "兰小欢 · 上海人民出版社 · 2021", note: "以地方政府投融资为主线，把“土地财政—产业升级”的运作逻辑讲得明明白白。想看懂中国经济，这是最好的入门之一。", stars: 5, cover: "置", color: "#d3a24a", douban: "https://book.douban.com/subject/35546622/" },
+        { title: "讲谈社·中国的历史", by: "讲谈社 · 十卷本", note: "日本学界写给大众的中国通史，十位学者各写一卷，从神话时代一路写到清末。视角新鲜，少有成见，适合打破惯常的历史叙事。", stars: 5, cover: "史", color: "#a8756b", douban: "https://book.douban.com/subject/25844017/" },
+        { title: "咸的玩笑", by: "刘震云 · 2025", note: "刘震云新作：杜太白在教师、红白事主持人与小贩之间辗转求生。语言依旧幽默锋利，底色是悲悯——“献给命运玩笑中认真生活的人”。", stars: 4, cover: "咸", color: "#7c8a6e", douban: "https://book.douban.com/subject/37833272/" }
       ],
       movies: [
-        { title: "银翼杀手 2049", by: "丹尼斯·维伦纽瓦 · 2017", note: "不是霓虹灯，是雾气、废墟和克制的配乐。暗色系审美的启蒙。", stars: 5, cover: "银", color: "#5b7a8c" },
-        { title: "完美的日子", by: "维姆·文德斯 · 2023", note: "一个人如何把每一天过成作品。\"下次是下次，现在是现在。\"", stars: 5, cover: "完", color: "#8c9e7a" },
-        { title: "星际穿越", by: "克里斯托弗·诺兰 · 2014", note: "硬科幻的外壳，亲情的内核。玉米地、五维书架和管风琴，缺一个都不成立。", stars: 5, cover: "星", color: "#9e6b5b" },
-        { title: "花样年华", by: "王家卫 · 2000", note: "克制是最高级的表达。欲言又止的旗袍、慢门镜头和 Yumeji's Theme。", stars: 4, cover: "花", color: "#6b5b8c" }
+        { title: "绝望写手", by: "Hacks · 第一季 · 2021", note: "HBO 双女主喜剧：拉斯维加斯传奇女谐星 Deborah 与失业的年轻写手 Ava 被迫搭档。台词锋利如刀，笑点里全是代际与时代的碰撞。", stars: 5, cover: "写", color: "#9e6b8c", douban: "https://movie.douban.com/subject/35445834/" },
+        { title: "人浮于爱", by: "林书宇 · 2025", note: "改编自侯文咏同名小说，陈妍希、吴慷仁、宋芸桦等主演。几段爱情在都市里载浮载沉，温柔的表象下是现实的钝痛。", stars: 4, cover: "爱", color: "#7a8a9e", douban: "https://movie.douban.com/subject/35441802/" },
+        { title: "星期三", by: "Wednesday · 2022", note: "《亚当斯一家》衍生剧，蒂姆·伯顿参与执导。珍娜·奥尔特加把哥特少女演成新一代 icon——阴郁、毒舌，却意外让人共情。", stars: 5, cover: "三", color: "#5b6b8c", douban: "https://movie.douban.com/subject/35364243/" },
+        { title: "蜘蛛侠：崭新之日", by: "Spider-Man: Brand New Day · 德斯汀·克里顿 · 2026", note: "荷兰弟版蜘蛛侠第四部：全世界遗忘了彼得·帕克，他独自成为全职的好邻居。两个半小时的孤独英雄成长史，豆瓣开分创系列新高。", stars: 4, cover: "蜘", color: "#a04a4a", douban: "https://movie.douban.com/subject/36246195/" }
       ],
       music: [
-        { title: "async", by: "坂本龙一 · 2017", note: "钢琴与环境音的\"异步\"。深夜的标配背景，听久了会进入一种安静的专注。", stars: 5, cover: "a", color: "#8c8c8c" },
-        { title: "Modal Soul", by: "Nujabes · 2005", note: "Jazz Hip-hop 的永恒坐标。Luv(sic) 系列永远听不腻，是最好的心流触发器。", stars: 5, cover: "N", color: "#b58950" },
-        { title: "冀西南林路行", by: "万能青年旅店 · 2020", note: "十年磨一张，太行山云雾里的中国摇滚。编曲的密度和留白都值得反复拆解。", stars: 5, cover: "万", color: "#7a6b5b" },
-        { title: "Ylang Ylang", by: "FKJ · 2019", note: "一个人的乐队。钢琴、贝斯、萨克斯层层叠叠，像看一个熟练的工匠即兴造物。", stars: 4, cover: "F", color: "#5b8c7a" }
+        { title: "Catch Catch", by: "YENA 崔叡娜 · 2026", note: "来自第五张迷你专辑《Love Catcher》的主打歌。轻快的节拍和俏皮的旋律，是最近循环最多的开心歌。", stars: 4, cover: "C", color: "#c66a8a" },
+        { title: "Perfect Illusion", by: "Lady Gaga · 2016", note: "《Joanne》的首支单曲。失真吉他与电子节拍包裹着关于“完美幻觉”的声嘶力竭，是 Gaga 回归根源的宣言。", stars: 4, cover: "P", color: "#b58950" },
+        { title: "Radio", by: "Lana Del Rey · 2012", note: "《Born to Die》里的名曲。慵懒复古的嗓音唱出“我是电台”的宣言，丧里带着骄傲，越听越上瘾。", stars: 5, cover: "R", color: "#8a7a9e" }
       ]
     },
     links: [
@@ -243,11 +241,12 @@
     share: function (s) {
       var stars = "";
       for (var i = 1; i <= 5; i++) stars += i <= (s.stars || 0) ? '<span class="star"></span>' : '<span class="star off"></span>';
-      return '<div data-item' + metaAttr({ stars: s.stars, color: s.color }) + ' class="share-item">' +
+      var link = s.douban ? '<a class="douban-link" href="' + esc(s.douban) + '" target="_blank" rel="noopener">豆瓣 <span class="ico ico-ext"></span></a>' : "";
+      return '<div data-item' + metaAttr({ stars: s.stars, color: s.color, douban: s.douban || "" }) + ' class="share-item">' +
         '<div class="share-cover" style="background:' + esc(s.color || "#d3a24a") + ';" data-field="cover">' + esc(s.cover || "?") + "</div>" +
         "<div><h3 data-field=\"title\">" + esc(s.title) + "</h3>" +
         '<p class="by" data-field="by">' + esc(s.by) + "</p>" +
-        '<p class="note" data-field="note">' + md(s.note) + "</p></div>" +
+        '<p class="note" data-field="note">' + md(s.note) + "</p>" + link + "</div>" +
         '<span class="stars">' + stars + "</span></div>";
     },
     linkItem: function (it) {
