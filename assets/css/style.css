@@ -974,10 +974,20 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   color: var(--accent); text-transform: uppercase;
 }
 .search-result {
-  display: block; padding: 12px 14px; border-radius: 12px;
+  display: block; position: relative; padding: 12px 14px; border-radius: 12px;
   transition: background var(--t-fast) var(--ease);
 }
 .search-result.is-active, .search-result:hover { background: var(--accent-soft); }
+.search-result .sr-main { display: block; text-decoration: none; color: inherit; }
+.search-result.has-ext .sr-top { padding-right: 62px; }
+.search-result .sr-ext {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+  color: var(--accent); border: 1px solid var(--line); border-radius: 999px;
+  padding: 2px 9px; text-decoration: none;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.search-result .sr-ext:hover { background: var(--accent-soft); border-color: var(--accent); }
 .search-result .sr-top { display: flex; align-items: baseline; gap: 10px; }
 .search-result .sr-title { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--ink); }
 .search-result .sr-tag {

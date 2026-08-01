@@ -63,6 +63,14 @@
     });
   });
 
+  /* 按 URL hash 直接激活对应 tab（如从站内搜索跳 shares.html#movies） */
+  var hashTab = (location.hash || "").replace("#", "");
+  if (hashTab) {
+    document.querySelectorAll(".tab").forEach(function (tab) {
+      if (tab.getAttribute("data-tab") === hashTab) tab.click();
+    });
+  }
+
   /* ---------- 当前页导航高亮 ---------- */
   var here = location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".nav-links a, .mobile-menu a").forEach(function (a) {

@@ -33,8 +33,8 @@
   ];
 
   /* ---------- 索引 ---------- */
-  function push(out, t, g, d, u, k, x) {
-    out.push({ t: t, g: g, d: d, u: u, k: k || "", x: !!x });
+  function push(out, t, g, d, u, k, x, ext) {
+    out.push({ t: t, g: g, d: d, u: u, k: k || "", x: !!x, ext: ext || null });
   }
 
   function buildIndex() {
@@ -50,7 +50,7 @@
       var kindLabel = { books: "读书", movies: "电影", music: "音乐" };
       ["books", "movies", "music"].forEach(function (k) {
         (s.shares && s.shares[k] || []).forEach(function (it) {
-          push(out, it.title, "书影音", it.by + "。" + it.note, it.douban || "shares.html", kindLabel[k], !!it.douban);
+          push(out, it.title, "书影音", it.by + "。" + it.note, "shares.html#" + k, kindLabel[k], false, it.douban);
         });
       });
       (s.links || []).forEach(function (grp) {
@@ -158,12 +158,14 @@
         lastGroup = e.g;
         html += '<div class="sr-group">' + esc(e.g) + "</div>";
       }
-      html += '<a class="search-result' + (idx === 0 ? " is-active" : "") + '" href="' + esc(e.u) + '"' +
-        (e.x ? ' target="_blank" rel="noopener"' : "") + ">" +
+      html += '<div class="search-result' + (idx === 0 ? " is-active" : "") + (e.ext ? " has-ext" : "") + '">';
+      html += '<a class="sr-main" href="' + esc(e.u) + '"' + (e.x ? ' target="_blank" rel="noopener"' : "") + ">" +
         '<span class="sr-top"><span class="sr-title">' + hl(e.t, terms) + "</span>" +
-        (e.x ? '<span class="sr-tag">外链</span>' : "") + "</span>" +
+        (e.x && !e.ext ? '<span class="sr-tag">外链</span>' : "") + "</span>" +
         (e.d ? '<span class="sr-desc">' + hl(snippet(e, terms), terms) + "</span>" : "") +
         "</a>";
+      if (e.ext) html += '<a class="sr-ext" href="' + esc(e.ext) + '" target="_blank" rel="noopener">外链 ↗</a>';
+      html += "</div>";
     });
     resultsEl.innerHTML = html;
   }
@@ -240,7 +242,7 @@
       if (ev.key === "ArrowDown") { ev.preventDefault(); move(1); return; }
       if (ev.key === "ArrowUp") { ev.preventDefault(); move(-1); return; }
       if (ev.key === "Enter") {
-        var a = resultsEl.querySelector(".search-result.is-active");
+        var a = resultsEl.querySelector(".search-result.is-active .sr-main");
         if (a) a.click();
         ev.preventDefault();
       }
