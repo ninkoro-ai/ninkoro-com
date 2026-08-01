@@ -1,0 +1,9 @@
+{
+  "name": "ninkoro.com",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Ninkoro 个人站 — 纯静态，构建步骤仅做资源哈希注入以失效浏览器缓存",
+  "scripts": {
+    "build": "node build/inject-hash.js"
+  }
+}

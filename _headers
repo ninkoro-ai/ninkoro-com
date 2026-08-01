@@ -1,11 +1,11 @@
 # ===== Cloudflare Pages Response Headers =====
 # Docs: https://developers.cloudflare.com/pages/configuration/headers/
 
-# Static assets: cache but allow revalidation so CSS/JS edits show up after a deploy.
-# NOTE: filenames are NOT content-hashed, so `immutable` must NOT be used here —
-# it would pin the old style.css/js for a year even after a push.
+# Static assets: 资源引用现已带 ?v=<git短哈希> 查询串（见 build/inject-hash.js），
+# 每次部署哈希必变 → URL 即缓存键随之变化，旧资源自动失效。
+# 因此可安全使用长缓存 + immutable，最大化重复访问命中率（最快加载）。
 /assets/*
-  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+  Cache-Control: public, max-age=31536000, immutable
 
 # Public pages: strict security headers, short cache
 /*

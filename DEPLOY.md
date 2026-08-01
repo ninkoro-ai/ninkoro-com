@@ -27,8 +27,10 @@ git push -u origin main
 
 ### 2. Cloudflare Pages
 - **Workers & Pages → Create → Pages → Connect to Git** → 选上述仓库。
-- Build command：**留空**；Build output directory：`ninkoro.com`。
+- Build command：**`node build/inject-hash.js`**（构建时把 HTML 里 `?v=__BUILD_HASH__` 占位符替换为当前部署的 git 短哈希，实现"改版即自动失效旧缓存"；Cloudflare 构建环境内置 `CF_PAGES_COMMIT_SHA` 变量可被脚本读取）。
+- Build output directory：**`/`（仓库根）**。
 - 部署后获得 `*.pages.dev` 预览域名。
+- 本地预览：直接用任意静态服务器打开 `index.html` 即可（未部署时浏览器按 `?v=__BUILD_HASH__` 字面量请求资源，不影响功能；**请勿在本地手动运行 build 并提交注入后的哈希**，否则会冻结缓存失效机制）。
 
 ### 3. 自定义域名 + DNS（需在腾讯云后台操作）
 1. Cloudflare 添加站点 `ninkoro.com`，按指引**把域名的 NS 从腾讯云改为 Cloudflare 提供的 NS**（这是域名注册商侧操作，Agent 不能代切）。
