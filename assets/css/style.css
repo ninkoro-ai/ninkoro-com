@@ -28,6 +28,9 @@
   --wrap: 1120px;
   --radius: 16px;
 
+  /* 品牌标记：星火（双 sparkle），用作 LOGO 图标遮罩，单色随 --accent */
+  --logo-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c.6 5 4 8.4 9 9-5 .6-8.4 4-9 9-.6-5-4-8.4-9-9 5-.6 8.4-4 9-9z'/%3E%3Cpath d='M20.5 2.6c.12 1 1 1.88 2 2-1 .12-1.88 1-2 2-.12-1-1-1.88-2-2 1-.12 1.88-1 2-2z'/%3E%3C/svg%3E");
+
   /* Apple 流体动效：临界阻尼，无过冲，随时可打断 */
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -120,9 +123,19 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   font-family: var(--serif);
   font-size: 21px; font-weight: 700;
   letter-spacing: -0.01em;
-  display: flex; align-items: baseline; gap: 6px;
+  display: flex; align-items: center; gap: 9px;
   transition: opacity var(--t-fast) var(--ease);
 }
+.nav-logo::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 22px; height: 22px;
+  background: var(--accent);
+  -webkit-mask: var(--logo-mark) center / contain no-repeat;
+          mask: var(--logo-mark) center / contain no-repeat;
+  transition: transform var(--t-med) var(--ease);
+}
+.nav-logo:hover::before { transform: rotate(16deg) scale(1.08); }
 .nav-logo:active { opacity: 0.6; }
 .nav-logo em {
   font-style: normal; color: var(--accent);
@@ -998,7 +1011,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .search-result mark { background: none; color: var(--accent); }
 
 @media (max-width: 760px) {
-  .nav-search { margin-left: 2px; }
+  .nav-search { margin-left: 0; margin-right: auto; }
+  .nav-logo::before { width: 19px; height: 19px; }
   .search-panel { top: 68px; width: calc(100% - 24px); border-radius: 16px; }
   .search-bar { padding: 16px; gap: 12px; }
   .search-bar .ico-search { width: 20px; height: 20px; }
