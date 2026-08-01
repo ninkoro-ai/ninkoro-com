@@ -79,7 +79,7 @@
     return out;
   }
 
-  var INDEX = buildIndex();
+  var INDEX = [];
 
   /* ---------- 匹配与排序 ---------- */
   function norm(s) { return String(s == null ? "" : s).toLowerCase(); }
@@ -205,6 +205,7 @@
     if (!overlay) return;
     input = overlay.querySelector(".search-input");
     resultsEl = overlay.querySelector("[data-search-results]");
+    INDEX = buildIndex();
     render("", [], []);
 
     document.querySelectorAll("[data-search-open]").forEach(function (btn) {
@@ -217,6 +218,8 @@
       var r = doSearch(input.value);
       render(input.value, r.terms, r.hits);
     });
+
+    document.addEventListener("ninkoro:rendered", function () { INDEX = buildIndex(); });
 
     document.addEventListener("keydown", function (ev) {
       if (ev.isComposing) return;
