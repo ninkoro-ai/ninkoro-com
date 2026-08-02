@@ -94,40 +94,11 @@
     },
     links: [
       {
-        name: "设计灵感",
+        name: "资源",
         items: [
-          { name: "Awwwards", url: "https://www.awwwards.com", letter: "A", color: "#d3a24a" },
-          { name: "Dribbble", url: "https://dribbble.com", letter: "D", color: "#c66a8a" },
-          { name: "Behance", url: "https://www.behance.net", letter: "B", color: "#6a8ac6" },
-          { name: "Typewolf", url: "https://www.typewolf.com", letter: "T", color: "#8ac66a" },
-          { name: "Are.na", url: "https://www.are.na", letter: "Ar", color: "#c6b56a" }
-        ]
-      },
-      {
-        name: "开发",
-        items: [
-          { name: "GitHub", url: "https://github.com", letter: "G", color: "#8a8a8a" },
-          { name: "MDN Web Docs", url: "https://developer.mozilla.org", letter: "M", color: "#6a8ac6" },
-          { name: "Vercel", url: "https://vercel.com", letter: "V", color: "#5a5a5a" },
-          { name: "Can I Use", url: "https://caniuse.com", letter: "C", color: "#8ac66a" },
-          { name: "Supabase", url: "https://supabase.com", letter: "Su", color: "#4ac68a" }
-        ]
-      },
-      {
-        name: "效率",
-        items: [
-          { name: "Notion", url: "https://www.notion.so", letter: "N", color: "#8a8a8a" },
-          { name: "Raycast", url: "https://www.raycast.com", letter: "R", color: "#c66a6a" },
-          { name: "Excalidraw", url: "https://excalidraw.com", letter: "E", color: "#9e7ac6" },
-          { name: "Figma", url: "https://www.figma.com", letter: "F", color: "#8ac66a" }
-        ]
-      },
-      {
-        name: "阅读与写作",
-        items: [
-          { name: "少数派", url: "https://sspai.com", letter: "少", color: "#c66a6a" },
-          { name: "阮一峰的网络日志", url: "https://www.ruanyifeng.com/blog/", letter: "阮", color: "#6a8ac6" },
-          { name: "豆瓣", url: "https://www.douban.com", letter: "豆", color: "#6ac68a" }
+          { name: "共享 ID", url: "https://idshare001.me", letter: "ID", color: "#6a8ac6" },
+          { name: "4K 影视", url: "https://pomo.mom", letter: "4K", color: "#a04a4a" },
+          { name: "夸克搜", url: "https://kuakesou.net", letter: "夸", color: "#4ac68a" }
         ]
       }
     ],

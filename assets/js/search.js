@@ -18,7 +18,7 @@
     { t: "关于", g: "页面", d: "关于 Ninkoro：自我介绍、速览、时间线、此刻在做，以及 MBTI 与星座特质介绍。", u: "about.html", k: "about 关于我 简历 时间线 mbti 星座 水瓶座 intj" },
     { t: "归档", g: "页面", d: "网站历史页面与旧版本内容归档，内容资产零损失。", u: "archive.html", k: "archive 归档 旧版 历史" },
     { t: "书影音", g: "页面", d: "读书、电影与音乐档案：读过的书、看过的电影、反复听的音乐。", u: "shares.html", k: "shares 读书 电影 音乐 豆瓣 评分" },
-    { t: "网址导航", g: "页面", d: "设计灵感、开发、效率、阅读与写作工具的私人起始页。", u: "links.html", k: "links 导航 收藏 工具 指南" },
+    { t: "网址导航", g: "页面", d: "共享 ID、4K 影视与网盘资源搜索的私人起始页。", u: "links.html", k: "links 导航 收藏 资源 id 影视 夸克搜 网盘 指南" },
     { t: "装备清单", g: "页面", d: "硬件、软件与日常手艺、AI 搭档——只留每天都用的。", u: "tools.html", k: "tools 硬件 软件 手艺 原则" },
     { t: "知识库（旧）", g: "归档", d: "原知识库列表页：AI Agent、FitBuddy、Ninkoro Philosophy 三篇文章的归档入口。", u: "wiki.html", k: "wiki 知识库 AI Agent FitBuddy 哲学" },
     { t: "AI Agent", g: "归档", d: "AI Agent 的架构、产品设计与实践记录：从 Planner、Memory、Tool 到 Execution 的完整拆解。", u: "wiki/ai-agent.html", k: "planner memory tool execution 架构" },
