@@ -23,6 +23,12 @@
         tags: ["Next.js", "FastAPI", "Supabase", "Agent"]
       },
       {
+        year: "2026", status: "live", title: "我ai学习", en: "AI STUDY COMPANION",
+        desc: "一个 AI 辅助的考研备考工作台：207 个知识点、艾宾浩斯智能复习、掌握度追踪、闯关测试与连续打卡。全程本地存储、零后端，可「添加到主屏幕」离线使用。",
+        tags: ["PWA", "零后端", "LocalStorage", "考研备考"],
+        href: "https://study.ninkoro.com"
+      },
+      {
         year: "2026", status: "live", title: "Ninkoro.com", en: "THIS VERY SITE",
         desc: "你正在看的这个网站。纯手写、零框架、零构建。暗色暖调、衬线排版、材质分层——自己的地方就该有自己的脾气。",
         tags: ["手写", "零依赖", "响应式"]
