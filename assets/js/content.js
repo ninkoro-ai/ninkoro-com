@@ -29,6 +29,12 @@
         href: "https://study.ninkoro.com"
       },
       {
+        year: "2026", status: "live", title: "心桥", en: "CLIENT BIRTHDAY CARE",
+        desc: "面向银行客户经理的客户关系小助手：生日智能提醒、微信风祝福一键生成、维护记录沉淀。纯本地存储、零后端、可装成离线 PWA。",
+        tags: ["PWA", "本地优先", "IndexedDB", "客户关系"],
+        href: "https://xinqiao.netlify.app"
+      },
+      {
         year: "2026", status: "live", title: "Ninkoro.com", en: "THIS VERY SITE",
         desc: "你正在看的这个网站。纯手写、零框架、零构建。暗色暖调、衬线排版、材质分层——自己的地方就该有自己的脾气。",
         tags: ["手写", "零依赖", "响应式"]
