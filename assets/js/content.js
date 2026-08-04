@@ -32,7 +32,7 @@
         year: "2026", status: "live", title: "心桥", en: "CLIENT BIRTHDAY CARE",
         desc: "面向银行客户经理的客户关系小助手：生日智能提醒、微信风祝福一键生成、维护记录沉淀。纯本地存储、零后端、可装成离线 PWA。",
         tags: ["PWA", "本地优先", "IndexedDB", "客户关系"],
-        href: "https://github.com/ninkoro-ai/xinqiao"
+        href: "https://xinqiao.ninkoro.com"
       },
       {
         year: "2026", status: "live", title: "Ninkoro.com", en: "THIS VERY SITE",
