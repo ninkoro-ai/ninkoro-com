@@ -14,13 +14,14 @@
       titleMain: "你好，我是 ",
       titleAccent: "Ninkoro",
       titleThin: "一个 AI Builder 的个人实验室。",
-      sub: "在这里，我把想法做成东西——从 LifeOS 这样的个人生活系统，到《AI Agent 产品设计实战手册》这样的产品方法论。相信好东西都是慢慢打磨出来的，也相信 AI Builder 这代人，值得拥有自己的实验室。"
+      sub: "在这里，我把想法做成东西——从「心桥」这样替人记住重要日子的客户关怀助手，到《AI Agent 产品设计实战手册》这样的产品方法论。相信好东西都是慢慢打磨出来的，也相信 AI Builder 这代人，值得拥有自己的实验室。"
     },
     works: [
       {
-        year: "2026", status: "wip", title: "LifeOS", en: "A PERSONAL LIFE OS",
-        desc: "一个主动管理日常生活的 AI 系统。不止给建议，直接替你完成：自动预约健身课、按预算安排健身餐。从健身场景切入，逐步接管重复决策。",
-        tags: ["Next.js", "FastAPI", "Supabase", "Agent"]
+        year: "2026", status: "live", title: "心桥", en: "XINQIAO · BIRTHDAY CARE",
+        desc: "一个替你记住每一个重要日子的客户生日关怀助手：自动推算生日、提前 7 天提醒、一键生成走心祝福。纯本地存储、零后端，可「添加到主屏幕」离线使用。",
+        tags: ["PWA", "React", "IndexedDB", "零后端"],
+        href: "https://xinqiao.ninkoro.com"
       },
       {
         year: "2026", status: "live", title: "我ai学习", en: "AI STUDY COMPANION",
@@ -29,26 +30,14 @@
         href: "https://study.ninkoro.com"
       },
       {
-        year: "2026", status: "live", title: "心桥", en: "CLIENT BIRTHDAY CARE",
-        desc: "面向银行客户经理的客户关系小助手：生日智能提醒、微信风祝福一键生成、维护记录沉淀。纯本地存储、零后端、可装成离线 PWA。",
-        tags: ["PWA", "本地优先", "IndexedDB", "客户关系"],
-        href: "https://xinqiao.ninkoro.com"
-      },
-      {
         year: "2026", status: "live", title: "Ninkoro.com", en: "THIS VERY SITE",
         desc: "你正在看的这个网站。纯手写、零框架、零构建。暗色暖调、衬线排版、材质分层——自己的地方就该有自己的脾气。",
         tags: ["手写", "零依赖", "响应式"]
       },
       {
-        year: "2026", status: "live", title: "LifeOS 官网", en: "PRODUCT LANDING",
-        desc: "LifeOS 的产品官网：手机交互 Demo、场景化叙事、纯静态手写。把产品讲清楚之前，先让它好看。",
-        tags: ["Landing", "交互动效", "响应式"],
-        href: "https://lifeos.ninkoro.com"
-      },
-      {
-        year: "2026", status: "idea", title: "好好吃饭", en: "EAT WELL, DECIDE LESS",
-        desc: "LifeOS 的第二个模块：根据训练日、预算和口味，自动规划一周餐单。目标是把\"今天吃什么\"这个世纪难题从大脑里删掉。",
-        tags: ["规划中", "餐单", "生活"]
+        year: "2026", status: "wip", title: "LifeOS", en: "A PERSONAL LIFE OS",
+        desc: "一个主动管理日常生活的 AI 系统（开发中）。从健身场景切入，探索「规划 → 执行 → 人确认」的闭环。目前仍在打磨，暂不作为重点展示。",
+        tags: ["Next.js", "FastAPI", "Supabase", "开发中"]
       }
     ],
     thoughts: [
@@ -64,24 +53,24 @@
       lede: "我是 Ninkoro，一个喜欢做东西的人。",
       paragraphs: [
         "我相信**好东西都是打磨出来的**。实现一件事的成本越来越低之后，真正值钱的只剩两件事：判断力和审美。所以我的所有作品，都坚持自己定方向、自己定细节。",
-        "目前的全部精力在 **LifeOS** 上——一个主动管理日常生活的系统。第一个切入场景是健身：自动约课、按预算安排健身餐，涉及付款的决定永远留给人。",
+        "目前的精力主要放在 **心桥** 上——一个替人记住重要日子、把关怀提前送到的客户生日助手。也还在慢慢打磨 **LifeOS** 这样的生活系统原型，涉及付款的决定永远留给人。",
         "做东西之外，读书、看电影、听音乐，偶尔在这个网站写点什么。所有的输入都会变成输出的审美，所以我对输入很挑剔。"
       ],
       facts: [
         ["位置", "互联网"],
-        ["正在做", "LifeOS — 个人生活系统"],
+        ["正在做", "心桥 — 客户生日助手"],
         ["方式", "先想清楚，再动手"],
         ["常用", "TypeScript · Python"],
         ["信条", "少即是多 · 做出来再说"],
         ["联系", "hi@ninkoro.com"]
       ],
       timeline: [
-        { when: "2026 — 现在", title: "开始做 LifeOS", body: "从零搭建一个个人生活系统：先想清楚模型，再一行行实现。第一个场景：健身。" },
+        { when: "2026 — 现在", title: "上线「心桥」", body: "做出第一个真正被人用起来的小工具：替人记住每一个重要的生日，把关怀提前送到。从想法到上线，全程自己设计、自己写。" },
         { when: "2025", title: "找到自己的工作方式", body: "确认了一件事：把重复的实现交给工具，人专注在判断和审美上，效率会完全不一样了。" },
         { when: "更早", title: "写下第一行代码", body: "从\"这东西能不能做出来\"到\"这东西该被做成什么样\"，中间隔了很多年，也隔了很多个推倒重来的深夜。" }
       ],
       now: [
-        { title: "在做", body: "LifeOS：打通\"规划 → 执行 → 人确认付款\"的完整闭环，跑通自动约课与健身餐两个真实场景。" },
+        { title: "在做", body: "心桥：打磨维护记录、批量导入与一键撤销等人际关怀的细节，让工具真正好用、让人愿意每天打开。" },
         { title: "在读", body: "《设计中的设计》——原研哉。\"再设计\"：把日常之物重新审视一遍，未知化的过程本身就是创造。" },
         { title: "在想", body: "工具的边界感：什么时候该自动，什么时候必须停下来问人。这个分寸，决定了工具是帮手还是麻烦。" }
       ]
@@ -281,7 +270,7 @@
       document.getElementById("hero-sub").innerHTML = '<span data-edit="home.sub">' + md(h.sub) + "</span>";
       var hw = document.getElementById("home-works");
       if (hw) {
-        hw.innerHTML = c.works.slice(0, 3).map(function (w, i) { return ITEM_RENDER.works(w, i || "", "projects.html"); }).join("");
+        hw.innerHTML = c.works.slice(0, 3).map(function (w, i) { return ITEM_RENDER.works(w, i || "", w.href || "projects.html"); }).join("");
         hw.setAttribute("data-list-path", "home.worksPreview");
       }
       var hm = document.getElementById("home-manifesto");
