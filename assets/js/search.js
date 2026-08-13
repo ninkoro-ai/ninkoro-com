@@ -12,7 +12,7 @@
   /* 静态页面清单（不在 DEFAULTS 里的页面与长文章节） */
   var STATIC_PAGES = [
     { t: "首页", g: "页面", d: "Ninkoro 的个人站：AI Builder · Personal Lab。从「心桥」到 AI Agent 产品设计实战手册。", u: "index.html", k: "home 个人站 实验室 入口" },
-    { t: "作品", g: "页面", d: "做出来后自己还想再看一眼的东西：心桥、我ai学习、Ninkoro.com。", u: "projects.html", k: "projects 作品集 项目 入口" },
+    { t: "作品", g: "页面", d: "做出来后自己还想再看一眼的东西：股权穿透、心桥、我ai学习、Ninkoro.com。", u: "projects.html", k: "projects 作品集 项目 入口" },
     { t: "分享", g: "页面", d: "书影音与资源工具：看过的好东西，和真正每天都在用的工具。", u: "knowledge.html", k: "知识 分享 书影音 资源 工具 入口" },
     { t: "想法", g: "页面", d: "不成体系的随想：关于做东西、工具的边界与一个审美偏见。", u: "thoughts.html", k: "thoughts 随想 思考 入口" },
     { t: "关于", g: "页面", d: "关于 Ninkoro：自我介绍、速览、时间线、此刻在做，以及 MBTI 与星座特质介绍。", u: "about.html", k: "about 关于我 简历 时间线 mbti 星座 水瓶座 intj" },
@@ -24,6 +24,8 @@
     { t: "AI Agent", g: "归档", d: "AI Agent 的架构、产品设计与实践记录：从 Planner、Memory、Tool 到 Execution 的完整拆解。", u: "wiki/ai-agent.html", k: "planner memory tool execution 架构" },
     { t: "FitBuddy", g: "归档", d: "FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及「执行闭环 + 人工确认」的边界设计。", u: "wiki/fitbuddy.html", k: "约课 点餐 乐刻 麦当劳 边界 产品" },
     { t: "Ninkoro Philosophy", g: "归档", d: "为什么建立 Ninkoro，Personal OS 理念，以及 AI 时代个人知识资产的意义。", u: "wiki/ninkoro-philosophy.html", k: "哲学 personal os 知识资产 理念" },
+    { t: "为什么画一张股权图，差点把一个系统搞崩溃？", g: "长文", d: "「股权穿透」工具背后的架构故事：从 Tree 到 Graph 的重新抽象，以及「真实不等于能看」的三层模型。", u: "equity-graph.html", k: "股权 穿透 架构 graph tree 重构 长文" },
+    { t: "从一句 slogan 到一款被真正用起来的产品：心桥诞生记", g: "长文", d: "记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。", u: "thought-xinqiao.html", k: "心桥 生日 产品 长文 pwa" },
     { t: "AI Agent 产品设计实战手册", g: "长文", d: "面向产品经理与 AI 创业者的 Agent 产品设计方法论，五章全链路覆盖，附 LifeOS 真实案例。", u: "ai-agent-handbook.html", k: "handbook 手册 方法论 agent 产品设计" },
     { t: "第一章　AI Agent 产品的本质与设计范式", g: "长文", d: "从 Chatbot 到 Agent 的演进；五层架构模型；四款产品案例拆解；Agent 设计四原则与可行性 Checklist。", u: "ai-agent-handbook.html#ch1", k: "chatbot assistant 五层架构 意图层 规划层 执行层 反馈层 安全层" },
     { t: "第二章　用户意图理解与多轮对话设计", g: "长文", d: "意图理解三层模型与多轮对话设计：在模糊与精确之间搭一座桥。", u: "ai-agent-handbook.html#ch2", k: "意图理解 对话 上下文 澄清" },

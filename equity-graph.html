@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro</title>
+<meta name="description" content="「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象——真实很重要，但让人看懂更重要。">
+<meta name="theme-color" content="#0e0d0b">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ninkoro">
+<meta property="og:title" content="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro">
+<meta property="og:description" content="把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象——真实很重要，但让人看懂更重要。">
+<meta property="og:url" content="https://ninkoro.com/equity-graph.html">
+<meta property="og:image" content="https://ninkoro.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro">
+<meta name="twitter:description" content="把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象。">
+<meta name="twitter:image" content="https://ninkoro.com/og.png">
+<link rel="canonical" href="https://ninkoro.com/equity-graph.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css?v=__BUILD_HASH__">
+<style>
+.read-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: var(--accent); z-index: 200;
+  box-shadow: 0 0 10px rgba(211,162,74,.7);
+  transition: width .12s linear;
+}
+.article-head { padding-top: calc(var(--nav-h) + clamp(44px, 7vw, 88px)); padding-bottom: clamp(28px, 4vw, 48px); }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: .04em;
+  color: var(--ink-dim); margin-bottom: 26px;
+  transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.back-link:hover { color: var(--accent); transform: translateX(-3px); }
+.article-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(28px, 5vw, 50px); line-height: 1.2; letter-spacing: -.02em;
+  margin-top: 10px;
+}
+.article-sub {
+  margin-top: 18px; max-width: 640px;
+  color: var(--ink-dim); font-size: clamp(15px, 2vw, 18px); line-height: 1.7;
+}
+.article-meta {
+  margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--ink-faint);
+}
+.article-meta span { color: var(--ink-faint); }
+.article-meta b { color: var(--accent); font-weight: 500; }
+
+.article-layout {
+  width: min(1080px, calc(100% - 48px));
+  margin-inline: auto;
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  padding-bottom: clamp(56px, 9vw, 110px);
+}
+.toc-side { display: none; }
+.toc-inline {
+  display: block;
+  width: min(720px, calc(100% - 48px));
+  margin: 0 auto clamp(28px, 5vw, 40px);
+  padding: 22px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.toc-inline .toc-nav { margin-top: 14px; }
+.article-body { max-width: clamp(680px, 90vw, 960px); margin-inline: auto; width: 100%; }
+
+.toc-ttl {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.toc-list, .toc-sub { list-style: none; }
+.toc-list > li { margin-bottom: 12px; }
+.toc-list > li > a {
+  font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--ink);
+  line-height: 1.45; transition: color var(--t-fast) var(--ease);
+}
+.toc-list > li > a:hover { color: var(--accent); }
+.toc-sub { margin: 6px 0 4px 12px; border-left: 1px solid var(--line); padding-left: 14px; }
+.toc-sub li { margin: 7px 0; }
+.toc-sub a {
+  font-family: var(--sans); font-size: 13px; color: var(--ink-dim); line-height: 1.4;
+  transition: color var(--t-fast) var(--ease);
+}
+.toc-sub a:hover { color: var(--accent); }
+.toc-nav a.active { color: var(--accent); }
+
+.article-body p {
+  font-size: clamp(16px, 2.3vw, 17px); line-height: 1.92; color: var(--ink-dim);
+  margin: 18px 0; letter-spacing: .005em;
+}
+.article-body p strong, .article-body li strong { color: var(--ink); font-weight: 600; }
+.article-body h2.ch-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(24px, 4vw, 36px); line-height: 1.25; letter-spacing: -.02em;
+  color: var(--accent); margin: clamp(48px,8vw,84px) 0 8px;
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.article-body h3.sec-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(19px, 2.8vw, 25px); line-height: 1.35; letter-spacing: -.01em;
+  color: #f1ebdb; margin: clamp(36px,6vw,56px) 0 6px;
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.article-body ul, .article-body ol { margin: 14px 0; padding-left: 0; }
+.article-body li {
+  position: relative; font-size: clamp(15px, 2.1vw, 16px); line-height: 1.85;
+  color: var(--ink-dim); margin: 8px 0; padding-left: 26px;
+}
+.article-body ul li::before {
+  content: ""; position: absolute; left: 6px; top: 13px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: .8;
+}
+.article-body blockquote {
+  margin: 24px 0; padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft); border-radius: 0 12px 12px 0;
+  color: var(--ink-dim); font-size: clamp(15px, 2.1vw, 16px); line-height: 1.8;
+}
+.article-body blockquote strong { color: var(--ink); }
+.article-body code.inline {
+  font-family: var(--mono); font-size: .88em; color: var(--accent);
+  background: rgba(237,232,222,.06); padding: 2px 6px; border-radius: 6px;
+}
+.article-body pre.code {
+  margin: 22px 0; padding: 18px 20px; overflow-x: auto;
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: 12px;
+  font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--ink-dim);
+  -webkit-overflow-scrolling: touch;
+}
+.article-body pre.code code { white-space: pre; }
+.article-body .done-list li::before { content: ""; border-radius: 2px; }
+
+@media (min-width: 1024px) {
+  .article-layout { grid-template-columns: 232px minmax(0, 1fr); gap: 56px; align-items: start; }
+  .toc-side { display: block; position: sticky; top: calc(var(--nav-h) + 28px); }
+  .toc-inline { display: none; }
+  .article-body { max-width: clamp(680px, 90vw, 960px); }
+}
+/* 移动端适配加固：杜绝整页横向滚动（iOS / 微信 WebKit 边界处理） */
+html { overflow-x: clip; }
+.article-layout, .article-body { min-width: 0; }
+.article-body,
+.article-body p, .article-body li, .article-body blockquote,
+.article-body h2, .article-body h3 {
+  overflow-wrap: break-word; word-break: break-word;
+}
+.article-body pre.code { max-width: 100%; }
+
+@media (max-width: 760px) {
+  .article-body p { line-height: 1.88; }
+  .article-body pre.code { font-size: 12px; padding: 14px 16px; }
+  .article-meta { font-size: 11px; gap: 8px; }
+}
+</style>
+</head>
+<body class="page-enter" data-page="article">
+<div class="grain"></div>
+<div class="read-progress" id="readProgress"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Ninkoro<em>.com</em></a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="projects.html">作品</a>
+      <a href="knowledge.html">分享</a>
+      <a href="thoughts.html">想法</a>
+      <a href="about.html">关于</a>
+    </div>
+    <button class="nav-search" data-search-open aria-label="搜索全站" title="搜索全站 (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
+    <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu">
+      <a href="index.html"><span class="idx">01</span>首页</a>
+      <a href="projects.html"><span class="idx">02</span>作品</a>
+      <a href="knowledge.html"><span class="idx">03</span>分享</a>
+      <a href="thoughts.html"><span class="idx">04</span>想法</a>
+      <a href="about.html"><span class="idx">05</span>关于</a>
+    </div>
+
+<header class="article-head wrap">
+  <a href="thoughts.html" class="back-link">返回想法</a>
+  <p class="en">FIELD NOTES · ARCHITECTURE</p>
+  <h1 class="article-title">为什么画一张股权图，差点把一个系统搞崩溃？</h1>
+  <p class="article-sub">「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失；换成一张「网」之后才发现，真正的难题是——真实，不等于能看。</p>
+  <div class="article-meta">
+    <span>2026.08</span><span>·</span><span>约 12 分钟阅读</span><span>·</span><span><b>无需技术背景</b></span>
+  </div>
+</header>
+
+<div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
+
+<div class="article-layout">
+  <aside class="toc-side">
+    <p class="toc-ttl">目录</p>
+    <nav class="toc-nav"><ul class="toc-list">
+      <li><a href="#ch1">一、起因：一个看似简单的需求</a></li>
+      <li><a href="#ch2">二、第一个跟头：硬把现实塞进家谱</a>
+        <ul class="toc-sub">
+          <li><a href="#s2_1">问题 1：一个股东，多条控制路径</a></li>
+          <li><a href="#s2_2">问题 2：股权关系会「绕圈」</a></li>
+          <li><a href="#s2_3">问题 3：公司本身 ≠ 图上的点</a></li>
+        </ul>
+      </li>
+      <li><a href="#ch3">三、真正的问题：理解世界的方式错了</a></li>
+      <li><a href="#ch4">四、换一套语言：从家谱到地铁图</a></li>
+      <li><a href="#ch5">五、新问题：真实，不等于能看</a></li>
+      <li><a href="#ch6">六、给系统定规矩：股权穿透规则</a></li>
+      <li><a href="#ch7">七、最终架构：三个世界各司其职</a></li>
+      <li><a href="#ch8">八、DisplayGraph：合理的「影分身」</a></li>
+      <li><a href="#ch9">九、ViewGraph：看得懂比完整更重要</a></li>
+      <li><a href="#ch10">十、最重要的转变</a></li>
+      <li><a href="#ch11">十一、AI 时代做开发的思考</a></li>
+      <li><a href="#ch12">十二、最终成果</a></li>
+      <li><a href="#ch13">十三、这个项目教会我的事</a></li>
+      <li><a href="#ch14">结语</a></li>
+    </ul></nav>
+  </aside>
+
+  <main class="article-body">
+
+<section class="chapter" id="ch1">
+<h2 class="ch-title">一、起因：一个看起来十分钟就能搞定的需求</h2>
+<p>故事的开头非常平淡。我接到的需求只有一句话：</p>
+<blockquote>输入一家企业的股东信息，自动生成一张股权结构图。</blockquote>
+<p>如果企业关系简单，这件事确实容易。比如：</p>
+<pre class="code"><code>张三
+  │ 持股 100%
+  ▼
+A集团有限公司
+  │ 持股 80%
+  ▼
+目标企业</code></pre>
+<p>或者几个股东并列：</p>
+<pre class="code"><code>股东A 60%   股东B 30%   股东C 10%
+        └──────┬──────┘
+               ▼
+           目标公司</code></pre>
+<p>这样的结构，像极了一棵<strong>家谱</strong>：一个最顶端的"祖先"，下面一层一层的"后代"，每条血脉只有一条线，不会绕圈。</p>
+<p>在编程世界里，这种结构有个专门的名字，叫"<strong>树</strong>（Tree）"。你可以就把它理解成家谱或公司组织架构图：每个成员只有一个直接上级，层级清楚，绝不循环。</p>
+<p>因为"树"简单、好算、好画，很多我们熟悉的系统都是用它搭的：电脑里的文件夹目录、网站菜单、商品分类……所以我最初的方案毫无悬念：用"树"来做。</p>
+<p><strong>但很快，现实给了我一记耳光——真实企业的股权关系，根本不是一棵树。</strong></p>
+</section>
+
+<section class="chapter" id="ch2">
+<h2 class="ch-title">二、第一个跟头：硬把现实世界塞进家谱里</h2>
+<p>最初的设计很朴素：每家公司记录一个"上级"（它的股东是谁），层层往上挂，就像给员工填"直属领导"那一栏。看起来天经地义。但随着真实案例一个个进来，问题接连爆发。</p>
+
+<h3 class="sec-title" id="s2_1">问题 1：一个股东可能同时走好几条路影响同一家公司</h3>
+<p>举个例子：</p>
+<pre class="code"><code>A公司 ──60%──> B公司 ──50%──> D公司
+A公司 ──30%──> C公司 ──40%──> D公司</code></pre>
+<p>意思是：A 公司通过 B、C 两条线，都在影响 D 公司。</p>
+<p>可是"家谱"有条铁律：<strong>每个人只能有一个爹</strong>。一个节点只能挂在一个父节点下面。于是系统只剩两个烂选择：</p>
+<ul>
+<li><strong>方案一：删掉其中一条路。</strong>后果：信息丢了，图上少了一条真实的控制线。</li>
+<li><strong>方案二：把 A 公司复制成两个。</strong>后果：同一家公司变成了两个"分身"，数据和现实对不上。</li>
+</ul>
+<p>怎么选都是错的。</p>
+
+<h3 class="sec-title" id="s2_2">问题 2：现实里股权关系会"绕圈"</h3>
+<p>比如：</p>
+<pre class="code"><code>A公司 → B公司 → C公司 → A公司（绕回来了）</code></pre>
+<p>这种交叉持股、循环持股，在复杂的投资关系里并不少见。但"家谱"天然禁止绕圈——你不可能既是你爷爷的孙子，又是你爷爷的爷爷。</p>
+<p>硬要画，程序就会陷入"死循环"：A 找 B，B 找 C，C 又找 A，永远停不下来。我们只能打上各种补丁：记录"谁已经走过了"、强行在某处剪断……</p>
+<p>最后的结果很微妙：<strong>程序没崩溃，但图上的数据已经不准了。</strong>这比崩溃更可怕——看起来一切正常，其实结论是错的。</p>
+
+<h3 class="sec-title" id="s2_3">问题 3：把"公司本身"和"图上的一个点"当成了一回事</h3>
+<p>这是后来我才想明白的最关键的问题。</p>
+<p>原来的设计默认：一家公司 = 图上的一个格子。"国家电网"这四个字，只能在图上出现一次。但现实是：同一个主体，可能既是直接股东、又是控制链条中的一环、还出现在好几条投资路径上。</p>
+<p><strong>"这家公司是谁"是唯一的，但"它出现在哪几条路径上"可以是很多个。</strong>这是两个完全不同的概念，我却把它们混在了一起。</p>
+</section>
+
+<section class="chapter" id="ch3">
+<h2 class="ch-title">三、停下来重新想：问题不在图好不好看，而在"理解世界的方式"</h2>
+<p>一开始，我的优化方向全都跑偏了：调整排版算法、改节点的排列方式、加折叠规则、限制展示的层级深度。</p>
+<p>这些都是治标不治本。因为我后来意识到一句话：</p>
+<blockquote><strong>如果你记录数据的方式本身就表达不了真实世界，那么一切展示层面的优化，都只是在错误的数据上打补丁。</strong></blockquote>
+<p>失败的架构长这样：</p>
+<pre class="code"><code>工商数据
+   ↓
+ Tree（树）   ← 装不下真实世界
+   ↓
+ Layout（排版）
+   ↓
+ 崩溃 / 数据失真</code></pre>
+<p>于是回到最根本的问题：股权关系到底是什么？</p>
+<p>答案：它不是一棵树，而是一张<strong>网</strong>。编程里管这个叫"<strong>图</strong>（Graph）"。别被名字吓到，你每天都在用它——<strong>地铁线路图</strong>就是一张"图"：站点之间可以有多条线路相连，可以换乘（多条路径），环线还能绕圈。这些恰恰是"家谱"做不到、而现实世界天天在发生的事。</p>
+</section>
+
+<section class="chapter" id="ch4">
+<h2 class="ch-title">四、换一套语言：从"家谱"改成"地铁图"</h2>
+<p>严格说，"树"只是"图"的一种被阉割过的特例——它额外加了一堆限制：只能一个起点、每个节点只能一个上级、不许绕圈、路径唯一。而"图"没有这些束缚，天然可以表达：多条路径、多种关系、环形结构。</p>
+<p>于是我推倒了原来的设计，重新定义核心模型，叫它 <code class="inline">EquityGraph</code>（股权关系网）。里面只有两样东西：</p>
+<ul>
+<li><strong>节点</strong>：企业、自然人、机构（地铁图里的"站点"）；</li>
+<li><strong>连线</strong>：持股关系，上面标着持股比例（地铁图里的"线路"）。</li>
+</ul>
+<p>比如：<code class="inline">A公司 ──60%──> B公司 ──50%──> 目标企业</code></p>
+<p>到这一步，<strong>数据层面终于恢复了真实</strong>——现实什么样，系统里就记什么样，不再丢信息、不再造假。</p>
+</section>
+
+<section class="chapter" id="ch5">
+<h2 class="ch-title">五、新问题：真实，不等于能看</h2>
+<p>换成"图"之后，数据对了，但新的麻烦来了。</p>
+<p>如果把一家大型集团的所有关系完整画出来，规模可能是：<strong>7000 多个节点、9000 多条连线</strong>。这种图，理论上完全正确，业务上完全没法用——打印出来是一团毛线，没人看得懂。</p>
+<p>我重新问了一个问题：银行的人拿到这张图，真正想知道什么？</p>
+<p>不是"这家企业的所有关联关系"，而是一句话：<strong>到底谁说了算？谁控制着这家企业？</strong></p>
+<p>于是有了第二层抽象：<strong>业务规则层</strong>。</p>
+</section>
+
+<section class="chapter" id="ch6">
+<h2 class="ch-title">六、给系统定规矩：股权穿透规则</h2>
+<p>在银行授信（审批贷款）的场景里，大家关心的无非是：第一层股东是谁、谁是控股股东、最终的实际控制人是谁。</p>
+<p>据此我设计了一个 <code class="inline">Penetration Plan</code>（穿透计划）——说白了，就是一份"要不要继续往下挖"的判断规则：</p>
+<ul>
+<li><strong>第一层股东</strong>：全部展示；</li>
+<li><strong>持股比例 ≥ 25%</strong>：继续往下穿透一层；</li>
+<li><strong>遇到自然人</strong>：到此为止（人不可能再有"股东"）；</li>
+<li><strong>遇到境外公司</strong>：到此为止（查不到，也没法再查）。</li>
+</ul>
+<p>这一步做的事，就是把"数据事实"（所有关系）加工成"业务视角"（需要展示的关系）。就像搜索引擎：互联网上有海量网页（真实世界），但只把最相关的几页结果给你看（业务视角）——不是隐藏真相，而是替你筛选。</p>
+</section>
+
+<section class="chapter" id="ch7">
+<h2 class="ch-title">七、最终的架构：三个世界，各司其职</h2>
+<p>重构后的系统，从数据到成品报告，一共流经五层：</p>
+<pre class="code"><code>工商原始关系
+      ↓
+EquityGraph      （真实世界：完整记录所有关系）
+      ↓
+PenetrationPlan  （业务规则：哪些关系需要展开）
+      ↓
+DisplayGraph     （展示世界：准备画出来的关系）
+      ↓
+ViewGraph        （阅读视角：为读者做的合理精简）
+      ↓
+银行版式布局 → PPT / 图片</code></pre>
+<p>中间那两层（DisplayGraph、ViewGraph）是整个架构里最关键、也最容易被忽视的设计，值得单独讲讲。</p>
+</section>
+
+<section class="chapter" id="ch8">
+<h2 class="ch-title">八、DisplayGraph：一个公司，可以有好几个"影分身"</h2>
+<p>前面说过，"公司实体"和"图上的一个格子"是两回事。DisplayGraph 就是用来正式承认这件事的。</p>
+<p>比如"财政部"这个主体，在真实数据里只有一个，但它可能同时出现在三条不同的投资路径上。如果硬把它合并成一个点，路径信息就丢了。所以 DisplayGraph 允许：<strong>一个实体，对应多个展示节点</strong>。</p>
+<pre class="code"><code>实体：财政部（只有一个）
+展示：财政部-路径1、财政部-路径2、财政部-路径3</code></pre>
+<p>就像同一位老师，在三个班的课表上各出现一次——课表上有三个格子，老师只有一个。课表没造假，老师也没被克隆。</p>
+<p><strong>数据的真实性，保住了。</strong></p>
+</section>
+
+<section class="chapter" id="ch9">
+<h2 class="ch-title">九、ViewGraph：让读者看得懂，比"完整"更重要</h2>
+<p>但新的矛盾又来了：如果"财政部"在图上出现 65 次，银行的人肯定不会接受这份报告。</p>
+<p>于是再加一层 ViewGraph，专门负责一件事：<strong>面向阅读者的合理折叠</strong>。</p>
+<p>原来密密麻麻的 65 个"财政部"，折叠成一个节点，标注"（共 65 条路径）"。同时后台完整保留：这些路径从哪来、有多少条、原始关系是什么。想深层的随时可以展开，看报告的不会被淹没。</p>
+<p>这就是<strong>数据完整性和可读性之间的平衡</strong>——详情和摘要分开存放，各取所需。</p>
+</section>
+
+<section class="chapter" id="ch10">
+<h2 class="ch-title">十、最重要的转变：不画"全部"，只画"需要被理解的"</h2>
+<p>回头看，整个项目最大的转折不是某个技术方案，而是目标的重新定义。一开始我的目标是：</p>
+<blockquote>生成一张完整的股权图。</blockquote>
+<p>后来才发现，这个目标本身就是错的。正确的目标是：</p>
+<blockquote><strong>生成一张银行人员能快速看懂的控制关系图。</strong></blockquote>
+<p>所以最终的版式设计是：</p>
+<pre class="code"><code>最终控制主体
+      ↓
+  控股股东
+      ↓
+  借款企业</code></pre>
+<p>第一层股东横向铺开（一眼看全），深层控制链垂直向下（层层递进）。因为这才是符合人阅读习惯的样子。</p>
+</section>
+
+<section class="chapter" id="ch11">
+<h2 class="ch-title">十一、AI 时代做开发的一点思考</h2>
+<p>这个项目大量使用了 AI 辅助开发：写代码、跑测试、重构模块、生成文档，AI 都能帮上忙。但整个过程中我最大的收获是：<strong>AI 替代不了架构判断。</strong></p>
+<p>打个比方：如果我一开始就吩咐 AI"帮我优化股权图的排版"，它会兢兢业业地把那棵"树"越修越漂亮——可是问题的根本压根不在排版，而在于<strong>"树"这种结构从第一天起就装不下真实的世界</strong>。</p>
+<p>AI 能把答案执行得又快又好，但"提出正确的问题"，仍然是人的活。</p>
+</section>
+
+<section class="chapter" id="ch12">
+<h2 class="ch-title">十二、最终成果</h2>
+<p>重构之后，系统做到了：</p>
+<ul class="done-list">
+<li><strong>第一层股东全部展示</strong>，一眼看清谁在台面上；</li>
+<li><strong>持股 25% 以上的股东自动往下穿透</strong>，直到挖出实际控制人；</li>
+<li><strong>遇到自然人、境外主体自动停止</strong>，不做无用功；</li>
+<li><strong>支持一家公司被多条路径持股</strong>，信息不丢；</li>
+<li><strong>支持交叉持股</strong>，绕圈也不怕；</li>
+<li><strong>自动生成银行格式的 PPT</strong>，拿来就能用；</li>
+<li><strong>再复杂的企业，图也保持可读</strong>。</li>
+</ul>
+<p>这套系统后来做成了在线工具「股权穿透」（<code class="inline">ox.ninkoro.com</code>）：上传工商股权 Excel，自动生成穿透结构图。</p>
+</section>
+
+<section class="chapter" id="ch13">
+<h2 class="ch-title">十三、这个项目教会我的事</h2>
+<p>很多软件问题，表面是技术问题，实质是：</p>
+<blockquote><strong>你有没有选对理解世界的那个"抽象"。</strong></blockquote>
+<ul>
+<li>现实世界是一张网，就别硬把它掰成一棵树；</li>
+<li>用户要的是摘要，就别把原始数据一股脑倒给他；</li>
+<li>业务要做判断，就别只提供裸数据。</li>
+</ul>
+<p>好的系统设计，本质上是这么一条链路：</p>
+<pre class="code"><code>现实世界 → 正确的抽象 → 业务规则 → 用户能理解的表达</code></pre>
+</section>
+
+<section class="chapter" id="ch14">
+<h2 class="ch-title">结语</h2>
+<p>一开始，我只是想解决"怎么自动生成一张股权结构图"。走到最后才发现，真正的问题是：<strong>怎么让机器理解企业之间复杂的股权关系，再按照人的业务认知，把它重新讲出来。</strong></p>
+<p>这大概是复杂业务系统开发里最重要的一课：</p>
+<blockquote><strong>代码可以很快写出来，但正确的问题抽象，只能来自对业务世界的真正理解。</strong></blockquote>
+</section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> NINKORO.COM</span>
+    </div>
+  </div>
+</footer>
+
+<div class="search-overlay" data-search-overlay aria-hidden="true">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索">
+    <div class="search-bar">
+      <span class="ico ico-search" aria-hidden="true"></span>
+      <input type="search" class="search-input" placeholder="搜索作品、想法、书影音、工具…" autocomplete="off" spellcheck="false" aria-label="搜索全站内容">
+      <button type="button" class="search-esc" data-search-close aria-label="关闭搜索">ESC</button>
+    </div>
+    <div class="search-hints">
+      <span>↑↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span><span>Ctrl+K 随时呼出</span>
+    </div>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="assets/js/main.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/content.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/search.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/handbook.js?v=__BUILD_HASH__" defer></script>
+</body>
+</html>
