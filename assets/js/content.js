@@ -10,11 +10,10 @@
   var DEFAULTS = {
     site: { email: "hi@ninkoro.com" },
     home: {
-      eyebrow: "AI BUILDER · PERSONAL LAB",
+      eyebrow: "AI · 个人实践",
       titleMain: "你好，我是 ",
       titleAccent: "Ninkoro",
-      titleThin: "一个 AI Builder 的个人实验室。",
-      sub: "在这里，我把想法做成东西——从「心桥」这样替人记住重要日子的客户关怀助手，到「股权穿透」这样把复杂企业关系画清楚的工具。相信好东西都是慢慢打磨出来的，也相信 AI Builder 这代人，值得拥有自己的实验室。"
+      sub: "喜欢琢磨 AI 能怎么真正帮上忙，也动手把它做成能用的东西——从替人记住重要日子的「心桥」，到把复杂股权关系画清楚的「股权穿透」。这里记录我做过的，和正在做的。"
     },
     works: [
       {
@@ -274,8 +273,7 @@
       document.getElementById("hero-eyebrow").innerHTML = '<span data-edit="home.eyebrow">' + esc(h.eyebrow) + "</span>";
       document.getElementById("hero-title").innerHTML =
         '<span data-edit="home.titleMain">' + esc(h.titleMain) + '</span>' +
-        '<span class="accent" data-edit="home.titleAccent">' + esc(h.titleAccent) + "</span><br>" +
-        '<span class="thin" data-edit="home.titleThin">' + esc(h.titleThin) + "</span>";
+        '<span class="accent" data-edit="home.titleAccent">' + esc(h.titleAccent) + "</span>";
       document.getElementById("hero-sub").innerHTML = '<span data-edit="home.sub">' + md(h.sub) + "</span>";
       var hw = document.getElementById("home-works");
       if (hw) {
