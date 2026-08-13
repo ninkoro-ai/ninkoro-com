@@ -46,13 +46,34 @@
       <a href="about.html"><span class="idx">05</span>关于</a>
     </div>
 
-<header class="hero wrap">
-  <p class="hero-eyebrow" id="hero-eyebrow"></p>
-  <h1 class="hero-title" id="hero-title"></h1>
-  <p class="hero-sub" id="hero-sub"></p>
-  <div class="hero-actions">
-    <a href="projects.html" class="btn solid">看看作品 <span class="arrow"></span></a>
-    <a href="about.html" class="btn">认识一下 <span class="arrow"></span></a>
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <canvas id="hero-stars"></canvas>
+  </div>
+  <div class="hero-grid-lines" aria-hidden="true"></div>
+  <div class="hero-grid wrap">
+    <div class="hero-copy">
+      <p class="hero-eyebrow hero-enter" id="hero-eyebrow" style="--d:.05s;--enter-y:18px;--enter-blur:6px;"></p>
+      <h1 class="hero-title hero-enter" id="hero-title" style="--d:.15s;--enter-y:26px;--enter-blur:12px;"></h1>
+      <p class="hero-sub hero-enter" id="hero-sub" style="--d:.28s;--enter-y:22px;--enter-blur:8px;"></p>
+      <div class="hero-actions hero-enter" style="--d:.42s;--enter-y:20px;--enter-blur:6px;">
+        <a href="projects.html" class="btn solid">看看作品 <span class="arrow"></span></a>
+        <a href="about.html" class="btn">认识一下 <span class="arrow"></span></a>
+        <a href="knowledge.html" class="btn ghost">分享与工具</a>
+      </div>
+    </div>
+    <div class="hero-stage hero-enter" style="--d:.55s;--enter-y:28px;--enter-blur:14px;">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="terminal-title">ninkoro.com — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <pre id="typeLayer"></pre>
+          <span class="cursor" id="cursor" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="hero-ornament"></div>
   <div class="scroll-hint">SCROLL</div>
@@ -65,20 +86,23 @@
       <h2 class="sec-title">从这里开始</h2>
     </div>
     <div class="entry-cards">
-      <a class="entry-card" href="projects.html">
+      <a class="entry-card i-work reveal" href="projects.html">
         <span class="entry-no">01</span>
+        <span class="entry-icon" aria-hidden="true"></span>
         <h3>作品 <span class="thin">/ Projects</span></h3>
         <p>做出来后、自己还想再看一眼的东西——从「心桥」这样替人记住重要日子的助手，到「股权穿透」这样把复杂股权关系画清楚的工具。</p>
         <span class="arrow"></span>
       </a>
-      <a class="entry-card" href="knowledge.html">
+      <a class="entry-card i-share reveal" href="knowledge.html" data-delay="1">
         <span class="entry-no">02</span>
+        <span class="entry-icon" aria-hidden="true"></span>
         <h3>分享 <span class="thin">/ Share</span></h3>
         <p>书影音与资源工具——看过的好东西，和真正每天都在用的工具。</p>
         <span class="arrow"></span>
       </a>
-      <a class="entry-card" href="thoughts.html">
+      <a class="entry-card i-thought reveal" href="thoughts.html" data-delay="2">
         <span class="entry-no">03</span>
+        <span class="entry-icon" aria-hidden="true"></span>
         <h3>想法 <span class="thin">/ Thoughts</span></h3>
         <p>不成体系的随想，关于做东西、工具的边界，以及一个审美偏见。</p>
         <span class="arrow"></span>
@@ -113,6 +137,23 @@
   </div>
 </section>
 
+<section class="section cta-section">
+  <div class="wrap">
+    <div class="cta-block reveal">
+      <span class="cta-shader" aria-hidden="true"></span>
+      <div class="cta-inner">
+        <p class="sec-label">TOGETHER · 一起打磨</p>
+        <h2 class="sec-title">有想法？一起打磨 <span class="thin">Ninkoro</span></h2>
+        <p class="sec-desc">关于做东西、工具的边界，与一个审美偏见——欢迎写信聊聊。</p>
+        <div class="cta-actions">
+          <a class="btn solid" data-mailto href="mailto:hi@ninkoro.com">写信给 hi@ninkoro.com <span class="arrow"></span></a>
+          <a class="btn ghost" href="about.html">认识一下</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
@@ -141,5 +182,6 @@
 <script src="assets/js/content.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/search.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/main.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/effects.js?v=__BUILD_HASH__" defer></script>
 </body>
 </html>
