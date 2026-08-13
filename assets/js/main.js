@@ -8,7 +8,7 @@
   /* ---------- 导航滚动态 ---------- */
   var nav = document.querySelector(".nav");
   function onScroll() {
-    if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 24);
+    if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 80);
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
