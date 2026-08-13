@@ -97,13 +97,24 @@
   /* ---------- 终端打字 ---------- */
   var typeLayer = document.getElementById("typeLayer");
   var cursorEl = document.getElementById("cursor");
-  var TYPED_LINES = [
+  var TYPED_LINES_ZH = [
     { t: "$ git clone https://github.com/ninkoro-ai/ninkoro-com", c: "ln-cmd" },
     { t: "$ cd ninkoro-com && python -m http.server 8080", c: "ln-cmd" },
     { t: "→ 你好，我是 Ninkoro", c: "ln-out" },
     { t: "$ open https://ninkoro.com", c: "ln-cmd" },
     { t: "→ 心桥 · 股权穿透 · 我ai学习", c: "ln-ok" }
   ];
+  var TYPED_LINES_EN = [
+    { t: "$ git clone https://github.com/ninkoro-ai/ninkoro-com", c: "ln-cmd" },
+    { t: "$ cd ninkoro-com && python -m http.server 8080", c: "ln-cmd" },
+    { t: "→ Hi, I'm Ninkoro", c: "ln-out" },
+    { t: "$ open https://ninkoro.com", c: "ln-cmd" },
+    { t: "→ Xinqiao · Equity Penetration · AI Study", c: "ln-ok" }
+  ];
+  function typedLines() {
+    return (window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh") ? TYPED_LINES_ZH : TYPED_LINES_EN;
+  }
+  var TYPED_LINES = typedLines();
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -121,6 +132,7 @@
 
   function typeStart() {
     if (!typeLayer || !cursorEl) return;
+    TYPED_LINES = typedLines();
     if (reduceMotion) {
       typeLayer.innerHTML = buildTypeHTML(TYPED_LINES.length, 0);
       return;
@@ -147,4 +159,9 @@
   }
 
   typeStart();
+  document.addEventListener("ninkoro:langchange", function () {
+    if (!typeLayer) return;
+    typeLayer.innerHTML = "";
+    typeStart();
+  });
 })();

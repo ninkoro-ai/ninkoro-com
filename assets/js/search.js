@@ -7,10 +7,21 @@
   "use strict";
 
   var GROUP_ORDER = ["作品", "书影音", "想法", "资源", "工具", "长文", "归档", "关于", "页面"];
+  var GROUP_LABELS = {
+    "作品": { en: "Works", zh: "作品" },
+    "书影音": { en: "Shares", zh: "书影音" },
+    "想法": { en: "Thoughts", zh: "想法" },
+    "资源": { en: "Resources", zh: "资源" },
+    "工具": { en: "Tools", zh: "工具" },
+    "长文": { en: "Long Read", zh: "长文" },
+    "归档": { en: "Archive", zh: "归档" },
+    "关于": { en: "About", zh: "关于" },
+    "页面": { en: "Pages", zh: "页面" }
+  };
   var MAX_RESULTS = 30;
 
   /* 静态页面清单（不在 DEFAULTS 里的页面与长文章节） */
-  var STATIC_PAGES = [
+  var STATIC_PAGES_ZH = [
     { t: "首页", g: "页面", d: "Ninkoro 的个人站：AI Builder · Personal Lab。从「心桥」到 AI Agent 产品设计实战手册。", u: "index.html", k: "home 个人站 实验室 入口" },
     { t: "作品", g: "页面", d: "做出来后自己还想再看一眼的东西：股权穿透、心桥、我ai学习、Ninkoro.com。", u: "projects.html", k: "projects 作品集 项目 入口" },
     { t: "分享", g: "页面", d: "书影音与资源工具：看过的好东西，和真正每天都在用的工具。", u: "knowledge.html", k: "知识 分享 书影音 资源 工具 入口" },
@@ -32,6 +43,28 @@
     { t: "第三章　Skill 生态与插件化架构设计", g: "长文", d: "Skill 生态与插件化架构：如何让 Agent 的能力可插拔、可扩展。", u: "ai-agent-handbook.html#ch3", k: "skill 插件 架构 扩展" },
     { t: "第四章　安全合规与边界设计", g: "长文", d: "Agent 安全的四层防护、HITL 人机边界、权限模型与合规框架。", u: "ai-agent-handbook.html#ch4", k: "安全 hitl 权限 rbac 合规 边界 支付" },
     { t: "第五章　从 MVP 到规模化运营", g: "长文", d: "Agent 产品的 MVP 定义、核心指标体系与规模化运营。", u: "ai-agent-handbook.html#ch5", k: "mvp 指标 运营 规模化 留存" }
+  ];
+
+  var STATIC_PAGES_EN = [
+    { t: "Home", g: "页面", d: "Ninkoro's personal site: AI Builder · Personal Lab. From LifeOS to the AI Agent Product Design Handbook.", u: "index.html", k: "home personal lab entrance" },
+    { t: "Works", g: "页面", d: "Things made and still worth a second look: Xinqiao, Equity Penetration, AI Study, Ninkoro.com and LifeOS.", u: "projects.html", k: "projects portfolio entrance" },
+    { t: "Share", g: "页面", d: "Books, films, music and the tools I actually use every day.", u: "knowledge.html", k: "share books films music resources tools entrance" },
+    { t: "Thoughts", g: "页面", d: "Unsystematic musings about making things, the boundaries of tools and one aesthetic prejudice.", u: "thoughts.html", k: "thoughts musings essays entrance" },
+    { t: "About", g: "页面", d: "About Ninkoro: introduction, quick facts, timeline, what I'm doing now, and MBTI & zodiac traits.", u: "about.html", k: "about resume timeline mbti zodiac" },
+    { t: "Archive", g: "页面", d: "Historical pages and archived content from Ninkoro's site — zero content lost.", u: "archive.html", k: "archive history old pages" },
+    { t: "Shares", g: "页面", d: "Books read, films watched, music on repeat — with ratings.", u: "shares.html", k: "books films music douban ratings" },
+    { t: "Links", g: "页面", d: "A personal start page: shared IDs, 4K movies and cloud-search resources.", u: "links.html", k: "links navigation bookmarks resources ids movies" },
+    { t: "Tools", g: "页面", d: "Hardware, software, everyday craft and AI partners — only what I use daily.", u: "tools.html", k: "tools gear hardware software principles" },
+    { t: "Wiki (old)", g: "归档", d: "The original wiki index: AI Agent, FitBuddy and Ninkoro Philosophy, preserved.", u: "wiki.html", k: "wiki knowledge base ai agent fitbuddy philosophy" },
+    { t: "AI Agent", g: "归档", d: "Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool and Execution.", u: "wiki/ai-agent.html", k: "planner memory tool execution architecture" },
+    { t: "FitBuddy", g: "归档", d: "FitBuddy product design notes: AI auto class-booking and meal-ordering, and the human-confirmation boundary.", u: "wiki/fitbuddy.html", k: "booking ordering boundary product lefit mcdonald" },
+    { t: "Ninkoro Philosophy", g: "归档", d: "Why Ninkoro exists, the Personal OS idea, and what personal knowledge assets mean in the age of AI.", u: "wiki/ninkoro-philosophy.html", k: "philosophy personal os knowledge assets" },
+    { t: "AI Agent Product Design Handbook", g: "长文", d: "An Agent product design methodology for product managers and AI founders — five chapters, end-to-end, with real LifeOS cases.", u: "ai-agent-handbook.html", k: "handbook methodology agent product design" },
+    { t: "Chapter 1 · The essence and design patterns of AI Agent products", g: "长文", d: "From Chatbot to Agent; the five-layer architecture; four product case studies; four design principles and a feasibility checklist.", u: "ai-agent-handbook.html#ch1", k: "chatbot assistant five layers intent planning execution feedback safety" },
+    { t: "Chapter 2 · User intent understanding and multi-turn dialogue design", g: "长文", d: "The three-layer intent model and multi-turn dialogue design: bridging ambiguity and precision.", u: "ai-agent-handbook.html#ch2", k: "intent dialogue context clarification" },
+    { t: "Chapter 3 · Skill ecosystem and plugin architecture design", g: "长文", d: "The Skill ecosystem and plugin architecture: making an Agent's capabilities pluggable and extensible.", u: "ai-agent-handbook.html#ch3", k: "skill plugin architecture extension" },
+    { t: "Chapter 4 · Safety, compliance and boundary design", g: "长文", d: "Four layers of Agent safety, the HITL boundary, permission models and compliance frameworks.", u: "ai-agent-handbook.html#ch4", k: "safety hitl permissions rbac compliance boundary payment" },
+    { t: "Chapter 5 · From MVP to scaled operations", g: "长文", d: "Defining an Agent product's MVP, core metrics and scaling operations.", u: "ai-agent-handbook.html#ch5", k: "mvp metrics operations scaling retention" }
   ];
 
   /* ---------- 索引 ---------- */
@@ -77,7 +110,8 @@
         (a.now || []).forEach(function (n) { push(out, n.title, "关于", n.body, "about.html", "此刻在做"); });
       }
     }
-    STATIC_PAGES.forEach(function (p) { push(out, p.t, p.g, p.d, p.u, p.k, p.x); });
+    var staticPages = (window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh") ? STATIC_PAGES_ZH : STATIC_PAGES_EN;
+    staticPages.forEach(function (p) { push(out, p.t, p.g, p.d, p.u, p.k, p.x); });
     return out;
   }
 
@@ -145,12 +179,14 @@
   var overlay, input, resultsEl;
 
   function render(query, terms, hits) {
+    var lang = (window.NINKORO_CMS && window.NINKORO_CMS.getLang) ? window.NINKORO_CMS.getLang() : "en";
+    var gLabel = function (g) { var m = GROUP_LABELS[g]; return m ? m[lang] : g; };
     if (!query) {
-      resultsEl.innerHTML = '<div class="search-state">输入关键词，搜索作品、想法、书影音与工具</div>';
+      resultsEl.innerHTML = '<div class="search-state">' + (lang === "zh" ? "输入关键词，搜索作品、想法、书影音与工具" : "Type to search works, thoughts, shares and tools") + "</div>";
       return;
     }
     if (!hits.length) {
-      resultsEl.innerHTML = '<div class="search-state">没有找到相关内容，换个关键词试试</div>';
+      resultsEl.innerHTML = '<div class="search-state">' + (lang === "zh" ? "没有找到相关内容，换个关键词试试" : "No results. Try another keyword.") + "</div>";
       return;
     }
     var html = "", lastGroup = null;
@@ -158,7 +194,7 @@
       var e = hit.e;
       if (e.g !== lastGroup) {
         lastGroup = e.g;
-        html += '<div class="sr-group">' + esc(e.g) + "</div>";
+        html += '<div class="sr-group">' + esc(gLabel(e.g)) + "</div>";
       }
       html += '<div class="search-result' + (idx === 0 ? " is-active" : "") + (e.ext ? " has-ext" : "") + '">';
       html += '<a class="sr-main" href="' + esc(e.u) + '"' + (e.x ? ' target="_blank" rel="noopener"' : "") + ">" +
@@ -224,6 +260,11 @@
     });
 
     document.addEventListener("ninkoro:rendered", function () { INDEX = buildIndex(); });
+    document.addEventListener("ninkoro:langchange", function () {
+      INDEX = buildIndex();
+      var r = doSearch(input.value);
+      render(input.value, r.terms, r.hits);
+    });
 
     document.addEventListener("keydown", function (ev) {
       if (ev.isComposing) return;

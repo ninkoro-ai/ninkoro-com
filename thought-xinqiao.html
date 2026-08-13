@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>从一句 slogan 到一款被真正用起来的产品：心桥诞生记 — Ninkoro</title>
-<meta name="description" content="记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。">
+<title data-en="From a slogan to a product people actually use: the birth of Xinqiao — Ninkoro" data-zh="从一句 slogan 到一款被真正用起来的产品：心桥诞生记 — Ninkoro">From a slogan to a product people actually use: the birth of Xinqiao — Ninkoro</title>
+<meta name="description" data-i18n-meta data-en="The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way." data-zh="记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。" content="The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way.">
 <meta name="theme-color" content="#0e0d0b">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Ninkoro">
-<meta property="og:title" content="从一句 slogan 到一款被真正用起来的产品：心桥诞生记 — Ninkoro">
-<meta property="og:description" content="记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。">
+<meta property="og:title" data-i18n-meta data-en="From a slogan to a product people actually use: the birth of Xinqiao — Ninkoro" data-zh="从一句 slogan 到一款被真正用起来的产品：心桥诞生记 — Ninkoro" content="From a slogan to a product people actually use: the birth of Xinqiao — Ninkoro">
+<meta property="og:description" data-i18n-meta data-en="The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way." data-zh="记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。" content="The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way.">
 <meta property="og:url" content="https://ninkoro.com/thought-xinqiao.html">
 <meta property="og:image" content="https://ninkoro.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="从一句 slogan 到一款被真正用起来的产品：心桥诞生记 — Ninkoro">
-<meta name="twitter:description" content="记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。">
+<meta name="twitter:title" data-i18n-meta data-en="From a slogan to a product people actually use: the birth of Xinqiao — Ninkoro" data-zh="从一句 slogan 到一款被真正用起来的产品：心桥诞生记 — Ninkoro" content="From a slogan to a product people actually use: the birth of Xinqiao — Ninkoro">
+<meta name="twitter:description" data-i18n-meta data-en="The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way." data-zh="记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。" content="The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way.">
 <meta name="twitter:image" content="https://ninkoro.com/og.png">
 <link rel="canonical" href="https://ninkoro.com/thought-xinqiao.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
@@ -191,35 +191,37 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Ninkoro<em>.com</em></a>
     <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="projects.html">作品</a>
-      <a href="knowledge.html">分享</a>
-      <a href="thoughts.html">想法</a>
-      <a href="about.html">关于</a>
+      <a href="index.html" data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="projects.html" data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="knowledge.html" data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="thoughts.html" data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="about.html" data-i18n data-en="About" data-zh="关于">About</a>
     </div>
-    <button class="nav-search" data-search-open aria-label="搜索全站" title="搜索全站 (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
-    <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lg-en">EN</span><i></i><span class="lg-zh">中文</span></button>
+    <button class="nav-search" data-search-open data-i18n-aria data-en="Search site" data-zh="搜索全站" aria-label="Search site" title="Search site (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
+    <button class="nav-burger" data-i18n-aria data-en="Open menu" data-zh="打开菜单" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu">
-      <a href="index.html"><span class="idx">01</span>首页</a>
-      <a href="projects.html"><span class="idx">02</span>作品</a>
-      <a href="knowledge.html"><span class="idx">03</span>分享</a>
-      <a href="thoughts.html"><span class="idx">04</span>想法</a>
-      <a href="about.html"><span class="idx">05</span>关于</a>
+      <a href="index.html"><span class="idx">01</span data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="projects.html"><span class="idx">02</span data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="knowledge.html"><span class="idx">03</span data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="thoughts.html"><span class="idx">04</span data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="about.html"><span class="idx">05</span data-i18n data-en="About" data-zh="关于">About</a>
     </div>
 
 <header class="article-head wrap">
-  <a href="thoughts.html" class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;">返回想法</a>
+  <a href="thoughts.html" class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;"><span data-i18n data-en="Back to Thoughts" data-zh="返回想法">Back to Thoughts</span></a>
   <p class="en hero-enter" style="--d:.08s;--enter-y:18px;--enter-blur:6px;">FIELD NOTES · PRODUCT</p>
-  <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;">从一句 slogan 到一款被真正用起来的产品：心桥诞生记</h1>
-  <p class="article-sub hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;">一个人、一次长对话、十几个版本的迭代。这篇文章整理「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。</p>
+  <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;" data-i18n data-en="From a slogan to a product people actually use: the birth of Xinqiao" data-zh="从一句 slogan 到一款被真正用起来的产品：心桥诞生记">From a slogan to a product people actually use: the birth of Xinqiao</h1>
+  <p class="article-sub hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;" data-i18n data-en="One person, one long conversation, a dozen iterations. This article organizes Xinqiao&apos;s complete thinking path from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way." data-zh="一个人、一次长对话、十几个版本的迭代。这篇文章整理「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。">One person, one long conversation, a dozen iterations. This article organizes Xinqiao&apos;s complete thinking path from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way.</p>
   <div class="article-meta hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;">
-    <span>2026.08</span><span>·</span><span>约 25 分钟阅读</span><span>·</span><span><b>产品思考 · 设计复盘</b></span>
+    <span>2026.08</span><span>·</span><span data-i18n data-en="25 min read" data-zh="约 25 分钟阅读">25 min read</span><span>·</span><span data-i18n><b data-en="Product thinking · Design review" data-zh="产品思考 · 设计复盘">Product thinking · Design review</b></span>
   </div>
 </header>
 
-<div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
+<div data-i18n-body></div>
+<template data-lang-body="zh"><div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
 
 <div class="article-layout">
   <aside class="toc-side">
@@ -344,13 +346,137 @@
 <p>如果这篇文章里有一个想法能帮到你，那最好的是这一句：<strong>先想清楚为什么，再决定做什么；承认做不到的，比假装做到更接近做好。</strong></p>
 </section>
 
-  </main>
+  </main></template>
+<template data-lang-body="en"><div class="toc-inline" id="tocInline"><p class="toc-ttl">Contents</p></div>
+
+<div class="article-layout">
+  <aside class="toc-side">
+    <p class="toc-ttl">Contents</p>
+    <nav class="toc-nav"><ul class="toc-list">
+      <li><a href="#ch1">1. Origin: why build Xinqiao</a><ul class="toc-sub"><li><a href="#s1_1">1.1 A pain point raised again and again</a></li><li><a href="#s1_2">1.2 Think first, then write code</a></li><li><a href="#s1_3">1.3 Three self-imposed limits: privacy, zero cost, minimalism</a></li></ul></li>
+      <li><a href="#ch2">2. From 0 to 1: building the minimal loop</a><ul class="toc-sub"><li><a href="#s2_1">2.1 Restrained tech choices</a></li><li><a href="#s2_2">2.2 The “30-second rule” and the first skeleton</a></li></ul></li>
+      <li><a href="#ch3">3. Thinking behind each feature (line by line)</a><ul class="toc-sub"><li><a href="#s3_1">3.1 Birthday field: from strict validation to smart parsing</a></li><li><a href="#s3_2">3.2 Reminders: 7 days ahead and the “three times a day” sense of proportion</a></li><li><a href="#s3_3">3.3 Greeting generation: why not call an AI</a></li><li><a href="#s3_4">3.4 Family relationships: customer relationships are a network, not points</a></li><li><a href="#s3_5">3.5 Notes follow the person: information belongs to its owner</a></li><li><a href="#s3_6">3.6 Birthday profile tags: age, zodiac animal, benmingnian, star sign</a></li><li><a href="#s3_7">3.7 Star marks: an “attention dimension” beyond value grades</a></li><li><a href="#s3_8">3.8 Demo mode: let people understand the product in 30 seconds</a></li><li><a href="#s3_9">3.9 Pagination and multi-dimensional filters: when the list grows</a></li><li><a href="#s3_10">3.10 Smart gender detection: the detail of typing one less character</a></li><li><a href="#s3_11">3.11 Undo import and triple confirmation: making it safe to use</a></li><li><a href="#s3_12">3.12 Export reminders: embedding backups into the workflow</a></li></ul></li>
+      <li><a href="#ch4">4. Docs and the storefront: the manual behind the tool</a><ul class="toc-sub"><li><a href="#s4_1">4.1 PRD and user manual: who are they for</a></li><li><a href="#s4_2">4.2 Design considerations: every feature answers “why”</a></li><li><a href="#s4_3">4.3 The website: product first, storefront second</a></li></ul></li>
+      <li><a href="#ch5">5. Pitfalls and fixes</a><ul class="toc-sub"><li><a href="#s5_1">5.1 Mobile focus zoom: the 16px rule</a></li><li><a href="#s5_2">5.2 The Cloudflare Direct Upload 404 mystery</a></li><li><a href="#s5_3">5.3 Deferring launch: admitting “we can't do this yet”</a></li></ul></li>
+      <li><a href="#ch6">6. Some product thinking</a><ul class="toc-sub"><li><a href="#s6_1">6.1 The value of a tool is reducing omissions</a></li><li><a href="#s6_2">6.2 Sense of boundary: what to automate, what to ask</a></li><li><a href="#s6_3">6.3 Aesthetics and restraint</a></li><li><a href="#s6_4">6.4 Next steps</a></li></ul></li>
+      <li><a href="#ch7">Closing</a></li>
+    </ul></nav>
+  </aside>
+  <main class="article-body">
+
+<section class="chapter" id="ch1"><h2 class="ch-title">1. Origin: why build Xinqiao</h2>
+<p>The product began with a very plain need: <strong>bank relationship managers maintain a large number of clients every day. Birthdays are the lowest-cost, highest-emotional-value touchpoint — but relying on Excel, notes and human memory, they get missed.</strong> What gets missed isn't a date; it's the chance, inside a relationship, to show “someone has me in mind”.</p>
+<h3 class="sec-title" id="s1_1">1.1 A pain point raised again and again</h3>
+<p>Like many tools, the problem came first, the product second. The relationship manager's pain is specific:</p>
+<ul><li><strong>Many clients, birthdays easily missed</strong> — spreadsheets and notes give no early warning; missing the birthday touchpoint of an important A-class client loses an emotional connection;</li><li><strong>High compliance risk</strong> — names, account numbers, ID numbers and transaction data must not be retained, yet traditional spreadsheet management is exactly how sensitive information leaks;</li><li><strong>No accumulation, no traceability</strong> — no unified maintenance records, no archive of years of contact, and no data support (like family relationships) for cross-segment collaboration.</li></ul>
+<p>And so the first PRD was written: product name tentatively “Client Birthday Care Assistant”, positioned as a <strong>lightweight web app</strong> for bank relationship managers, with the core loop “client info management → automatic birthday recognition → early reminder → same-day reminder → complete care → record the outcome”.</p>
+<h3 class="sec-title" id="s1_2">1.2 Think first, then write code</h3>
+<p>Before writing the first line of code, I forced myself to produce four things: <strong>UI prototype, database ER diagram, technical architecture plan, and an MVP task breakdown</strong>. The reason is simple: when a product is just starting, the cost of architectural rework far exceeds the time spent thinking.</p>
+<p>The key decisions made at this stage were almost never overturned later:</p>
+<ul><li><strong>Privacy boundary</strong>: only client ID, short name, birthday, gender, industry, grade and notes are stored; ID numbers, account numbers, full names and transaction data are never touched;</li><li><strong>Zero cost</strong>: pure frontend + browser local database — no servers, no paid database;</li><li><strong>Minimal operation</strong>: 30 seconds to 2 minutes a day to complete care — it adds no workload, only removes omissions.</li></ul>
+<h3 class="sec-title" id="s1_3">1.3 Three self-imposed limits: privacy, zero cost, minimalism</h3>
+<p>These three limits looked like “constraints” at the time; looking back, they are the product's biggest moat: by not touching sensitive data, compliance risk is naturally zero; with no server, there is no operations cost and no data-leak surface; by staying minimal, users are willing to open it every day.</p>
+<blockquote><strong>Constraints are not restrictions — they are decisions made for you in advance.</strong> Once “what not to do” is clear, “what to do” becomes simple.</blockquote>
+</section>
+
+<section class="chapter" id="ch2"><h2 class="ch-title">2. From 0 to 1: building the minimal loop</h2>
+<h3 class="sec-title" id="s2_1">2.1 Restrained tech choices</h3>
+<p>The stack was almost settled in the first PRD: <strong>React + TypeScript + Vite</strong> for the frontend, <strong>Dexie.js (IndexedDB)</strong> for local storage, <strong>SheetJS</strong> to parse Excel in the browser, and <strong>PWA</strong> for offline and installability. Nothing that needs a server was introduced.</p>
+<p>This choice has an easily overlooked benefit: <strong>deployment is static hosting</strong>. Moving later from GitHub Pages to Cloudflare Pages cost almost nothing; it works offline too — a relationship manager in a weak-signal branch or traveling can still view and record.</p>
+<h3 class="sec-title" id="s2_2">2.2 The “30-second rule” and the first skeleton</h3>
+<p>The first feature skeleton revolved around “open the app and know what to do today”: three stats at the top (today's birthdays / next 7 days / A-class clients), a today card with “generate greeting” and “complete care”, and a next-7-days list sorted by countdown. The whole path was deliberately compressed into one screen — see the list, send the greeting, record the result, no page hopping.</p>
+<p>The “30-second rule” later became my ruler for every feature: <strong>if a feature can't make the user feel “useful” within 30 seconds, it shouldn't be on the first screen.</strong></p>
+</section>
+
+<section class="chapter" id="ch3"><h2 class="ch-title">3. Thinking behind each feature (line by line)</h2>
+<h3 class="sec-title" id="s3_1">3.1 Birthday field: from strict validation to smart parsing</h3>
+<p>The earliest batch import used strict format validation, and a lot of perfectly normal data was rejected as “format error”. Real-world Excel is far messier than imagined: some write <code class="inline">1990/08/05</code>, some <code class="inline">1990.08.05</code>, some <code class="inline">1990年8月5日</code>, some only <code class="inline">8月5日</code>, and some paste Excel's date serial number (a string of digits).</p>
+<p>The lesson: <strong>the end of validation isn't “is the format correct”, it's “can the data be used”.</strong> So the strategy became smart parsing: try to parse; if it parses, normalize to <code class="inline">YYYY-MM-DD</code> or <code class="inline">MM-DD</code>; only report an error when it can't parse, with a readable row number. It ended up supporting 8 common formats, plus “yearless birthdays” — many existing clients only know month and day, not the year.</p>
+<div class="tbl-scroll"><table><thead><tr><th>Input</th><th>Example</th><th>Normalized</th></tr></thead><tbody>
+<tr><td>YYYY-MM-DD</td><td>1990-08-05</td><td>1990-08-05</td></tr>
+<tr><td>MM-DD (month-day only)</td><td>08-05</td><td>08-05</td></tr>
+<tr><td>Slash / dot</td><td>1990/08/05, 1990.08.05</td><td>1990-08-05</td></tr>
+<tr><td>Chinese year-month-day</td><td>1990年8月5日 / 8月5日</td><td>1990-08-05 / 08-05</td></tr>
+<tr><td>No zero padding</td><td>8-5 / 8/5 / 8.5</td><td>08-05</td></tr>
+<tr><td>Excel date object / serial</td><td>Date / 45874</td><td>auto-converted</td></tr>
+</tbody></table></div>
+<h3 class="sec-title" id="s3_2">3.2 Reminders: 7 days ahead and the “three times a day” sense of proportion</h3>
+<p>Reminders have two levels: <strong>7 days ahead</strong> gives the manager time to prepare (flowers, gifts, scheduling); <strong>three same-day reminders for A-class clients</strong> (09:00 / 10:00 / 14:00) is about giving a key client more than one chance if the first touch misses.</p>
+<p>There's an honest interlude here: <strong>“three times a day” was eventually deferred.</strong> Since the product is a pure web app without system notification permission, so-called “scheduled reminders” can only be seen when the app is open — they can't truly reach the user on time. Rather than keep a feature that didn't live up to its name, the module was taken offline, with the PRD and user manual keeping the explanation and reason, to be restored once push notifications are available.</p>
+<blockquote><strong>Admitting “we can't do this yet” is harder and more worthwhile than pretending “it's done”.</strong> Features can be deferred; trust cannot be overdrawn.</blockquote>
+<p>Another detail: “reminder state is not persisted”. Whether a client has been contacted is derived dynamically from whether a care record exists for that day, rather than stored as a boolean. That way it doesn't expire across years — mark a client contacted last year, and this year's birthday still reminds you anew.</p>
+<h3 class="sec-title" id="s3_3">3.3 Greeting generation: why not call an AI</h3>
+<p>Many would assume “generating greetings = calling a large model”. I chose the opposite: a <strong>local rule engine</strong> that composes randomly by grade, industry and note keywords.</p>
+<p>Three reasons: <strong>privacy</strong> (client data never leaves the device — no sending customer info to third parties), <strong>zero cost</strong> (no API fees), and <strong>offline availability</strong> (works without network). The rule engine also has a hidden advantage: stable, reproducible results, controllable length (30–80 characters), and it can filter stiff phrasing like “distinguished sir, sincere wishes” — more like a human WeChat message than a template.</p>
+<p>Details hidden in notes get recognized: tea culture, credit, wealth management, corporate banking, private banking, entrepreneurship, years of cooperation… these keywords turn the greeting from “broadcast” into “I remember you”.</p>
+<h3 class="sec-title" id="s3_4">3.4 Family relationships: customer relationships are a network, not points</h3>
+<p>The original motive for family relationships was cross-segment collaboration: the spouse, children and parents of a business owner may be the actual controller, the successor, or a key decision influencer. Behind one client often lies a whole family's business map.</p>
+<p>Family relationships went through three iterations: first simple “spouse / child / parent” tags; then <strong>search linking</strong> — linking a family member to an existing client by client ID or name, with <strong>bidirectional auto-sync</strong> (A adds “son B”, B's profile automatically shows “father A”); finally making relationships specific: husband / wife / son / daughter / father / mother, with the reverse relationship <strong>auto-inferred from the owner's gender</strong> (Mr. Liu registers “son”, the other profile shows “father: Mr. Liu”).</p>
+<p>Family members aren't necessarily existing clients, so free registration is also supported: just a name, birthday and note — no client ID needed; once a birthday is filled, they automatically join the same reminder sequence as standard clients — a family member's birthday is a care touchpoint too.</p>
+<h3 class="sec-title" id="s3_5">3.5 Notes follow the person: information belongs to its owner</h3>
+<p>This feature came from a real mix-up: you write “likes cigars” in Ms. Zhang's profile for her father Mr. Zhang, and the note gets copied under “daughter: Ms. Zhang” in Mr. Zhang's profile — next gift-giving, the cigars might go to Ms. Zhang.</p>
+<p>The fix is simple and important: <strong>information about “him” belongs to “him”.</strong> Notes written for a linked person sync into that person's own profile, rather than being copied onto both sides' relationship entry. When information sits in the right place, people don't get things mixed up.</p>
+<h3 class="sec-title" id="s3_6">3.6 Birthday profile tags: age, zodiac animal, benmingnian, star sign</h3>
+<p>A birthday that carries a year is a goldmine for profiling: <strong>age</strong> decides how to address someone and how deep the care goes; <strong>zodiac animal and “benmingnian” (the year of your own animal)</strong> directly serve gift-giving — preparing a red string or good-luck charm for a Horse-year client in a Horse year is a low-cost, memorable touch; <strong>star sign</strong> is a natural icebreaker in conversation.</p>
+<p>This rule has one deliberately designed boundary: <strong>tags only show when the birthday includes a year.</strong> For yearless birthdays, better to show nothing than to infer wrongly — an age joke hurts more than a missing tag.</p>
+<h3 class="sec-title" id="s3_7">3.7 Star marks: an “attention dimension” beyond value grades</h3>
+<p>Grades A/B/C measure “client value”, but “who deserves more of my attention” is a different judgment. A C-class client may be an important referrer; a client may be at a key business juncture — the star mark hands this second judgment back to the manager, decoupled from grade, pinnable and filterable anytime.</p>
+<h3 class="sec-title" id="s3_8">3.8 Demo mode: let people understand the product in 30 seconds</h3>
+<p>An empty product can't be demonstrated. So I embedded a complete demo dataset of 34 clients (including family relationships, care records, stars and profile tags) directly into the app — one toggle in settings loads it.</p>
+<p>There's an easily overlooked engineering decision here: <strong>demo data and real data are isolated in two separate IndexedDB databases.</strong> Turning demo mode on switches to the demo database; off switches back to the real one — no matter how lively the demo, it never contaminates a manager's real data.</p>
+<h3 class="sec-title" id="s3_9">3.9 Pagination and multi-dimensional filters: when the list grows</h3>
+<p>As the client base grows, rendering everyone on one screen is neither smooth nor browsable. So the client list became <strong>sorted by countdown to birthday, 20 per page</strong>, with a total count at the bottom. Filtering was consolidated from scattered buttons into <strong>dropdown menus</strong>: grade, industry, star, birth month, star sign, zodiac animal — “Horse + December”, for example, filters out all benmingnian clients for batch gift preparation.</p>
+<h3 class="sec-title" id="s3_10">3.10 Smart gender detection: the detail of typing one less character</h3>
+<p>When entering “Mr. Liu”, gender shouldn't need a separate selection. The system detects keywords from the short name (先生/哥/男士/男生 → male; 女士/姐/妹/女生 → female), the result can be freely edited, and once edited it won't be overwritten. A “type one less character” detail is product sense.</p>
+<h3 class="sec-title" id="s3_11">3.11 Undo import and triple confirmation: making it safe to use</h3>
+<p>Batch import is the highest-migration-cost action and the easiest to mis-trigger. So after importing, you can <strong>undo with one click</strong> (delete newly added clients, restore overwritten data); clearing data requires <strong>triple confirmation</strong>. One makes operations reversible, the other makes destructive operations hard to trigger accidentally — when people dare to use it, they use it.</p>
+<h3 class="sec-title" id="s3_12">3.12 Export reminders: embedding backups into the workflow</h3>
+<p>The biggest risk of local storage isn't “no data”, it's “data silently gone” — clearing phone memory, clearing history, switching devices can all do it. So after each completed care action, the app shows a <strong>backup reminder</strong> (at most once a day, unobtrusive), guiding the user to export; the export also skips empty cells and compresses column widths, making backups smaller and faster.</p>
+</section>
+
+<section class="chapter" id="ch4"><h2 class="ch-title">4. Docs and the storefront: the manual behind the tool</h2>
+<h3 class="sec-title" id="s4_1">4.1 PRD and user manual: who are they for</h3>
+<p>At a certain point, I realized what really separates good products isn't features, but “whether the why is clearly explained”. So two sets of documents were produced: the <strong>PRD</strong> (for whoever rebuilds it and for my future self — with requirement IDs, acceptance criteria, design considerations) and the <strong>user manual</strong> (for users — with real screenshots, even generated as a PDF embedded on the website for download).</p>
+<p>The PRD has a section dedicated to “design considerations”: every feature answers “why does it exist” once. The zodiac tag is for gifting and greetings; the star mark is for expressing attention; notes following the person are so gifts don't go to the wrong person. Documents aren't decoration; they're the archive of product decisions.</p>
+<h3 class="sec-title" id="s4_2">4.2 Design considerations: every feature answers “why”</h3>
+<p>“First solve whether it exists, then whether it's good” is the guiding principle I wrote in the docs. Almost every line in the comparison table was forced out by a real problem:</p>
+<ul><li>See “who to care for today” the moment you open it → reduce decision cost;</li><li>Birthdays with only month and day are accepted → shutting out existing data is the same as not importing;</li><li>Status derived from the day's records → not persisted, so it never expires across years;</li><li>Demo data in a separate database → demos can't pollute real data;</li><li>Export reminder after completing care → embedding backup at the most natural moment.</li></ul>
+<h3 class="sec-title" id="s4_3">4.3 The website: product first, storefront second</h3>
+<p>Only after the product stabilized was the website worth building. It kept the original narrative logic (industry pain → core value → real scenarios → quick start → feature matrix → tech & security), but all content was rewritten for the latest features, replacing screenshot mockups with a mobile-first, pure-CSS product demo on the homepage. Deferred features like the three-time reminder carry an asterisk and a small footnote — the storefront must be honest too.</p>
+</section>
+
+<section class="chapter" id="ch5"><h2 class="ch-title">5. Pitfalls and fixes</h2>
+<h3 class="sec-title" id="s5_1">5.1 Mobile focus zoom: the 16px rule</h3>
+<p>Tap the search box on an iPhone and the page suddenly zooms — a classic iOS Safari behavior: inputs with font sizes below 16px auto-zoom. The fix wasn't disabling zoom (that hurts accessibility), but raising every input control's font size to 16px. A pixel-level spec solves an experience-level problem.</p>
+<h3 class="sec-title" id="s5_2">5.2 The Cloudflare Direct Upload 404 mystery</h3>
+<p>On the first deployment to Cloudflare Pages, the API said “deploy successful” but the live site was all 404s. Four multipart field formats failed; finally the official Wrangler CLI worked first try. Lesson: <strong>when official tools exist, don't hand-write protocol details</strong> — the time saved is enough for another feature iteration.</p>
+<h3 class="sec-title" id="s5_3">5.3 Deferring launch: admitting “we can't do this yet”</h3>
+<p>“Same-day reminder (A-class, three times)” was removed from the product because there's no system notification permission, but the PRD and user manual keep the explanation with its reason, and the website marks it with an asterisk. Removing a feature isn't failure — it's making <strong>“product honesty” part of the launch standard</strong>.</p>
+</section>
+
+<section class="chapter" id="ch6"><h2 class="ch-title">6. Some product thinking</h2>
+<h3 class="sec-title" id="s6_1">6.1 The value of a tool is reducing omissions</h3>
+<p>Xinqiao didn't invent a new need; it simply made “remembering” reliable. Good tools don't create anxiety — they take over the things humans are bad at (remembering dates, counting down, drafting messages) and leave people's energy for what truly needs a human (a phone call, a greeting).</p>
+<h3 class="sec-title" id="s6_2">6.2 Sense of boundary: what to automate, what to ask</h3>
+<p>This product has a boundary that appears again and again: the system can remind, generate and record, but it <strong>doesn't decide for people</strong> — greetings need human confirmation, records are filled by humans, and clearing data needs triple confirmation. There's a thin line between automation and intrusion; good systems know when to stop and ask.</p>
+<h3 class="sec-title" id="s6_3">6.3 Aesthetics and restraint</h3>
+<p>From the orange-white theme to the 16px input, from the slogan “a bridge of hearts” to the asterisk footnotes on the website, restraint runs through everything: one fewer button where possible, one fewer field where possible, honest annotation where ambiguity exists. A product's final texture often comes from these decisions of “less”.</p>
+<h3 class="sec-title" id="s6_4">6.4 Next steps</h3>
+<p>Restore the “three times a day” reminder once system push/notification capability is available; build daily/weekly summaries from user and team fields; and keep polishing the details that make relationship managers “willing to open it every day”.</p>
+</section>
+
+<section class="chapter" id="ch7"><h2 class="ch-title">Closing</h2>
+<p>Looking back at this development log, what moves me most isn't how many features were built, but how almost every feature corresponds to a real trade-off: privacy vs convenience, completeness vs minimalism, automation vs intrusion, now vs later.</p>
+<p>The product is called Xinqiao, and the slogan is “a bridge of hearts”. What it ultimately wants to do is very small: <strong>help relationship managers remember, and help clients feel they are in someone's heart.</strong></p>
+<blockquote><strong>Tools don't create relationships; tools keep relationships from being forgotten.</strong></blockquote>
+<p>If one idea in this article can help you, let it be this: <strong>think clearly about why before deciding what; and admitting what you can't do is closer to doing it well than pretending you did.</strong></p>
+</section></template>
 </div>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
-      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <p class="big" data-i18n-html data-en='Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>' data-zh='有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>'>Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year></span> NINKORO.COM</span>
@@ -360,19 +486,20 @@
 
 <div class="search-overlay" data-search-overlay aria-hidden="true">
   <div class="search-backdrop" data-search-close></div>
-  <div class="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索">
+  <div class="search-panel" role="dialog" aria-modal="true" data-i18n-aria data-en="Site-wide search" data-zh="全站搜索" aria-label="Site-wide search">
     <div class="search-bar">
       <span class="ico ico-search" aria-hidden="true"></span>
-      <input type="search" class="search-input" placeholder="搜索作品、想法、书影音、工具…" autocomplete="off" spellcheck="false" aria-label="搜索全站内容">
-      <button type="button" class="search-esc" data-search-close aria-label="关闭搜索">ESC</button>
+      <input type="search" class="search-input" data-i18n-placeholder data-en="Search works, thoughts, shares, tools…" data-zh="搜索作品、想法、书影音、工具…" placeholder="Search works, thoughts, shares, tools…" autocomplete="off" spellcheck="false" data-i18n-aria data-en="Search site content" data-zh="搜索全站内容" aria-label="Search site content">
+      <button type="button" class="search-esc" data-search-close data-i18n-aria data-en="Close search" data-zh="关闭搜索" aria-label="Close search">ESC</button>
     </div>
     <div class="search-hints">
-      <span>↑↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span><span>Ctrl+K 随时呼出</span>
+      <span data-i18n data-en="↑↓ Navigate" data-zh="↑↓ 选择">↑↓ Navigate</span><span data-i18n data-en="Enter Open" data-zh="Enter 打开">Enter Open</span><span data-i18n data-en="Esc Close" data-zh="Esc 关闭">Esc Close</span><span data-i18n data-en="Ctrl+K anytime" data-zh="Ctrl+K 随时呼出">Ctrl+K anytime</span>
     </div>
     <div class="search-results" data-search-results></div>
   </div>
 </div>
 <script src="assets/js/main.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/i18n.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/content.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/search.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/handbook.js?v=__BUILD_HASH__" defer></script>

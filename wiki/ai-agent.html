@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Agent — Ninkoro Wiki</title>
-<meta name="description" content="关于 AI Agent 的架构、产品设计与实践记录：从 Planner、Memory、Tool 到 Execution 的完整拆解。">
+<meta name="description" data-i18n-meta data-en="Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool and Execution." data-zh="关于 AI Agent 的架构、产品设计与实践记录：从 Planner、Memory、Tool 到 Execution 的完整拆解。" content="Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool and Execution.">
 <meta name="keywords" content="AI Agent, Agent 架构, Planner, Memory, Tool Use, 产品设计, Ninkoro Wiki">
 <meta name="theme-color" content="#0e0d0b">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Ninkoro">
 <meta property="og:title" content="AI Agent — Ninkoro Wiki">
-<meta property="og:description" content="关于 AI Agent 的架构、产品设计与实践记录：Planner、Memory、Tool、Execution。">
+<meta property="og:description" data-i18n-meta data-en="Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool, Execution." data-zh="关于 AI Agent 的架构、产品设计与实践记录：Planner、Memory、Tool、Execution。" content="Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool, Execution.">
 <meta property="og:url" content="https://ninkoro.com/wiki/ai-agent.html">
 <meta property="og:image" content="https://ninkoro.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI Agent — Ninkoro Wiki">
-<meta name="twitter:description" content="关于 AI Agent 的架构、产品设计与实践记录：Planner、Memory、Tool、Execution。">
+<meta name="twitter:description" data-i18n-meta data-en="Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool, Execution." data-zh="关于 AI Agent 的架构、产品设计与实践记录：Planner、Memory、Tool、Execution。" content="Notes on AI Agent architecture, product design and practice: Planner, Memory, Tool, Execution.">
 <meta name="twitter:image" content="https://ninkoro.com/og.png">
 <link rel="canonical" href="https://ninkoro.com/wiki/ai-agent.html">
 <script type="application/ld+json" src="../assets/data/person.jsonld"></script>
@@ -29,32 +29,34 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">Ninkoro<em>.com</em></a>
     <div class="nav-links">
-      <a href="../index.html">首页</a>
-      <a href="../projects.html">作品</a>
-      <a href="../knowledge.html">分享</a>
-      <a href="../thoughts.html">想法</a>
-      <a href="../about.html">关于</a>
+      <a href="../index.html" data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="../projects.html" data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="../knowledge.html" data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="../thoughts.html" data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="../about.html" data-i18n data-en="About" data-zh="关于">About</a>
     </div>
-    <button class="nav-search" data-search-open aria-label="搜索全站" title="搜索全站 (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
+    <button class="lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lg-en">EN</span><i></i><span class="lg-zh">中文</span></button>
+    <button class="nav-search" data-search-open data-i18n-aria data-en="Search site" data-zh="搜索全站" aria-label="Search site" title="Search site (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
     <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu">
-      <a href="../index.html"><span class="idx">01</span>首页</a>
-      <a href="../projects.html"><span class="idx">02</span>作品</a>
-      <a href="../knowledge.html"><span class="idx">03</span>分享</a>
-      <a href="../thoughts.html"><span class="idx">04</span>想法</a>
-      <a href="../about.html"><span class="idx">05</span>关于</a>
+      <a href="../index.html"><span class="idx">01</span data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="../projects.html"><span class="idx">02</span data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="../knowledge.html"><span class="idx">03</span data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="../thoughts.html"><span class="idx">04</span data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="../about.html"><span class="idx">05</span data-i18n data-en="About" data-zh="关于">About</a>
 </div>
 
 <article class="page-head wrap longread">
-  <a class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;" href="../knowledge.html">返回分享</a>
+  <a class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;" href="../knowledge.html"><span data-i18n data-en="Back to Share" data-zh="返回分享">Back to Share</span></a>
   <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;">AI Agent</h1>
-  <p class="lede hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;">一种能自己规划、调用工具、执行动作来完成目标的 AI 系统。这篇记录我对 Agent 架构的理解，以及做 LifeOS 时踩过的坑。</p>
-  <p class="updated hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;">更新于 2026.07</p>
-  <nav class="toc-inline" id="tocInline" aria-label="目录"></nav>
+  <p class="lede hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;" data-i18n data-en="An AI system that plans, calls tools and executes actions to reach a goal. This note records how I understand Agent architecture, and the pitfalls I hit building LifeOS." data-zh="一种能自己规划、调用工具、执行动作来完成目标的 AI 系统。这篇记录我对 Agent 架构的理解，以及做 LifeOS 时踩过的坑。">An AI system that plans, calls tools and executes actions to reach a goal. This note records how I understand Agent architecture, and the pitfalls I hit building LifeOS.</p>
+  <p class="updated hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;"><span data-i18n data-en="Updated 2026.07" data-zh="更新于 2026.07">Updated 2026.07</span></p>
+  <nav class="toc-inline" id="tocInline" data-auto aria-label="Contents"></nav>
 
-  <h2>什么是 Agent</h2>
+  <div data-i18n-body></div>
+<template data-lang-body="zh"><h2>什么是 Agent</h2>
   <p>传统 chatbot 是「你问一句，它答一句」；Agent 的区别在于<strong>它手里有了动作</strong>。给它一个目标，它会自己拆步骤、决定调用什么工具、执行、看结果、再决定下一步，直到目标达成或主动停下来问人。</p>
   <p>判断一个东西是不是 Agent，看三件事：有没有<strong>目标驱动</strong>的循环、能不能<strong>接触外部世界</strong>（工具/API）、以及是否有<strong>停下来求助</strong>的边界感。</p>
 
@@ -98,13 +100,57 @@
     <h4>相关文章</h4>
     <a href="fitbuddy.html">FitBuddy：Agent 在产品里的落地 <span class="arrow"></span></a>
     <a href="ninkoro-philosophy.html">Ninkoro Philosophy：为什么做这些 <span class="arrow"></span></a>
-  </section>
-</article>
+  </section></template>
+<template data-lang-body="en"><h2>What is an Agent</h2>
+  <p>A traditional chatbot answers what you ask, one turn at a time; the difference with an Agent is that <strong>it has hands</strong>. Give it a goal, and it breaks it into steps, decides which tools to call, executes, reads the result, and decides what to do next — until the goal is done or it deliberately stops to ask a human.</p>
+  <p>Three things tell you whether something is an Agent: a <strong>goal-driven</strong> loop, the ability to <strong>touch the outside world</strong> (tools/APIs), and a <strong>sense of boundary</strong> about when to stop and ask for help.</p>
+
+  <h2>Agent architecture overview</h2>
+  <p>A usable Agent usually has four parts, interlocking in sequence:</p>
+  <table>
+    <thead><tr><th>Module</th><th>Responsibility</th><th>Key question</th></tr></thead>
+    <tbody>
+      <tr><td>Planner</td><td>Break the goal into an executable plan</td><td>How fine? When to re-plan?</td></tr>
+      <tr><td>Memory</td><td>Remember context and history</td><td>What to keep? What to forget?</td></tr>
+      <tr><td>Tool</td><td>Extend capability to the world</td><td>What to expose? How to fail safely?</td></tr>
+      <tr><td>Execution</td><td>Turn plans into actions and collect results</td><td>Who confirms dangerous operations?</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Planner: turning goals into executable plans</h2>
+  <p>The Planner doesn't do the work itself; it produces the “what to do next” list. A good Planner doesn't break things down to the finest grain — it <strong>stops at a granularity that can be safely handed to a Tool</strong>. Too coarse, and the Tool has nothing to grab; too fine, and you lose flexibility.</p>
+  <blockquote>If the model isn't settled, the faster you write, the more you rework. The Planner's prompt and structure deserve the most polish time.</blockquote>
+  <p>In practice we have the Planner output steps with dependencies, and decide whether to <strong>re-plan</strong> after each step: when real results diverge from expectations, regenerate the remaining steps instead of forcing the original plan.</p>
+
+  <h2>Memory: letting the Agent remember context</h2>
+  <p>Memory has two layers: <strong>short-term</strong> (the context window of the current session) and <strong>long-term</strong> (facts, preferences and past decisions accumulated across sessions). Long-term memory is what turns an Agent from a “one-shot tool” into a “long-term partner”.</p>
+  <ul>
+    <li><strong>What to write</strong>: the user's stable preferences, completed tasks, pitfalls hit.</li>
+    <li><strong>What to forget</strong>: transient intermediate states, one-off dirty data.</li>
+    <li><strong>How to retrieve</strong>: relevance-based retrieval, not stuffing everything into context.</li>
+  </ul>
+
+  <h2>Tool: extending capability to the world</h2>
+  <p>Tools are the interface between the Agent and the real world — checking calendars, placing orders, sending messages, reading databases. The most important thing to design for when exposing a Tool is its <strong>failure modes</strong>: every Tool can error, time out, or produce irreversible consequences.</p>
+  <pre class="code"><code>// Minimal Tool contract
+{ name, description, input_schema,
+  execute(args) -&gt; { ok, data?, error? } }</code></pre>
+  <p>Design principle: read-only operations may run automatically; <strong>write operations and anything involving money or privacy must wait for human confirmation</strong>. In LifeOS the system can place an order up to “awaiting payment”, but never pays automatically — that hard boundary decides whether the system is a helper or a nuisance.</p>
+
+  <h2>Execution: from plan to action</h2>
+  <p>Execution is where the Agent actually “does things”: calling Tools, collecting results, feeding them back to the Planner for the next decision. It's the most overlooked part and yet the most decisive for experience — pacing, readability, and how exceptions are expressed are all product problems.</p>
+  <p>The execution loop must find the proportion between “automatic” and “intrusive”: handle what it can without bothering people, and never decide on people's behalf when it should ask. That line decides whether users trust it or fear it.</p>
+
+  <section class="related">
+    <h4>Related</h4>
+    <a href="fitbuddy.html">FitBuddy: Agents in a real product <span class="arrow"></span></a>
+    <a href="ninkoro-philosophy.html">Ninkoro Philosophy: why build these <span class="arrow"></span></a>
+  </section></template></article>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
-      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <p class="big" data-i18n-html data-en='Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>' data-zh='有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>'>Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year></span> NINKORO.COM</span>
@@ -114,18 +160,19 @@
 
 <div class="search-overlay" data-search-overlay aria-hidden="true">
   <div class="search-backdrop" data-search-close></div>
-  <div class="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索">
+  <div class="search-panel" role="dialog" aria-modal="true" data-i18n-aria data-en="Site-wide search" data-zh="全站搜索" aria-label="Site-wide search">
     <div class="search-bar">
       <span class="ico ico-search" aria-hidden="true"></span>
-      <input type="search" class="search-input" placeholder="搜索作品、想法、书影音、工具…" autocomplete="off" spellcheck="false" aria-label="搜索全站内容">
-      <button type="button" class="search-esc" data-search-close aria-label="关闭搜索">ESC</button>
+      <input type="search" class="search-input" data-i18n-placeholder data-en="Search works, thoughts, shares, tools…" data-zh="搜索作品、想法、书影音、工具…" placeholder="Search works, thoughts, shares, tools…" autocomplete="off" spellcheck="false" data-i18n-aria data-en="Search site content" data-zh="搜索全站内容" aria-label="Search site content">
+      <button type="button" class="search-esc" data-search-close data-i18n-aria data-en="Close search" data-zh="关闭搜索" aria-label="Close search">ESC</button>
     </div>
     <div class="search-hints">
-      <span>↑↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span><span>Ctrl+K 随时呼出</span>
+      <span data-i18n data-en="↑↓ Navigate" data-zh="↑↓ 选择">↑↓ Navigate</span><span data-i18n data-en="Enter Open" data-zh="Enter 打开">Enter Open</span><span data-i18n data-en="Esc Close" data-zh="Esc 关闭">Esc Close</span><span data-i18n data-en="Ctrl+K anytime" data-zh="Ctrl+K 随时呼出">Ctrl+K anytime</span>
     </div>
     <div class="search-results" data-search-results></div>
   </div>
 </div>
+<script src="../assets/js/i18n.js?v=__BUILD_HASH__" defer></script>
 <script src="../assets/js/content.js?v=__BUILD_HASH__" defer></script>
 <script src="../assets/js/search.js?v=__BUILD_HASH__" defer></script>
 <script src="../assets/js/main.js?v=__BUILD_HASH__" defer></script>

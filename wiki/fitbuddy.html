@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FitBuddy — Ninkoro Wiki</title>
-<meta name="description" content="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及背后「执行闭环 + 人工确认」的边界设计。">
+<meta name="description" data-i18n-meta data-en="FitBuddy product design notes: AI auto class-booking and meal-ordering, and the boundary design of “execution loop + human confirmation”." data-zh="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及背后「执行闭环 + 人工确认」的边界设计。" content="FitBuddy product design notes: AI auto class-booking and meal-ordering, and the boundary design of “execution loop + human confirmation”.">
 <meta name="keywords" content="FitBuddy, 自动约课, 自动点餐, AI 生活助手, 产品设计, Ninkoro Wiki">
 <meta name="theme-color" content="#0e0d0b">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Ninkoro">
 <meta property="og:title" content="FitBuddy — Ninkoro Wiki">
-<meta property="og:description" content="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及人工确认边界。">
+<meta property="og:description" data-i18n-meta data-en="FitBuddy product design notes: AI auto class-booking and meal-ordering, and the human-confirmation boundary." data-zh="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及人工确认边界。" content="FitBuddy product design notes: AI auto class-booking and meal-ordering, and the human-confirmation boundary.">
 <meta property="og:url" content="https://ninkoro.com/wiki/fitbuddy.html">
 <meta property="og:image" content="https://ninkoro.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="FitBuddy — Ninkoro Wiki">
-<meta name="twitter:description" content="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及人工确认边界。">
+<meta name="twitter:description" data-i18n-meta data-en="FitBuddy product design notes: AI auto class-booking and meal-ordering, and the human-confirmation boundary." data-zh="FitBuddy 的产品设计记录：AI 自动约课与自动点餐，以及人工确认边界。" content="FitBuddy product design notes: AI auto class-booking and meal-ordering, and the human-confirmation boundary.">
 <meta name="twitter:image" content="https://ninkoro.com/og.png">
 <link rel="canonical" href="https://ninkoro.com/wiki/fitbuddy.html">
 <script type="application/ld+json" src="../assets/data/person.jsonld"></script>
@@ -29,32 +29,34 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">Ninkoro<em>.com</em></a>
     <div class="nav-links">
-      <a href="../index.html">首页</a>
-      <a href="../projects.html">作品</a>
-      <a href="../knowledge.html">分享</a>
-      <a href="../thoughts.html">想法</a>
-      <a href="../about.html">关于</a>
+      <a href="../index.html" data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="../projects.html" data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="../knowledge.html" data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="../thoughts.html" data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="../about.html" data-i18n data-en="About" data-zh="关于">About</a>
     </div>
-    <button class="nav-search" data-search-open aria-label="搜索全站" title="搜索全站 (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
+    <button class="lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lg-en">EN</span><i></i><span class="lg-zh">中文</span></button>
+    <button class="nav-search" data-search-open data-i18n-aria data-en="Search site" data-zh="搜索全站" aria-label="Search site" title="Search site (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
     <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu">
-      <a href="../index.html"><span class="idx">01</span>首页</a>
-      <a href="../projects.html"><span class="idx">02</span>作品</a>
-      <a href="../knowledge.html"><span class="idx">03</span>分享</a>
-      <a href="../thoughts.html"><span class="idx">04</span>想法</a>
-      <a href="../about.html"><span class="idx">05</span>关于</a>
+      <a href="../index.html"><span class="idx">01</span data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="../projects.html"><span class="idx">02</span data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="../knowledge.html"><span class="idx">03</span data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="../thoughts.html"><span class="idx">04</span data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="../about.html"><span class="idx">05</span data-i18n data-en="About" data-zh="关于">About</a>
 </div>
 
 <article class="page-head wrap longread">
-  <a class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;" href="../knowledge.html">返回分享</a>
+  <a class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;" href="../knowledge.html"><span data-i18n data-en="Back to Share" data-zh="返回分享">Back to Share</span></a>
   <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;">FitBuddy</h1>
-  <p class="lede hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;">LifeOS 的第一个落地场景：用 Agent 替你搞定「今天练什么、吃什么」这两件每天重复的决定，把认知带宽留给真正重要的事。</p>
-  <p class="updated hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;">更新于 2026.07</p>
-  <nav class="toc-inline" id="tocInline" aria-label="目录"></nav>
+  <p class="lede hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;" data-i18n data-en="The first scenario LifeOS ships: an Agent handles the two daily repeated decisions of “what to train and what to eat”, freeing cognitive bandwidth for what truly matters." data-zh="LifeOS 的第一个落地场景：用 Agent 替你搞定「今天练什么、吃什么」这两件每天重复的决定，把认知带宽留给真正重要的事。">The first scenario LifeOS ships: an Agent handles the two daily repeated decisions of “what to train and what to eat”, freeing cognitive bandwidth for what truly matters.</p>
+  <p class="updated hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;"><span data-i18n data-en="Updated 2026.07" data-zh="更新于 2026.07">Updated 2026.07</span></p>
+  <nav class="toc-inline" id="tocInline" data-auto aria-label="Contents"></nav>
 
-  <h2>产品定位</h2>
+  <div data-i18n-body></div>
+<template data-lang-body="zh"><h2>产品定位</h2>
   <p>FitBuddy 不是健身 App，也不是菜谱 App。它是一个<strong>主动的生活执行层</strong>：你定方向（想增肌、想控预算），它把「约课」「点餐」这类重复决策接过去，做成、并替你执行到「只差你点头」的那一步。</p>
   <p>它的边界很清醒——<strong>系统可以下到待付款，但绝不自动扣款</strong>。这条线，是产品信任感的来源。</p>
 
@@ -77,13 +79,36 @@
     <h4>相关文章</h4>
     <a href="ai-agent.html">AI Agent：执行闭环背后的架构 <span class="arrow"></span></a>
     <a href="ninkoro-philosophy.html">Ninkoro Philosophy：为什么做这些 <span class="arrow"></span></a>
-  </section>
-</article>
+  </section></template>
+<template data-lang-body="en"><h2>Product positioning</h2>
+  <p>FitBuddy is not a fitness app, and not a recipe app. It's an <strong>active life-execution layer</strong>: you set the direction (build muscle, watch the budget), and it takes over repetitive decisions like “booking a class” and “ordering a meal” — completing them up to the one step that needs your nod.</p>
+  <p>Its boundary is clear-headed — <strong>the system can go as far as “awaiting payment”, but never pays automatically</strong>. That line is the source of the product's trustworthiness.</p>
+
+  <h2>Auto class-booking</h2>
+  <p>The user gives preferences (time slots, coach, frequency); the Agent queries available classes, checks conflicts, generates a booking plan, and submits it — the order goes through once the human confirms. The core is the Planner translating “I want to train three times this week” into concrete actions like “Tue/Thu evening, Saturday morning”.</p>
+  <ul>
+    <li><strong>Input</strong>: training goals, available slots, attendance history.</li>
+    <li><strong>Execute</strong>: check schedule → pick classes → hold a spot (pending confirmation).</li>
+    <li><strong>Human confirms</strong>: one-tap approve, or adjust and resubmit.</li>
+  </ul>
+
+  <h2>Auto meal-ordering</h2>
+  <p>Based on training days (leg day means more protein), budget, and personal taste, the Agent plans a weekly menu and orders on partner platforms. The hard part isn't “recommending” — it's <strong>making budget and taste hard constraints</strong>: an over-budget plan should never even appear.</p>
+  <blockquote>Humans make hundreds of decisions a day, most of them repetitive and low-value. Save that cognitive bandwidth for what actually matters.</blockquote>
+
+  <h2>An AI life assistant</h2>
+  <p>Booking classes and ordering meals are two entry points to the same underlying thing: <strong>hand repetitive life decisions to the system, keep direction and confirmation rights for the human</strong>. Once FitBuddy proves the loop, the pattern can be copied to more scenarios — its value isn't any single feature, but the reusable skeleton of “execution loop + human confirmation”.</p>
+
+  <section class="related">
+    <h4>Related</h4>
+    <a href="ai-agent.html">AI Agent: the architecture behind the execution loop <span class="arrow"></span></a>
+    <a href="ninkoro-philosophy.html">Ninkoro Philosophy: why build these <span class="arrow"></span></a>
+  </section></template></article>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
-      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <p class="big" data-i18n-html data-en='Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>' data-zh='有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>'>Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year></span> NINKORO.COM</span>
@@ -93,18 +118,19 @@
 
 <div class="search-overlay" data-search-overlay aria-hidden="true">
   <div class="search-backdrop" data-search-close></div>
-  <div class="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索">
+  <div class="search-panel" role="dialog" aria-modal="true" data-i18n-aria data-en="Site-wide search" data-zh="全站搜索" aria-label="Site-wide search">
     <div class="search-bar">
       <span class="ico ico-search" aria-hidden="true"></span>
-      <input type="search" class="search-input" placeholder="搜索作品、想法、书影音、工具…" autocomplete="off" spellcheck="false" aria-label="搜索全站内容">
-      <button type="button" class="search-esc" data-search-close aria-label="关闭搜索">ESC</button>
+      <input type="search" class="search-input" data-i18n-placeholder data-en="Search works, thoughts, shares, tools…" data-zh="搜索作品、想法、书影音、工具…" placeholder="Search works, thoughts, shares, tools…" autocomplete="off" spellcheck="false" data-i18n-aria data-en="Search site content" data-zh="搜索全站内容" aria-label="Search site content">
+      <button type="button" class="search-esc" data-search-close data-i18n-aria data-en="Close search" data-zh="关闭搜索" aria-label="Close search">ESC</button>
     </div>
     <div class="search-hints">
-      <span>↑↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span><span>Ctrl+K 随时呼出</span>
+      <span data-i18n data-en="↑↓ Navigate" data-zh="↑↓ 选择">↑↓ Navigate</span><span data-i18n data-en="Enter Open" data-zh="Enter 打开">Enter Open</span><span data-i18n data-en="Esc Close" data-zh="Esc 关闭">Esc Close</span><span data-i18n data-en="Ctrl+K anytime" data-zh="Ctrl+K 随时呼出">Ctrl+K anytime</span>
     </div>
     <div class="search-results" data-search-results></div>
   </div>
 </div>
+<script src="../assets/js/i18n.js?v=__BUILD_HASH__" defer></script>
 <script src="../assets/js/content.js?v=__BUILD_HASH__" defer></script>
 <script src="../assets/js/search.js?v=__BUILD_HASH__" defer></script>
 <script src="../assets/js/main.js?v=__BUILD_HASH__" defer></script>

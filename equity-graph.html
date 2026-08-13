@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro</title>
-<meta name="description" content="「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象——真实很重要，但让人看懂更重要。">
+<title data-en="Why drawing one equity chart nearly crashed a system — Ninkoro" data-zh="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro">Why drawing one equity chart nearly crashed a system — Ninkoro</title>
+<meta name="description" data-i18n-meta data-en="The architecture story behind the Equity Penetration tool: cramming real corporate relationships into a tree loses information. A re-abstraction from Tree to Graph — being truthful matters, but being legible matters more." data-zh="「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象——真实很重要，但让人看懂更重要。" content="The architecture story behind the Equity Penetration tool: cramming real corporate relationships into a tree loses information. A re-abstraction from Tree to Graph — being truthful matters, but being legible matters more.">
 <meta name="theme-color" content="#0e0d0b">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Ninkoro">
-<meta property="og:title" content="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro">
-<meta property="og:description" content="把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象——真实很重要，但让人看懂更重要。">
+<meta property="og:title" data-i18n-meta data-en="Why drawing one equity chart nearly crashed a system — Ninkoro" data-zh="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro" content="Why drawing one equity chart nearly crashed a system — Ninkoro">
+<meta property="og:description" data-i18n-meta data-en="Cramming real corporate relationships into a tree loses information. A re-abstraction from Tree to Graph — truth matters, but legibility matters more." data-zh="把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象——真实很重要，但让人看懂更重要。" content="Cramming real corporate relationships into a tree loses information. A re-abstraction from Tree to Graph — truth matters, but legibility matters more.">
 <meta property="og:url" content="https://ninkoro.com/equity-graph.html">
 <meta property="og:image" content="https://ninkoro.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro">
-<meta name="twitter:description" content="把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象。">
+<meta name="twitter:title" data-i18n-meta data-en="Why drawing one equity chart nearly crashed a system — Ninkoro" data-zh="为什么画一张股权图，差点把一个系统搞崩溃？ — Ninkoro" content="Why drawing one equity chart nearly crashed a system — Ninkoro">
+<meta name="twitter:description" data-i18n-meta data-en="Cramming real corporate relationships into a tree loses information. A re-abstraction from Tree to Graph." data-zh="把真实企业关系硬塞进一棵树，信息必然丢失。一次从 Tree 到 Graph 的重新抽象。" content="Cramming real corporate relationships into a tree loses information. A re-abstraction from Tree to Graph.">
 <meta name="twitter:image" content="https://ninkoro.com/og.png">
 <link rel="canonical" href="https://ninkoro.com/equity-graph.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
@@ -165,35 +165,37 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Ninkoro<em>.com</em></a>
     <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="projects.html">作品</a>
-      <a href="knowledge.html">分享</a>
-      <a href="thoughts.html">想法</a>
-      <a href="about.html">关于</a>
+      <a href="index.html" data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="projects.html" data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="knowledge.html" data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="thoughts.html" data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="about.html" data-i18n data-en="About" data-zh="关于">About</a>
     </div>
-    <button class="nav-search" data-search-open aria-label="搜索全站" title="搜索全站 (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
-    <button class="nav-burger" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lg-en">EN</span><i></i><span class="lg-zh">中文</span></button>
+    <button class="nav-search" data-search-open data-i18n-aria data-en="Search site" data-zh="搜索全站" aria-label="Search site" title="Search site (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
+    <button class="nav-burger" data-i18n-aria data-en="Open menu" data-zh="打开菜单" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu">
-      <a href="index.html"><span class="idx">01</span>首页</a>
-      <a href="projects.html"><span class="idx">02</span>作品</a>
-      <a href="knowledge.html"><span class="idx">03</span>分享</a>
-      <a href="thoughts.html"><span class="idx">04</span>想法</a>
-      <a href="about.html"><span class="idx">05</span>关于</a>
+      <a href="index.html"><span class="idx">01</span data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="projects.html"><span class="idx">02</span data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="knowledge.html"><span class="idx">03</span data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="thoughts.html"><span class="idx">04</span data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="about.html"><span class="idx">05</span data-i18n data-en="About" data-zh="关于">About</a>
     </div>
 
 <header class="article-head wrap">
-  <a href="thoughts.html" class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;">返回想法</a>
+  <a href="thoughts.html" class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;"><span data-i18n data-en="Back to Thoughts" data-zh="返回想法">Back to Thoughts</span></a>
   <p class="en hero-enter" style="--d:.08s;--enter-y:18px;--enter-blur:6px;">FIELD NOTES · ARCHITECTURE</p>
-  <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;">为什么画一张股权图，差点把一个系统搞崩溃？</h1>
-  <p class="article-sub hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;">「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失；换成一张「网」之后才发现，真正的难题是——真实，不等于能看。</p>
+  <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;" data-i18n data-en="Why drawing one equity chart nearly crashed a system" data-zh="为什么画一张股权图，差点把一个系统搞崩溃？">Why drawing one equity chart nearly crashed a system</h1>
+  <p class="article-sub hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;" data-i18n data-en="The architecture story behind the Equity Penetration tool: cramming real corporate relationships into a tree loses information; switching to a graph revealed the real challenge — being truthful is not the same as being legible." data-zh="「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失；换成一张「网」之后才发现，真正的难题是——真实，不等于能看。">The architecture story behind the Equity Penetration tool: cramming real corporate relationships into a tree loses information; switching to a graph revealed the real challenge — being truthful is not the same as being legible.</p>
   <div class="article-meta hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;">
-    <span>2026.08</span><span>·</span><span>约 12 分钟阅读</span><span>·</span><span><b>无需技术背景</b></span>
+    <span>2026.08</span><span>·</span><span data-i18n data-en="12 min read" data-zh="约 12 分钟阅读">12 min read</span><span>·</span><span data-i18n><b data-en="No technical background needed" data-zh="无需技术背景">No technical background needed</b></span>
   </div>
 </header>
 
-<div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
+<div data-i18n-body></div>
+<template data-lang-body="zh"><div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
 
 <div class="article-layout">
   <aside class="toc-side">
@@ -419,13 +421,238 @@ ViewGraph        （阅读视角：为读者做的合理精简）
 <blockquote><strong>代码可以很快写出来，但正确的问题抽象，只能来自对业务世界的真正理解。</strong></blockquote>
 </section>
 
-  </main>
+  </main></template>
+<template data-lang-body="en"><div class="toc-inline" id="tocInline"><p class="toc-ttl">Contents</p></div>
+
+<div class="article-layout">
+  <aside class="toc-side">
+    <p class="toc-ttl">Contents</p>
+    <nav class="toc-nav"><ul class="toc-list">
+      <li><a href="#ch1">1. The trigger: a request that looked ten minutes long</a></li>
+      <li><a href="#ch2">2. First stumble: forcing reality into a family tree
+        <ul class="toc-sub">
+          <li><a href="#s2_1">Problem 1: one shareholder, many control paths</a></li>
+          <li><a href="#s2_2">Problem 2: equity relationships can “loop”</a></li>
+          <li><a href="#s2_3">Problem 3: the company itself ≠ a dot on the chart</a></li>
+        </ul>
+      </li>
+      <li><a href="#ch3">3. The real problem: the way we understood the world was wrong</a></li>
+      <li><a href="#ch4">4. A new language: from family tree to metro map</a></li>
+      <li><a href="#ch5">5. New problem: truthful is not the same as legible</a></li>
+      <li><a href="#ch6">6. Setting rules: the equity penetration rules</a></li>
+      <li><a href="#ch7">7. Final architecture: three worlds, each doing its job</a></li>
+      <li><a href="#ch8">8. DisplayGraph: one company, several “clones”</a></li>
+      <li><a href="#ch9">9. ViewGraph: legibility matters more than completeness</a></li>
+      <li><a href="#ch10">10. The biggest shift: draw what needs understanding, not everything</a></li>
+      <li><a href="#ch11">11. Thoughts on developing in the AI age</a></li>
+      <li><a href="#ch12">12. The final result</a></li>
+      <li><a href="#ch13">13. What this project taught me</a></li>
+      <li><a href="#ch14">Closing</a></li>
+    </ul></nav>
+  </aside>
+
+  <main class="article-body">
+
+<section class="chapter" id="ch1">
+<h2 class="ch-title">1. The trigger: a request that looked like it would take ten minutes</h2>
+<p>The story opens unremarkably. The request I received was one sentence:</p>
+<blockquote>Input a company's shareholder information, and automatically generate an equity structure chart.</blockquote>
+<p>If corporate relationships were simple, this would indeed be easy. For example:</p>
+<pre class="code"><code>Zhang San
+  │ owns 100%
+  ▼
+Group Co. A
+  │ owns 80%
+  ▼
+Target company</code></pre>
+<p>Or several shareholders side by side:</p>
+<pre class="code"><code>Shareholder A 60%  Shareholder B 30%  Shareholder C 10%
+        └────────┬────────┘
+                 ▼
+            Target company</code></pre>
+<p>Such structures look exactly like a <strong>family tree</strong>: one ancestor at the top, generations of “descendants” below, every bloodline a single line, never looping.</p>
+<p>In programming, this structure has a name: the “<strong>Tree</strong>”. Think of it as a family tree or an org chart: every member has exactly one direct superior, the levels are clear, and cycles never happen.</p>
+<p>Because a tree is simple, easy to compute and easy to draw, many familiar systems are built on it: computer folder hierarchies, website menus, product categories… So my initial plan was unsurprising: use a tree.</p>
+<p><strong>But reality soon slapped me — real corporate equity relationships are not a tree.</strong></p>
+</section>
+
+<section class="chapter" id="ch2">
+<h2 class="ch-title">2. First stumble: forcing the real world into a family tree</h2>
+<p>The initial design was naive: every company records one “superior” (who its shareholder is), hung layer by layer, like filling in the “direct manager” column for employees. It seemed self-evident. But as real cases came in one by one, the problems piled up.</p>
+
+<h3 class="sec-title" id="s2_1">Problem 1: one shareholder can influence the same company through several paths</h3>
+<p>For example:</p>
+<pre class="code"><code>Company A ──60%──&gt; Company B ──50%──&gt; Company D
+Company A ──30%──&gt; Company C ──40%──&gt; Company D</code></pre>
+<p>That is: Company A influences Company D through both B and C.</p>
+<p>But a family tree has an iron law: <strong>everyone has exactly one parent</strong>. A node can only hang under one parent. So the system was left with two bad choices:</p>
+<ul>
+<li><strong>Option one: delete one of the paths.</strong> Consequence: information is lost, and the chart is missing a real control line.</li>
+<li><strong>Option two: duplicate Company A.</strong> Consequence: the same company becomes two “clones”, and the data no longer matches reality.</li>
+</ul>
+<p>Either choice was wrong.</p>
+
+<h3 class="sec-title" id="s2_2">Problem 2: equity relationships “loop” in reality</h3>
+<p>For example:</p>
+<pre class="code"><code>Company A → Company B → Company C → Company A (back to the start)</code></pre>
+<p>Cross-holding and circular holding are not rare in complex investment relationships. But a family tree forbids loops by nature — you can't be both your grandfather's grandson and your grandfather's grandfather.</p>
+<p>Forcing it makes the program fall into an infinite loop: A finds B, B finds C, C finds A, never stopping. We could only patch it: record “who has already been visited”, cut somewhere arbitrarily…</p>
+<p>The subtle result: <strong>the program didn't crash, but the data on the chart was already wrong.</strong> That's scarier than crashing — everything looks fine, yet the conclusion is false.</p>
+
+<h3 class="sec-title" id="s2_3">Problem 3: treating “the company itself” and “a dot on the chart” as the same thing</h3>
+<p>This was the most critical problem, and I only understood it later.</p>
+<p>The original design assumed: one company = one cell on the chart. “State Grid” could appear only once. But in reality, the same entity can be a direct shareholder, a link in a control chain, and appear on several investment paths at once.</p>
+<p><strong>“Who this company is” is unique, but “which paths it appears on” can be many.</strong> These are two completely different concepts, and I had merged them.</p>
+</section>
+
+<section class="chapter" id="ch3">
+<h2 class="ch-title">3. Stop and rethink: the problem isn't how the chart looks, it's “how we understand the world”</h2>
+<p>At first, all my optimization went the wrong way: tweaking layout algorithms, changing node arrangement, adding collapse rules, limiting displayed depth.</p>
+<p>All of those treat symptoms, not causes. Because I eventually realized:</p>
+<blockquote><strong>If the way you record data cannot express the real world, then every presentation-layer optimization is just patching on top of wrong data.</strong></blockquote>
+<p>The failing architecture looked like this:</p>
+<pre class="code"><code>Business-registration data
+   ↓
+ Tree              ← cannot hold the real world
+   ↓
+ Layout
+   ↓
+ crash / distorted data</code></pre>
+<p>So I went back to the fundamental question: what is an equity relationship, really?</p>
+<p>The answer: it is not a tree, but a <strong>network</strong>. In programming this is called a “<strong>Graph</strong>”. Don't be scared by the name — you use it every day: a <strong>metro map</strong> is a graph. Stations can be connected by multiple lines, you can transfer (multiple paths), and loop lines go in circles. These are exactly the things a family tree can't do, yet the real world does every day.</p>
+</section>
+
+<section class="chapter" id="ch4">
+<h2 class="ch-title">4. A new language: from “family tree” to “metro map”</h2>
+<p>Strictly speaking, a tree is a constrained special case of a graph — it adds a pile of restrictions: one root, one parent per node, no cycles, unique paths. A graph has none of those constraints and can naturally express multiple paths, multiple relationship kinds, and circular structures.</p>
+<p>So I tore down the original design and redefined the core model, calling it <code class="inline">EquityGraph</code>. It contains only two things:</p>
+<ul>
+<li><strong>Nodes</strong>: companies, natural persons, institutions (the “stations” of the metro map);</li>
+<li><strong>Edges</strong>: shareholding relationships, labeled with the percentage (the “lines” of the metro map).</li>
+</ul>
+<p>For example: <code class="inline">Company A ──60%──&gt; Company B ──50%──&gt; Target company</code></p>
+<p>At this step, <strong>the data layer finally became truthful</strong> — whatever reality looks like is what the system records: no lost information, no fabrication.</p>
+</section>
+
+<section class="chapter" id="ch5">
+<h2 class="ch-title">5. New problem: truthful is not the same as legible</h2>
+<p>After switching to a graph, the data was correct, but a new trouble arrived.</p>
+<p>If you draw every relationship of a large group in full, the scale can be: <strong>7,000+ nodes, 9,000+ edges</strong>. Such a chart is theoretically perfectly correct and practically completely unusable — printed out it's a ball of yarn nobody can read.</p>
+<p>I asked the question again: what do bankers actually want to know when they receive this chart?</p>
+<p>Not “every relationship this company has”, but one sentence: <strong>who is really in charge? Who controls this company?</strong></p>
+<p>And so a second layer of abstraction appeared: the <strong>business-rules layer</strong>.</p>
+</section>
+
+<section class="chapter" id="ch6">
+<h2 class="ch-title">6. Setting rules: the equity penetration rules</h2>
+<p>In the bank credit (loan approval) context, people care about: who are the first-layer shareholders, who is the controlling shareholder, and who is the ultimate actual controller.</p>
+<p>Based on that I designed a <code class="inline">Penetration Plan</code> — in plain words, a set of rules for “should we dig deeper”:</p>
+<ul>
+<li><strong>First-layer shareholders</strong>: show all of them;</li>
+<li><strong>Shareholding ≥ 25%</strong>: penetrate one more layer;</li>
+<li><strong>Encounter a natural person</strong>: stop (a person cannot have “shareholders”);</li>
+<li><strong>Encounter an offshore company</strong>: stop (unreachable, and not worth chasing).</li>
+</ul>
+<p>What this step does is turn “data facts” (all relationships) into “business view” (the relationships worth showing). Like a search engine: the web has billions of pages (the real world), but you only get the most relevant few (the business view) — not hiding truth, but filtering on your behalf.</p>
+</section>
+
+<section class="chapter" id="ch7">
+<h2 class="ch-title">7. Final architecture: three worlds, each doing its job</h2>
+<p>After the rebuild, the system flows through five layers, from data to final report:</p>
+<pre class="code"><code>Raw business-registration relationships
+      ↓
+EquityGraph      (the real world: records every relationship in full)
+      ↓
+PenetrationPlan  (business rules: which relationships to expand)
+      ↓
+DisplayGraph     (the presentation world: relationships ready to draw)
+      ↓
+ViewGraph        (the reading view: sensible simplification for readers)
+      ↓
+Bank-format layout → PPT / image</code></pre>
+<p>The two middle layers (DisplayGraph and ViewGraph) are the most critical and most overlooked designs in the whole architecture — they deserve their own sections.</p>
+</section>
+
+<section class="chapter" id="ch8">
+<h2 class="ch-title">8. DisplayGraph: one company can have several “clones”</h2>
+<p>As said earlier, “the company entity” and “a cell on the chart” are two different things. DisplayGraph is how the system formally acknowledges this.</p>
+<p>Take “the Ministry of Finance”: in the real data it is one entity, but it may appear on three different investment paths. If you force it into a single node, path information is lost. So DisplayGraph allows: <strong>one entity mapping to multiple display nodes</strong>.</p>
+<pre class="code"><code>Entity: Ministry of Finance (one, only)
+Display: Finance-Path 1, Finance-Path 2, Finance-Path 3</code></pre>
+<p>Like one teacher appearing in three class schedules — three cells on the schedules, but only one teacher. The schedule isn't fake, and the teacher wasn't cloned.</p>
+<p><strong>Data truthfulness: preserved.</strong></p>
+</section>
+
+<section class="chapter" id="ch9">
+<h2 class="ch-title">9. ViewGraph: making it legible matters more than “complete”</h2>
+<p>But a new contradiction appeared: if “Ministry of Finance” appears 65 times on the chart, no banker will accept the report.</p>
+<p>So another layer, ViewGraph, was added to do exactly one thing: <strong>reasonable folding for the reader</strong>.</p>
+<p>The dense 65 “Ministry of Finance” nodes fold into one, annotated “(65 paths in total)”. Meanwhile the backend keeps everything in full: where the paths come from, how many there are, what the raw relationships were. Those who want depth can expand at any time; those reading the report won't be drowned.</p>
+<p>This is the <strong>balance between data completeness and readability</strong> — details and summaries stored separately, each available on demand.</p>
+</section>
+
+<section class="chapter" id="ch10">
+<h2 class="ch-title">10. The biggest shift: draw what needs to be understood, not everything</h2>
+<p>Looking back, the biggest turning point of the whole project wasn't any technical solution, but a redefinition of the goal. My initial goal was:</p>
+<blockquote>Generate a complete equity chart.</blockquote>
+<p>I later realized this goal itself was wrong. The right goal is:</p>
+<blockquote><strong>Generate a control-relationship chart a banker can understand quickly.</strong></blockquote>
+<p>So the final layout is:</p>
+<pre class="code"><code>Ultimate controlling entity
+      ↓
+   Controlling shareholder
+      ↓
+   Borrowing company</code></pre>
+<p>First-layer shareholders spread horizontally (see them all at once); deeper control chains go vertically downward (layer by layer). Because that's how people actually read.</p>
+</section>
+
+<section class="chapter" id="ch11">
+<h2 class="ch-title">11. Thoughts on developing in the AI age</h2>
+<p>This project leaned heavily on AI-assisted development: writing code, running tests, refactoring modules, generating docs — AI helped everywhere. But my biggest takeaway was: <strong>AI cannot replace architectural judgment.</strong></p>
+<p>As an analogy: if I had told the AI from day one “optimize my equity chart's layout”, it would have dutifully made the tree prettier and prettier — yet the root problem was never the layout; it was that <strong>a tree could not hold the real world from day one</strong>.</p>
+<p>AI executes answers fast and well, but “asking the right question” remains a human job.</p>
+</section>
+
+<section class="chapter" id="ch12">
+<h2 class="ch-title">12. The final result</h2>
+<p>After the rebuild, the system does this:</p>
+<ul class="done-list">
+<li><strong>Shows all first-layer shareholders</strong> — see who's on the surface at a glance;</li>
+<li><strong>Automatically penetrates shareholders holding 25% or more</strong> until the actual controller is found;</li>
+<li><strong>Stops automatically at natural persons and offshore entities</strong> — no wasted work;</li>
+<li><strong>Supports one company held through multiple paths</strong> — no information lost;</li>
+<li><strong>Supports cross-holding</strong> — loops are no problem;</li>
+<li><strong>Generates bank-format PPT automatically</strong> — ready to use as-is;</li>
+<li><strong>Keeps even the most complex companies legible on one page</strong>.</li>
+</ul>
+<p>The system later became the online tool “Equity Penetration” (<code class="inline">ox.ninkoro.com</code>): upload a business-registration equity Excel, get a penetration structure chart automatically.</p>
+</section>
+
+<section class="chapter" id="ch13">
+<h2 class="ch-title">13. What this project taught me</h2>
+<p>Many software problems look technical on the surface, but underneath they are:</p>
+<blockquote><strong>Did you pick the right “abstraction” for understanding the world?</strong></blockquote>
+<ul>
+<li>The real world is a network — don't bend it into a tree;</li>
+<li>Users want a summary — don't dump raw data on them;</li>
+<li>Business needs judgment — don't hand over naked data only.</li>
+</ul>
+<p>Good system design is essentially this chain:</p>
+<pre class="code"><code>Real world → right abstraction → business rules → an expression users understand</code></pre>
+</section>
+
+<section class="chapter" id="ch14">
+<h2 class="ch-title">Closing</h2>
+<p>At first, I just wanted to solve “how to auto-generate an equity structure chart”. At the end I realized the real problem was: <strong>how to make a machine understand the complex equity relationships between companies, then re-tell them according to human business cognition.</strong></p>
+<p>This is probably the most important lesson in complex business-system development:</p>
+<blockquote><strong>Code can be written fast, but the right abstraction can only come from truly understanding the business world.</strong></blockquote>
+</section></template>
 </div>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
-      <p class="big">有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+      <p class="big" data-i18n-html data-en='Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>' data-zh='有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>'>Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year></span> NINKORO.COM</span>
@@ -435,19 +662,20 @@ ViewGraph        （阅读视角：为读者做的合理精简）
 
 <div class="search-overlay" data-search-overlay aria-hidden="true">
   <div class="search-backdrop" data-search-close></div>
-  <div class="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索">
+  <div class="search-panel" role="dialog" aria-modal="true" data-i18n-aria data-en="Site-wide search" data-zh="全站搜索" aria-label="Site-wide search">
     <div class="search-bar">
       <span class="ico ico-search" aria-hidden="true"></span>
-      <input type="search" class="search-input" placeholder="搜索作品、想法、书影音、工具…" autocomplete="off" spellcheck="false" aria-label="搜索全站内容">
-      <button type="button" class="search-esc" data-search-close aria-label="关闭搜索">ESC</button>
+      <input type="search" class="search-input" data-i18n-placeholder data-en="Search works, thoughts, shares, tools…" data-zh="搜索作品、想法、书影音、工具…" placeholder="Search works, thoughts, shares, tools…" autocomplete="off" spellcheck="false" data-i18n-aria data-en="Search site content" data-zh="搜索全站内容" aria-label="Search site content">
+      <button type="button" class="search-esc" data-search-close data-i18n-aria data-en="Close search" data-zh="关闭搜索" aria-label="Close search">ESC</button>
     </div>
     <div class="search-hints">
-      <span>↑↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span><span>Ctrl+K 随时呼出</span>
+      <span data-i18n data-en="↑↓ Navigate" data-zh="↑↓ 选择">↑↓ Navigate</span><span data-i18n data-en="Enter Open" data-zh="Enter 打开">Enter Open</span><span data-i18n data-en="Esc Close" data-zh="Esc 关闭">Esc Close</span><span data-i18n data-en="Ctrl+K anytime" data-zh="Ctrl+K 随时呼出">Ctrl+K anytime</span>
     </div>
     <div class="search-results" data-search-results></div>
   </div>
 </div>
 <script src="assets/js/main.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/i18n.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/content.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/search.js?v=__BUILD_HASH__" defer></script>
 <script src="assets/js/handbook.js?v=__BUILD_HASH__" defer></script>
