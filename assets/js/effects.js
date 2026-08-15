@@ -112,22 +112,45 @@
   var OK_ZH = ["个任务完成", "个神经元已连接", "个节点已连接", "条路径已穿透", "层深度"];
 
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-  function mkLine(c, en, zh) { return { c: c, en: en, zh: zh || en }; }
+  function mkLine(c, en, zh, glEn, glZh) {
+    return { c: c, en: en, zh: zh || en, gl: { en: glEn, zh: glZh || glEn } };
+  }
 
   function makeDemo() {
     var n = 3 + Math.floor(Math.random() * 2);
     var lines = [];
-    lines.push(mkLine("ln-cmd", "$ npx ninkoro " + pick(CMD)));
+    var cmd = pick(CMD);
+    lines.push(mkLine("ln-cmd", "$ npx ninkoro " + cmd, null,
+      "run the ninkoro " + cmd + " command", "运行 ninkoro 的 " + cmd + " 命令"));
     var used = {};
     while (lines.length < n) {
       var kind = Math.floor(Math.random() * 6);
       var line;
-      if (kind === 0) line = mkLine("ln-cmd", "const " + pick(NAMES) + " = new " + pick(TYPES) + "({ " + pick(KEYS) + ": " + pick(VALS) + " })");
-      else if (kind === 1) line = mkLine("ln-cmd", "await " + pick(NAMES) + "." + pick(METHODS) + "(" + pick(ARGS) + ")");
-      else if (kind === 2) line = mkLine("ln-cmd", "if (" + pick(CONDS) + ") { " + pick(NAMES) + ".go() }");
-      else if (kind === 3) line = mkLine("ln-cmd", "# " + pick(PHRASES_EN), "# " + pick(PHRASES_ZH));
-      else if (kind === 4) line = mkLine("ln-out", "→ " + pick(OUT_EN), "→ " + pick(OUT_ZH));
-      else line = mkLine("ln-ok", "✓ " + pick(NUMS) + " " + pick(OK_EN), "✓ " + pick(NUMS) + " " + pick(OK_ZH));
+      if (kind === 0) {
+        var nm = pick(NAMES), tp = pick(TYPES), ky = pick(KEYS), vl = pick(VALS);
+        line = mkLine("ln-cmd", "const " + nm + " = new " + tp + "({ " + ky + ": " + vl + " })", null,
+          "create a new " + tp + " instance named \u201c" + nm + "\u201d", "创建一个名为 " + nm + " 的 " + tp + " 实例");
+      } else if (kind === 1) {
+        var nm2 = pick(NAMES), mt = pick(METHODS), ar = pick(ARGS);
+        line = mkLine("ln-cmd", "await " + nm2 + "." + mt + "(" + ar + ")", null,
+          "await the result of " + nm2 + "." + mt, "等待 " + nm2 + "." + mt + " 的结果");
+      } else if (kind === 2) {
+        var cd = pick(CONDS);
+        line = mkLine("ln-cmd", "if (" + cd + ") { " + pick(NAMES) + ".go() }", null,
+          "only call go() when the condition holds", "条件成立时才调用 go()");
+      } else if (kind === 3) {
+        var phEn = pick(PHRASES_EN), phZh = pick(PHRASES_ZH);
+        line = mkLine("ln-cmd", "# " + phEn, "# " + phZh,
+          "a note to yourself: \u201c" + phEn + "\u201d", "一句给自己的注释：" + phZh);
+      } else if (kind === 4) {
+        var ouEn = pick(OUT_EN), ouZh = pick(OUT_ZH);
+        line = mkLine("ln-out", "→ " + ouEn, "→ " + ouZh,
+          "prints: \u201c" + ouEn + "\u201d", "输出：" + ouZh);
+      } else {
+        var num = pick(NUMS), okEn = pick(OK_EN), okZh = pick(OK_ZH);
+        line = mkLine("ln-ok", "✓ " + num + " " + okEn, "✓ " + num + " " + okZh,
+          "confirms: " + num + " " + okEn, "确认：" + num + okZh);
+      }
       if (!used[line.en]) { used[line.en] = true; lines.push(line); }
     }
     return lines;
@@ -141,6 +164,18 @@
     if (!seen[key]) { seen[key] = 1; DEMO_POOL.push(d); }
   }
   var CURRENT_DEMO = DEMO_POOL[Math.floor(Math.random() * DEMO_POOL.length)];
+  var glossBox = document.getElementById("demoGloss");
+
+  function renderGloss() {
+    if (!glossBox || !CURRENT_DEMO) return;
+    var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
+    var html = '<p class="gloss-label">' + (zh ? "每日一代码 · 一行一注释" : "LEARN A LINE A DAY") + "</p><ul>";
+    CURRENT_DEMO.forEach(function (line, i) {
+      html += '<li><span class="g-no">' + (i + 1) + '</span><span class="g-text">' + esc(zh ? line.gl.zh : line.gl.en) + "</span></li>";
+    });
+    glossBox.innerHTML = html + "</ul>";
+  }
+  renderGloss();
 
   function lineText(line) {
     var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
@@ -193,6 +228,7 @@
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     typeLayer.innerHTML = "";
     typeStart();
+    renderGloss();
   });
 
   /* ---------- 磁吸按钮 + 入口卡 3D 倾斜（精细指针设备） ---------- */
