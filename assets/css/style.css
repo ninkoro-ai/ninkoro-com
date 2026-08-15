@@ -1155,6 +1155,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   position: absolute; z-index: 3;
   transition: left .18s cubic-bezier(.3, .8, .4, 1), top .18s cubic-bezier(.3, .8, .4, 1);
 }
+/* 彩蛋按钮仅 PC（鼠标设备）展示，触摸端隐藏，避免与页脚邮箱重复 */
+@media (hover: none), (pointer: coarse) {
+  #ctaContact { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   #ctaContact.cta-dodge-active { transition: none; }
 }
