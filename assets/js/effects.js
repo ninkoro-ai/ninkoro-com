@@ -246,19 +246,15 @@
     var token = ++typeToken;
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     var body = typeLayer.parentElement;
-    if (body) body.style.height = "";
     function paint(uptoLine, uptoChar, typing) {
       typeLayer.innerHTML = buildTypeHTML(lines, uptoLine, uptoChar) + '<span class="cursor" aria-hidden="true"></span>';
-      if (body) {
-        body.classList.toggle("is-typing", typing);
-        body.style.height = body.scrollHeight + "px";
-      }
+      if (body) body.classList.toggle("is-typing", typing);
     }
-    if (reduceMotion) { paint(lines.length, 0, false); if (body) body.style.height = ""; return; }
+    if (reduceMotion) { paint(lines.length, 0, false); return; }
     var li = 0, ci = 0;
     function tick() {
       if (token !== typeToken) return;
-      if (li >= lines.length) { paint(lines.length, 0, false); if (body) body.style.height = ""; return; }
+      if (li >= lines.length) { paint(lines.length, 0, false); return; }
       paint(li, ci, true);
       ci++;
       if (ci > lines[li].en.length) { li++; ci = 0; typeTimer = setTimeout(tick, 300); return; }

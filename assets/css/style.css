@@ -1119,7 +1119,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .terminal-bar .dot.y { background: #febc2e; }
 .terminal-bar .dot.g { background: #28c840; }
 .terminal-title { margin-left: 8px; font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: .04em; }
-.terminal-body { position: relative; padding: 22px 20px 26px; font-family: var(--mono); font-size: 13.5px; line-height: 1.85; min-height: 62px; transition: height .3s var(--ease); }
+.terminal-body { position: relative; padding: 22px 20px 26px; font-family: var(--mono); font-size: 13.5px; line-height: 1.85; min-height: 62px; }
 .terminal-body pre { white-space: pre-wrap; word-break: break-word; }
 .terminal-body .ln-cmd { color: var(--ink); }
 .terminal-body .ln-ok { color: #7fc98a; }
@@ -1357,7 +1357,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .hero-actions .btn { padding: 12px 18px; font-size: 14px; }
   .hero-stage { max-width: 100%; }
   .terminal-bar { padding: 10px 14px; }
-  .terminal-body { padding: 16px 16px 21px; font-size: 11.5px; line-height: 1.75; min-height: 54px; transition: height .3s var(--ease); }
+  .terminal-body { padding: 16px 16px 21px; font-size: 11.5px; line-height: 1.75; min-height: 54px; }
 
   /* 长文/文章页：更宽松的行高与字距 */
   .article-title { font-size: clamp(26px, 7.6vw, 34px); line-height: 1.3; }
@@ -1469,7 +1469,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 /* ---------- 打字机修复（2026-08-15）：光标跟随字符 + 移动端防抖 ---------- */
-.terminal-body { contain: layout paint; }
 .terminal-body.is-typing .cursor { animation: none; }
 @media (max-width: 760px) {
   .hero-stage .terminal { animation: none; }
