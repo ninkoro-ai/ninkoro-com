@@ -1174,7 +1174,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   transition: max-height .45s var(--ease), opacity .3s, margin-top .45s var(--ease), border-color .3s;
 }
 .demo-note.show {
-  max-height: 340px; opacity: 1;
+  max-height: 640px; opacity: 1; overflow-y: auto;
   margin-top: 14px; padding-top: 12px;
   border-top-color: var(--line-strong);
 }
@@ -1187,10 +1187,31 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   font-family: var(--mono); font-size: 10px; font-weight: 500;
   letter-spacing: .08em; color: var(--accent);
 }
+.demo-note .note-item { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(211, 162, 74, .18); }
+.demo-note .note-item .ni-cmd {
+  display: block; font-family: var(--mono); font-size: 10.5px; line-height: 1.6;
+  color: var(--ink); background: rgba(237, 232, 222, .05);
+  border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px;
+  margin-bottom: 8px; word-break: break-all;
+}
+.demo-note .note-item .ni-line { display: block; margin-bottom: 6px; font-size: 11px; line-height: 1.7; color: var(--ink-faint); }
+.demo-note .note-item .ni-line:last-child { margin-bottom: 0; }
+.demo-note .note-item .ni-line b {
+  font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+  letter-spacing: .08em; color: var(--accent); margin-right: 5px;
+}
+.demo-note .note-item .ni-line code {
+  display: inline; font-family: var(--mono); font-size: 10px;
+  background: none; border: none; padding: 0; color: var(--accent);
+  word-break: break-all;
+}
+.demo-note .note-item .ni-eq-lbl { color: var(--ink-dim); }
+.demo-note .note-item .ni-unique { color: var(--ink-dim); }
 
 @media (max-width: 760px) {
   .note-toggle { font-size: 10.5px; padding: 6px 13px; margin-top: 10px; }
   .demo-note p { font-size: 11px; line-height: 1.65; }
+  .demo-note.show { max-height: 480px; }
 }
 
 @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
