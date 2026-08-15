@@ -126,6 +126,336 @@
         "→ 200 OK · 1.2s · 3 tool calls",
         "✓ update complete · hermes 1.4.3"
       ]
+    },
+    {
+      id: "dsh",
+      name: { en: "DeepSeek Harness (dsh)", zh: "DeepSeek Harness（dsh）" },
+      desc: {
+        en: "A practical DeepSeek Harness workflow: launch web or headless profiles, install plugin bundles, and inspect the merged config tree.",
+        zh: "实用的 DeepSeek Harness 工作流：启动 web 或 headless profile、安装插件组合包、查看合并后的配置树。"
+      },
+      use: {
+        en: "Plugin-based agent runs: Web UI sessions, headless one-shot tasks, custom profiles.",
+        zh: "基于插件的 Agent 运行：Web 界面会话、无头一次性任务、自定义 profile。"
+      },
+      comments: [
+        "DeepSeek Harness · dsh profile",
+        "dsh · plugin bundles",
+        "DeepSeek Harness · headless run"
+      ],
+      lines: [
+        "$ npx @deepseek-ai/dsh web",
+        "$ dsh web --port 8080",
+        "$ dsh web --trusted-host api.ninkoro.com",
+        "$ dsh web --patch ./extra.cordis.yml",
+        "$ dsh web --dump-config",
+        "$ dsh web --help",
+        "$ dsh --profile headless \"run the tests\"",
+        "$ dsh --profile headless \"check disk usage and report\"",
+        "$ dsh --profile web --dump-default-config",
+        "$ dsh --profile web --patch ./extra.yml --dump-config",
+        "$ dsh plugin --profile tui add github:deepseek-harness/turtle-ui",
+        "$ dsh plugin --profile tui remove turtle-ui",
+        "$ dsh plugin --profile lifeos add @deepseek-ai/dsh-headless",
+        "$ dsh plugin --profile lifeos update",
+        "$ dsh --profile tui",
+        "$ dsh --profile lifeos",
+        "$ DSH_TOOLS_MODE=both dsh web",
+        "$ dsh --version",
+        "$ dsh --help"
+      ],
+      outs: [
+        "→ web UI ready · http://127.0.0.1:3080",
+        "✓ headless run completed · exit 0",
+        "✓ turtle-ui installed · profile tui",
+        "→ 3 bundles · base + web-app",
+        "✓ patch applied · ./extra.cordis.yml",
+        "→ headless: tests passed · 42 assertions",
+        "✓ config dumped · 18 lines · 2 overrides",
+        "→ plugin removed · tui reset to base"
+      ]
+    },
+    {
+      id: "codex",
+      name: { en: "OpenAI Codex CLI", zh: "OpenAI Codex CLI" },
+      desc: {
+        en: "A practical Codex CLI workflow: one-shot coding tasks, session resume, MCP servers, and sandbox approval control.",
+        zh: "实用的 Codex CLI 工作流：一次性编码任务、会话恢复、MCP 服务器与沙箱审批控制。"
+      },
+      use: {
+        en: "Automated coding tasks, CI/CD scripting, repo exploration, agent tooling.",
+        zh: "自动化编码任务、CI/CD 脚本、仓库探索与 Agent 工具链。"
+      },
+      comments: [
+        "OpenAI Codex · exec mode",
+        "codex · one-shot task",
+        "Codex CLI · sandbox & MCP"
+      ],
+      lines: [
+        "$ codex",
+        "$ codex exec \"explain this codebase\"",
+        "$ codex exec \"add error handling to utils.ts\"",
+        "$ codex exec --full-auto \"update dependencies\"",
+        "$ codex exec --json \"run tests\"",
+        "$ codex exec --json --output-last-message summary.txt \"run test suite\"",
+        "$ codex exec --debug --json \"your task\"",
+        "$ codex exec --sandbox read-only \"review the diff\"",
+        "$ codex exec --ask-for-approval \"migrate the database\"",
+        "$ codex resume cli_8f3a2c",
+        "$ codex chat",
+        "$ codex login",
+        "$ codex logout",
+        "$ codex install",
+        "$ codex features",
+        "$ codex mcp add github -- npx @github/mcp-server",
+        "$ codex mcp list",
+        "$ codex mcp remove github",
+        "$ codex tasks",
+        "$ codex approve",
+        "$ codex reject",
+        "$ codex --version"
+      ],
+      outs: [
+        "→ 6 files changed · tests green",
+        "✓ task completed · exit 0 · 42s",
+        "→ 3 approvals pending",
+        "✓ MCP github connected · 8 tools",
+        "→ resumed session cli_8f3a2c",
+        "✓ 12 features · 2 enabled",
+        "→ 200 OK · model gpt-5-codex",
+        "✓ shell integration installed"
+      ]
+    },
+    {
+      id: "claude",
+      name: { en: "Claude Code (Anthropic)", zh: "Claude Code（Anthropic）" },
+      desc: {
+        en: "A practical Claude Code workflow: print-mode queries, session resume, MCP tooling, and permission profiles.",
+        zh: "实用的 Claude Code 工作流：打印模式查询、会话恢复、MCP 工具与权限配置。"
+      },
+      use: {
+        en: "Repo-level coding, multi-file edits, and long-running agent sessions.",
+        zh: "仓库级编码、多文件修改与长时 Agent 会话。"
+      },
+      comments: [
+        "Claude Code · print mode",
+        "claude · session ops",
+        "Anthropic Claude · MCP"
+      ],
+      lines: [
+        "$ claude",
+        "$ claude -p \"explain this codebase\"",
+        "$ claude -p --output-format json \"find the bug in auth.ts\"",
+        "$ claude --continue",
+        "$ claude --resume 9f4b2c1e",
+        "$ claude --model sonnet",
+        "$ claude --dangerously-skip-permissions",
+        "$ claude --permission-mode acceptEdits",
+        "$ claude --add-dir packages/api",
+        "$ claude --append-system-prompt \"Be concise and cite files.\"",
+        "$ claude config set -g theme dark",
+        "$ claude mcp add postgres -- npx @modelcontextprotocol/server-postgres",
+        "$ claude mcp list",
+        "$ claude doctor",
+        "$ claude update",
+        "$ claude install",
+        "$ claude login",
+        "$ claude logout"
+      ],
+      outs: [
+        "→ 3 files edited · diff applied",
+        "✓ session 9f4b2c1e resumed",
+        "→ 12 MCP tools · 3 enabled",
+        "✓ doctor: all systems ok",
+        "→ 200 OK · 1.8s · 24 tool calls",
+        "✓ update complete · claude 2.x",
+        "→ 5 permissions accepted",
+        "✓ config saved · theme dark"
+      ]
+    },
+    {
+      id: "gemini",
+      name: { en: "Gemini CLI (Google)", zh: "Gemini CLI（Google）" },
+      desc: {
+        en: "A practical Gemini CLI workflow: print-mode queries, model selection, skills and extensions, and MCP servers.",
+        zh: "实用的 Gemini CLI 工作流：打印模式查询、模型选择、技能与扩展、MCP 服务器。"
+      },
+      use: {
+        en: "Quick research queries, multi-model experiments, and Google-ecosystem agent skills.",
+        zh: "快速调研查询、多模型实验与 Google 生态 Agent 技能。"
+      },
+      comments: [
+        "Gemini CLI · print mode",
+        "gemini · skills & extensions",
+        "Gemini CLI · model routing"
+      ],
+      lines: [
+        "$ gemini",
+        "$ gemini -p \"explain the git rebase flow\"",
+        "$ gemini -p --skip-tools \"summarize this RFC\"",
+        "$ gemini --model gemini-2.5-pro",
+        "$ gemini login",
+        "$ gemini logout",
+        "$ gemini config",
+        "$ gemini skills list",
+        "$ gemini skills install https://github.com/ninkoro/gemini-skills",
+        "$ gemini extensions install https://github.com/ninkoro/gemini-ext",
+        "$ gemini mcp list",
+        "$ gemini agents",
+        "$ gemini update",
+        "$ gemini install",
+        "$ gemini --version"
+      ],
+      outs: [
+        "→ 200 OK · gemini-2.5-pro · 1.1s",
+        "✓ 3 skills installed · 1 updated",
+        "→ 2 extensions enabled",
+        "✓ login ok · @ninkoro",
+        "→ 4 MCP servers · 2 active",
+        "✓ config updated · model default",
+        "→ agents: 2 ready · 1 running",
+        "✓ update complete · gemini 1.x"
+      ]
+    },
+    {
+      id: "openclaw",
+      name: { en: "OpenClaw", zh: "OpenClaw" },
+      desc: {
+        en: "A practical OpenClaw workflow: chat with the agent, run the gateway, manage channels and skills, and check status.",
+        zh: "实用的 OpenClaw 工作流：与 Agent 对话、运行网关、管理频道与技能、查看状态。"
+      },
+      use: {
+        en: "Always-on personal agent: messaging channels, skills, memory, and browser automation.",
+        zh: "常驻个人 Agent：消息频道、技能、记忆与浏览器自动化。"
+      },
+      comments: [
+        "OpenClaw · gateway",
+        "openclaw · skills & channels",
+        "OpenClaw · always-on agent"
+      ],
+      lines: [
+        "$ openclaw chat",
+        "$ openclaw setup",
+        "$ openclaw configure",
+        "$ openclaw gateway start",
+        "$ openclaw gateway status",
+        "$ openclaw gateway restart",
+        "$ openclaw channels list",
+        "$ openclaw channels add telegram",
+        "$ openclaw channels remove discord",
+        "$ openclaw skills list",
+        "$ openclaw skills install github-workflow",
+        "$ openclaw skills search \"web research\"",
+        "$ openclaw browser status",
+        "$ openclaw browser start",
+        "$ openclaw mcp list",
+        "$ openclaw doctor",
+        "$ openclaw status",
+        "$ openclaw update",
+        "$ openclaw backup",
+        "$ openclaw version"
+      ],
+      outs: [
+        "→ gateway running · 3 channels connected",
+        "✓ telegram linked · pairing code 8841",
+        "→ 14 skills · 2 updates available",
+        "✓ browser ready · 2 tabs open",
+        "→ status: healthy · memory 84%",
+        "✓ backup written · ~/.openclaw/backup",
+        "→ channel removed · discord offline",
+        "✓ doctor: no issues found"
+      ]
+    },
+    {
+      id: "opencode",
+      name: { en: "OpenCode", zh: "OpenCode" },
+      desc: {
+        en: "A practical OpenCode workflow: non-interactive runs, session continuation, model routing, and MCP integration.",
+        zh: "实用的 OpenCode 工作流：非交互运行、会话延续、模型路由与 MCP 集成。"
+      },
+      use: {
+        en: "Open-source agent CLI for scripting, multi-model runs, and team-friendly sessions.",
+        zh: "开源 Agent CLI：脚本化、多模型运行与团队协作会话。"
+      },
+      comments: [
+        "OpenCode · run mode",
+        "opencode · sessions & models",
+        "OpenCode · MCP tools"
+      ],
+      lines: [
+        "$ opencode",
+        "$ opencode run \"summarize the last 5 commits\"",
+        "$ opencode run --format json \"list every TODO with file and line\"",
+        "$ opencode run --model anthropic/claude-sonnet-4.6 \"refactor this function\"",
+        "$ opencode run --attach http://localhost:4096 \"explain async/await\"",
+        "$ opencode --continue",
+        "$ opencode --session ses_7f3a91",
+        "$ opencode --fork \"try a different approach\"",
+        "$ opencode sessions",
+        "$ opencode auth login",
+        "$ opencode auth logout",
+        "$ opencode mcp add github -- npx @github/mcp-server",
+        "$ opencode mcp list",
+        "$ opencode agents",
+        "$ opencode models",
+        "$ opencode --help"
+      ],
+      outs: [
+        "→ 14 TODOs · 3 files · top: api/auth.ts",
+        "✓ run completed · 0 errors · 31s",
+        "→ session ses_7f3a91 continued",
+        "✓ 2 agents · 5 models configured",
+        "→ MCP github connected · 8 tools",
+        "✓ auth ok · opencode@ninkoro",
+        "→ 6 commits summarized · 1 breaking",
+        "✓ fork created · session ses_91b2c4"
+      ]
+    },
+    {
+      id: "aider",
+      name: { en: "Aider (pair programming)", zh: "Aider（结对编程）" },
+      desc: {
+        en: "A practical Aider workflow: pair-programming sessions, architect mode, voice input, and watch-mode edits.",
+        zh: "实用的 Aider 工作流：结对编程会话、架构师模式、语音输入与监听模式编辑。"
+      },
+      use: {
+        en: "Git-native pair programming, refactors, and multi-file edits with diffs.",
+        zh: "Git 原生结对编程、重构与基于 diff 的多文件修改。"
+      },
+      comments: [
+        "Aider · architect mode",
+        "aider · pair programming",
+        "Aider · watch + voice"
+      ],
+      lines: [
+        "$ aider",
+        "$ aider --message \"fix the failing test\"",
+        "$ aider --file utils.py --file api.py \"add retry logic\"",
+        "$ aider --model gpt-4o",
+        "$ aider --sonnet",
+        "$ aider --architect",
+        "$ aider --edit-format diff",
+        "$ aider --watch-files",
+        "$ aider --voice",
+        "$ aider --read README.md",
+        "$ aider --restore-chat-history",
+        "$ aider --yes",
+        "$ aider --lint",
+        "$ aider --test",
+        "$ aider --commit",
+        "$ aider --list-models",
+        "$ aider --version"
+      ],
+      outs: [
+        "✓ 3 files changed · 2 commits",
+        "→ diff applied · 42 insertions · 7 deletions",
+        "✓ tests pass · 18 passed",
+        "→ voice input heard · prompt saved",
+        "✓ watch mode active · 4 files monitored",
+        "→ architect plan · 5 steps",
+        "✓ lint clean · 0 warnings",
+        "→ 214 models available"
+      ]
     }
   ];
 
@@ -159,6 +489,8 @@
   var CURRENT_DEMO = picked.lines;
   var CURRENT_THEME = picked.theme;
   var CURRENT_META = { lang: CURRENT_THEME.name, desc: CURRENT_THEME.desc, use: CURRENT_THEME.use };
+  var termTitle = document.querySelector(".terminal-title");
+  if (termTitle) termTitle.textContent = "ninkoro.com — " + CURRENT_THEME.id;
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
