@@ -46,6 +46,7 @@
       }
     ],
     thoughts: [
+      { date: "2026.08", title: "从一个页面到一次整站重建：Ninkoro 变成了会打字的终端", body: "从克隆 DeepSeek Harness 页面开始的一场整站改造记录：动效适配、移动端打磨、中英双语、装着 8 个 Agent CLI 的打字终端、银河背景、彩蛋，以及那些没能活下来的效果。", href: "thought-site-rebuild.html" },
       { date: "2026.08", title: "为什么画一张股权图，差点把一个系统搞崩溃？", body: "「股权穿透」工具背后的架构故事：把真实企业关系硬塞进一棵树，信息必然丢失；换成一张「网」之后才发现，真正的难题是——真实，不等于能看。一次从 Tree 到 Graph 的重新抽象。", href: "equity-graph.html" },
       { date: "2026.08", title: "从一句 slogan 到一款被真正用起来的产品：心桥诞生记", body: "记录「心桥」从想法到上线的完整思考路径：为什么做、怎么做、每个功能设计背后的权衡，以及踩过的坑与修正。", href: "thought-xinqiao.html" },
       { date: "2026.07", title: "新书｜《AI Agent 产品设计实战手册》", body: "一本写给产品经理和 AI 创业者的实战手册：从 0 到 1 覆盖设计、构建、验证、运营全链路。五章、三十多个可复用 Checklist 与决策矩阵，附 LifeOS 真实案例拆解。", href: "ai-agent-handbook.html" },
@@ -184,6 +185,7 @@
       }
     ],
     thoughts: [
+      { date: "2026.08", title: "From one page to a whole rebuild: how ninkoro.com became a terminal that types", body: "The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn't survive.", href: "thought-site-rebuild.html" },
       { date: "2026.08", title: "Why drawing one equity chart nearly crashed a system", body: "The architecture story behind the Equity Penetration tool: cramming real corporate relationships into a tree loses information; switching to a graph revealed the real challenge — being truthful is not the same as being legible. A rebuild from Tree to Graph.", href: "equity-graph.html" },
       { date: "2026.08", title: "From a slogan to a product people actually use: the birth of Xinqiao", body: "The complete thinking path behind Xinqiao, from idea to launch: why build it, how to build it, the trade-offs behind every feature, and the pitfalls and fixes along the way.", href: "thought-xinqiao.html" },
       { date: "2026.07", title: "New｜The AI Agent Product Design Handbook", body: "A practical handbook for product managers and AI founders: end-to-end coverage of design, build, validation and operations. Five chapters, 30+ reusable checklists and decision matrices, with real LifeOS case studies.", href: "ai-agent-handbook.html" },

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title data-en="From one page to a whole rebuild: how ninkoro.com became a terminal that types — Ninkoro" data-zh="从一个页面到一次整站重建：Ninkoro 变成了会打字的终端 — Ninkoro">From one page to a whole rebuild: how ninkoro.com became a terminal that types — Ninkoro</title>
+<meta name="description" data-i18n-meta data-en="The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn&apos;t survive." data-zh="从克隆 DeepSeek Harness 页面开始的一场整站改造记录：动效适配、移动端打磨、中英双语、装着 8 个 Agent CLI 的打字终端、银河背景、彩蛋，以及那些没能活下来的效果。" content="The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn&apos;t survive.">
+<meta name="theme-color" content="#0e0d0b">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ninkoro">
+<meta property="og:title" data-i18n-meta data-en="From one page to a whole rebuild: how ninkoro.com became a terminal that types — Ninkoro" data-zh="从一个页面到一次整站重建：Ninkoro 变成了会打字的终端 — Ninkoro" content="From one page to a whole rebuild: how ninkoro.com became a terminal that types — Ninkoro">
+<meta property="og:description" data-i18n-meta data-en="The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn&apos;t survive." data-zh="从克隆 DeepSeek Harness 页面开始的一场整站改造记录：动效适配、移动端打磨、中英双语、装着 8 个 Agent CLI 的打字终端、银河背景、彩蛋，以及那些没能活下来的效果。" content="The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn&apos;t survive.">
+<meta property="og:url" content="https://ninkoro.com/thought-site-rebuild.html">
+<meta property="og:image" content="https://ninkoro.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" data-i18n-meta data-en="From one page to a whole rebuild: how ninkoro.com became a terminal that types — Ninkoro" data-zh="从一个页面到一次整站重建：Ninkoro 变成了会打字的终端 — Ninkoro" content="From one page to a whole rebuild: how ninkoro.com became a terminal that types — Ninkoro">
+<meta name="twitter:description" data-i18n-meta data-en="The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn&apos;t survive." data-zh="从克隆 DeepSeek Harness 页面开始的一场整站改造记录：动效适配、移动端打磨、中英双语、装着 8 个 Agent CLI 的打字终端、银河背景、彩蛋，以及那些没能活下来的效果。" content="The full log of redesigning ninkoro.com after cloning the DeepSeek Harness page: motion adaptation, mobile polish, bilingual i18n, a typewriter terminal with 8 agent CLIs, a galaxy background, easter eggs — and the effects that didn&apos;t survive.">
+<meta name="twitter:image" content="https://ninkoro.com/og.png">
+<link rel="canonical" href="https://ninkoro.com/thought-site-rebuild.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0d0b'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23d3a24a' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css?v=__BUILD_HASH__">
+<style>
+.read-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: var(--accent); z-index: 200;
+  box-shadow: 0 0 10px rgba(211,162,74,.7);
+  transition: width .12s linear;
+}
+.article-head { padding-top: calc(var(--nav-h) + clamp(44px, 7vw, 88px)); padding-bottom: clamp(28px, 4vw, 48px); }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: .04em;
+  color: var(--ink-dim); margin-bottom: 26px;
+  transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.back-link:hover { color: var(--accent); transform: translateX(-3px); }
+.article-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(30px, 5.4vw, 56px); line-height: 1.16; letter-spacing: -.02em;
+  margin-top: 10px;
+}
+.article-sub {
+  margin-top: 18px; max-width: 640px;
+  color: var(--ink-dim); font-size: clamp(15px, 2vw, 18px); line-height: 1.7;
+}
+.article-meta {
+  margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--ink-faint);
+}
+.article-meta span { color: var(--ink-faint); }
+.article-meta b { color: var(--accent); font-weight: 500; }
+
+.article-layout {
+  width: min(1080px, calc(100% - 48px));
+  margin-inline: auto;
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  padding-bottom: clamp(56px, 9vw, 110px);
+}
+.toc-side { display: none; }
+.toc-inline {
+  display: block;
+  width: min(720px, calc(100% - 48px));
+  margin: 0 auto clamp(28px, 5vw, 40px);
+  padding: 22px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.toc-inline .toc-nav { margin-top: 14px; }
+.article-body { max-width: clamp(680px, 90vw, 960px); margin-inline: auto; width: 100%; }
+
+.toc-ttl {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+}
+.toc-list, .toc-sub { list-style: none; }
+.toc-list > li { margin-bottom: 12px; }
+.toc-list > li > a {
+  font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--ink);
+  line-height: 1.45; transition: color var(--t-fast) var(--ease);
+}
+.toc-list > li > a:hover { color: var(--accent); }
+.toc-sub { margin: 6px 0 4px 12px; border-left: 1px solid var(--line); padding-left: 14px; }
+.toc-sub li { margin: 7px 0; }
+.toc-sub a {
+  font-family: var(--sans); font-size: 13px; color: var(--ink-dim); line-height: 1.4;
+  transition: color var(--t-fast) var(--ease);
+}
+.toc-sub a:hover { color: var(--accent); }
+.toc-nav a.active { color: var(--accent); }
+
+.article-body p {
+  font-size: clamp(16px, 2.3vw, 17px); line-height: 1.92; color: var(--ink-dim);
+  margin: 18px 0; letter-spacing: .005em;
+}
+.article-body p strong, .article-body li strong { color: var(--ink); font-weight: 600; }
+.article-body h2.ch-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(26px, 4.4vw, 40px); line-height: 1.22; letter-spacing: -.02em;
+  color: var(--accent); margin: clamp(48px,8vw,84px) 0 8px;
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.article-body h3.sec-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(20px, 3vw, 27px); line-height: 1.35; letter-spacing: -.01em;
+  color: #f1ebdb; margin: clamp(36px,6vw,56px) 0 6px;
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.article-body h4.sub-title {
+  font-family: var(--sans); font-weight: 600;
+  font-size: clamp(16px, 2.2vw, 18px); color: var(--accent);
+  margin: 28px 0 2px; letter-spacing: .01em;
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.article-body ul, .article-body ol { margin: 14px 0; padding-left: 0; }
+.article-body li {
+  position: relative; font-size: clamp(15px, 2.1vw, 16px); line-height: 1.85;
+  color: var(--ink-dim); margin: 8px 0; padding-left: 26px;
+}
+.article-body ul li::before {
+  content: ""; position: absolute; left: 6px; top: 13px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: .8;
+}
+.article-body ol { counter-reset: li; }
+.article-body ol li { counter-increment: li; padding-left: 30px; }
+.article-body ol li::before {
+  content: counter(li); position: absolute; left: 0; top: 1px;
+  font-family: var(--mono); font-size: 12px; color: var(--accent);
+  font-weight: 600; min-width: 20px; text-align: right;
+}
+.article-body blockquote {
+  margin: 24px 0; padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft); border-radius: 0 12px 12px 0;
+  color: var(--ink-dim); font-size: clamp(15px, 2.1vw, 16px); line-height: 1.8;
+}
+.article-body blockquote strong { color: var(--ink); }
+.article-body code.inline {
+  font-family: var(--mono); font-size: .88em; color: var(--accent);
+  background: rgba(237,232,222,.06); padding: 2px 6px; border-radius: 6px;
+}
+.article-body pre.code {
+  margin: 22px 0; padding: 18px 20px; overflow-x: auto;
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: 12px;
+  font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--ink-dim);
+  -webkit-overflow-scrolling: touch;
+}
+.article-body pre.code code { white-space: pre; }
+.tbl-scroll { margin: 24px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
+.article-body table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 480px; }
+.article-body th, .article-body td {
+  text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line);
+  color: var(--ink-dim); vertical-align: top;
+}
+.article-body th {
+  font-family: var(--sans); font-weight: 600; color: var(--ink);
+  background: rgba(237,232,222,.04); white-space: nowrap; font-size: 13px;
+}
+.article-body tbody tr:hover { background: rgba(237,232,222,.025); }
+.article-body td strong { color: var(--ink); }
+
+@media (min-width: 1024px) {
+  .article-layout { grid-template-columns: 232px minmax(0, 1fr); gap: 56px; align-items: start; }
+  .toc-side { display: block; position: sticky; top: calc(var(--nav-h) + 28px); }
+  .toc-inline { display: none; }
+  .article-body { max-width: clamp(680px, 90vw, 960px); }
+}
+.article-layout, .article-body { min-width: 0; }
+.article-body,
+.article-body p, .article-body li, .article-body blockquote,
+.article-body td, .article-body th,
+.article-body h2, .article-body h3, .article-body h4 {
+  overflow-wrap: break-word; word-break: break-word;
+}
+.article-body pre.code { max-width: 100%; }
+
+@media (max-width: 760px) {
+  .article-body p { line-height: 1.88; }
+  .article-body table { font-size: 13px; min-width: 0; }
+  .article-body th, .article-body td { white-space: normal; }
+  .article-body pre.code { font-size: 12px; padding: 14px 16px; }
+  .article-meta { font-size: 11px; gap: 8px; }
+}
+</style>
+</head>
+<body class="page-enter" data-page="article">
+<div class="grain"></div>
+<div class="read-progress" id="readProgress"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Ninkoro<em>.com</em></a>
+    <div class="nav-links">
+      <a href="index.html" data-i18n data-en="Home" data-zh="首页">Home</a>
+      <a href="projects.html" data-i18n data-en="Works" data-zh="作品">Works</a>
+      <a href="knowledge.html" data-i18n data-en="Share" data-zh="分享">Share</a>
+      <a href="thoughts.html" data-i18n data-en="Thoughts" data-zh="想法">Thoughts</a>
+      <a href="about.html" data-i18n data-en="About" data-zh="关于">About</a>
+    </div>
+    <button class="lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lt-label lt-en">EN</span><span class="lt-knob" aria-hidden="true"></span><span class="lt-label lt-zh">中</span></button>
+    <button class="nav-search" data-search-open data-i18n-aria data-en="Search site" data-zh="搜索全站" aria-label="Search site" title="Search site (Ctrl+K)"><span class="ico ico-search" aria-hidden="true"></span></button>
+    <button class="nav-burger" data-i18n-aria data-en="Open menu" data-zh="打开菜单" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu">
+      <a href="index.html"><span class="idx">01</span><span data-i18n data-en="Home" data-zh="首页">Home</span></a>
+      <a href="projects.html"><span class="idx">02</span><span data-i18n data-en="Works" data-zh="作品">Works</span></a>
+      <a href="knowledge.html"><span class="idx">03</span><span data-i18n data-en="Share" data-zh="分享">Share</span></a>
+      <a href="thoughts.html"><span class="idx">04</span><span data-i18n data-en="Thoughts" data-zh="想法">Thoughts</span></a>
+      <a href="about.html"><span class="idx">05</span><span data-i18n data-en="About" data-zh="关于">About</span></a>
+    </div>
+
+<header class="article-head wrap">
+  <a href="thoughts.html" class="back-link hero-enter" style="--d:.02s;--enter-y:14px;--enter-blur:4px;"><span data-i18n data-en="Back to Thoughts" data-zh="返回想法">Back to Thoughts</span></a>
+  <p class="en hero-enter" style="--d:.08s;--enter-y:18px;--enter-blur:6px;">FIELD NOTES · SITE CRAFT</p>
+  <h1 class="article-title hero-enter" style="--d:.16s;--enter-y:26px;--enter-blur:12px;" data-i18n data-en="From one page to a whole rebuild: how ninkoro.com became a terminal that types" data-zh="从一个页面到一次整站重建：Ninkoro 变成了会打字的终端">From one page to a whole rebuild: how ninkoro.com became a terminal that types</h1>
+  <p class="article-sub hero-enter" style="--d:.28s;--enter-y:22px;--enter-blur:8px;" data-i18n data-en="One page inspired the entire redesign. This is the log of turning ninkoro.com into a bilingual, motion-rich personal lab — with the agent CLIs, the galaxy background, the easter eggs, and everything that didn&apos;t survive." data-zh="一个页面启发了整场改版。这篇文章记录 ninkoro.com 变成双语、充满动效的个人实验室的全过程——Agent CLI 演示、银河背景、彩蛋，以及那些没能活下来的效果。">One page inspired the entire redesign. This is the log of turning ninkoro.com into a bilingual, motion-rich personal lab — with the agent CLIs, the galaxy background, the easter eggs, and everything that didn&apos;t survive.</p>
+  <div class="article-meta hero-enter" style="--d:.36s;--enter-y:18px;--enter-blur:6px;">
+    <span>2026.08</span><span>·</span><span data-i18n data-en="≈ 12 min read" data-zh="约 12 分钟阅读">≈ 12 min read</span><span>·</span><span data-i18n><b data-en="Site craft · Motion &amp; design" data-zh="站点手艺 · 动效与设计">Site craft · Motion &amp; design</b></span>
+  </div>
+</header>
+
+<div data-i18n-body></div>
+<template data-lang-body="zh">
+<div class="toc-inline" id="tocInline"><p class="toc-ttl">目录</p></div>
+
+<div class="article-layout">
+  <aside class="toc-side">
+    <p class="toc-ttl">目录</p>
+    <nav class="toc-nav"><ul class="toc-list">
+      <li><a href="#ch1">一、 缘起：一次「克隆」请求</a><ul class="toc-sub"><li><a href="#s1_1">1.1 看中一个页面，不是它的内容</a></li><li><a href="#s1_2">1.2 先生成本地 demo，再谈上线</a></li><li><a href="#s1_3">1.3 拷贝感觉，而不是像素</a></li></ul></li>
+      <li><a href="#ch2">二、 全站动效适配</a><ul class="toc-sub"><li><a href="#s2_1">2.1 会收缩的导航</a></li><li><a href="#s2_2">2.2 错落入场与金色光晕</a></li><li><a href="#s2_3">2.3 弹簧手感</a></li></ul></li>
+      <li><a href="#ch3">三、 移动端优先的打磨</a><ul class="toc-sub"><li><a href="#s3_1">3.1 一个滚动失效的根因</a></li><li><a href="#s3_2">3.2 首屏留白与按钮比例</a></li><li><a href="#s3_3">3.3 微信浏览器的一致性</a></li></ul></li>
+      <li><a href="#ch4">四、 双语与语言开关</a><ul class="toc-sub"><li><a href="#s4_1">4.1 默认英文，一键切换</a></li><li><a href="#s4_2">4.2 只有首页的开关</a></li><li><a href="#s4_3">4.3 像素级居中的强迫症</a></li></ul></li>
+      <li><a href="#ch5">五、 打字终端：从克隆代码到 8 个 Agent CLI</a><ul class="toc-sub"><li><a href="#s5_1">5.1 删掉克隆的代码</a></li><li><a href="#s5_2">5.2 1000 条随机演示与「四行命令」</a></li><li><a href="#s5_3">5.3 从 DOS 到 8 大 Agent CLI</a></li><li><a href="#s5_4">5.4 每条命令都能「查看注释」</a></li><li><a href="#s5_5">5.5 注释分页与呼吸暂停</a></li></ul></li>
+      <li><a href="#ch6">六、 背景：银河、星座与你在哪里</a><ul class="toc-sub"><li><a href="#s6_1">6.1 星空到银河</a></li><li><a href="#s6_2">6.2 星座相对位置与悬停命名</a></li><li><a href="#s6_3">6.3 「I'm watching you」</a></li></ul></li>
+      <li><a href="#ch7">七、 彩蛋与细节</a><ul class="toc-sub"><li><a href="#s7_1">7.1 永远点不中的「联系我」</a></li><li><a href="#s7_2">7.2 Apple 风格的按钮与卡片</a></li><li><a href="#s7_3">7.3 注释打开时地球让位</a></li></ul></li>
+      <li><a href="#ch8">八、 试错：粒子消散的来与去</a><ul class="toc-sub"><li><a href="#s8_1">8.1 灭霸响指的实现</a></li><li><a href="#s8_2">8.2 为什么删掉了</a></li><li><a href="#s8_3">8.3 取舍才是设计</a></li></ul></li>
+      <li><a href="#ch9">九、 一些感悟</a><ul class="toc-sub"><li><a href="#s9_1">9.1 与 Agent 一起做网站</a></li><li><a href="#s9_2">9.2 工具的边界</a></li></ul></li>
+      <li><a href="#ch10">结语</a></li>
+    </ul></nav>
+  </aside>
+  <main class="article-body">
+
+<section class="chapter" id="ch1"><h2 class="ch-title">一、 缘起：一次「克隆」请求</h2>
+<h3 class="sec-title" id="s1_1">1.1 看中一个页面，不是它的内容</h3>
+<p>2026 年 8 月 14 日，我打开 DeepSeek 的 Harness 开发者预览页。第一反应不是「这个产品能做什么」，而是<strong>「这个页面的按钮手感真好」</strong>。液态填充的光晕、错落的入场、恰到好处的弹簧缓动——它把 AI 产品页做成了让人想反复滚动的东西。</p>
+<p>于是我给 Agent 下了一个很任性的指令：把这一页的所有要素克隆到我的网站，先做本地 demo。克隆网站不是为了偷内容，是为了偷「手感」。</p>
+<h3 class="sec-title" id="s1_2">1.2 先生成本地 demo，再谈上线</h3>
+<p>第一版在本地 demo 里跑通：粒子星空、液态填充按钮、hero 错落入场、旋转描边 CTA……然后才谈适配。先看效果，再决定要不要，这成了后来所有动效的默认流程——每个效果都先在本地呼吸几天，确认真的喜欢，才让它上线。</p>
+<h3 class="sec-title" id="s1_3">1.3 拷贝感觉，而不是像素</h3>
+<p>真正的适配不是把 DeepSeek 的代码搬过来，而是把我的内容放进它的「呼吸节奏」里。页面结构完全不同，但那种<strong>重要的事情一件件浮现</strong>的节奏被保留了下来。</p>
+<blockquote>感觉是可以迁移的，像素不行。</blockquote>
+</section>
+
+<section class="chapter" id="ch2"><h2 class="ch-title">二、 全站动效适配</h2>
+<h3 class="sec-title" id="s2_1">2.1 会收缩的导航</h3>
+<p>导航改成了浮动玻璃胶囊，向下滚动时从 1120px 弹性收窄到 880px，用的是一条带一点回弹的缓动曲线 <code>cubic-bezier(.34,1.56,.64,1)</code>。16 个页面全部生效。这个小小的「收一下」动作，让滚动有了回应——你在往下看，它在往后退。</p>
+<h3 class="sec-title" id="s2_2">2.2 错落入场与金色光晕</h3>
+<p>每个页面的页头元素按 0.02s 到 0.36s 的间隔依次浮现：返回链接 → 英文眉题 → 标题 → 描述 → meta。卡片 hover 时浮起一层金色光晕。没有发明新的设计语言，只是把已有的暗色暖金风格做得更有层次感。</p>
+<h3 class="sec-title" id="s2_3">2.3 弹簧手感</h3>
+<p>动效系统里最值钱的是那条缓动曲线。同样的过渡，线性是「动了」，回弹是「活了」。后来所有按钮、面板、开关都统一到这套手感上，用户不一定说得出来，但会感觉「这个网站很顺」。</p>
+</section>
+
+<section class="chapter" id="ch3"><h2 class="ch-title">三、 移动端优先的打磨</h2>
+<h3 class="sec-title" id="s3_1">3.1 一个滚动失效的根因</h3>
+<p>长文页面在 Chrome 里鼠标滚轮失效，查了很久。根因是 <code>html{overflow-x:clip}</code> 与 body 的 <code>overflow-x:hidden</code> 组合，导致根滚动容器失效。删掉那一行，世界恢复正常。</p>
+<p>同一轮里，移动端首屏也被重排：内容居中、留白拉开、标题改用 <code>clamp()</code> 自适应，第一屏不再拥挤。</p>
+<h3 class="sec-title" id="s3_2">3.2 首屏留白与按钮比例</h3>
+<p>「查看作品 / 认识一下」两个按钮缩小到恰好包裹文字、可以并排；导航 logo 缩小，语言开关和搜索按钮的间距重新排过。移动端的优雅，一大半来自留白。</p>
+<h3 class="sec-title" id="s3_3">3.3 微信浏览器的一致性</h3>
+<p>微信的 WebView 会根据用户的字号设置把页面放大，和手机 Safari 的表现不一致。处理方式是 viewport 加 <code>maximum-scale=1.0, user-scalable=no</code>，再配合 <code>text-size-adjust:100%</code>。之后两端观感一致。</p>
+</section>
+
+<section class="chapter" id="ch4"><h2 class="ch-title">四、 双语与语言开关</h2>
+<h3 class="sec-title" id="s4_1">4.1 默认英文，一键切换</h3>
+<p>全站翻译成英文，默认英文展示，右上角一个拟物化开关可以切回中文，选择会被记住。18 个页面、全部长文正文、搜索索引，全部双语。</p>
+<h3 class="sec-title" id="s4_2">4.2 只有首页的开关</h3>
+<p>后来发现子页面没必要再放开关——语言是全局的，在哪切都一样。于是开关只在首页出现，子页面隐藏，导航自动右对齐。少一个控件，就少一次纠结。</p>
+<h3 class="sec-title" id="s4_3">4.3 像素级居中的强迫症</h3>
+<p>开关里 EN 和「中」两个字要精确落在滑块中心。最初用固定 left/right 定位，「中」字总会偏右约 4px。最后改成相对旋钮中心定位，偏差归零。这种 4px 的强迫症，大概就是做个人网站的乐趣。</p>
+</section>
+
+<section class="chapter" id="ch5"><h2 class="ch-title">五、 打字终端：从克隆代码到 8 个 Agent CLI</h2>
+<h3 class="sec-title" id="s5_1">5.1 删掉克隆的代码</h3>
+<p>首页的打字终端最早展示的是克隆仓库里的代码。后来决定全部删掉，换成随机生成 1000 种演示，每次刷新不同。</p>
+<h3 class="sec-title" id="s5_2">5.2 1000 条随机演示与「四行命令」</h3>
+<p>行数从三四行，到六到八行，最后定为固定 4 条命令加一行注释。光标跟着字符走，换行留出呼吸空间，移动端不再抖动。现在每次刷新，终端都会打出 4 条不重复的真实命令。</p>
+<h3 class="sec-title" id="s5_3">5.3 从 DOS 到 8 大 Agent CLI</h3>
+<p>演示内容一开始是 DOS、PowerShell、Agent Skill，后来全部换成主流 Agent CLI：Hermes、DeepSeek Harness（dsh）、OpenAI Codex、Claude Code、Gemini、OpenClaw、OpenCode、Aider。每条命令都来自官方文档，比如：</p>
+<pre class="code">$ dsh --profile headless "run the tests"
+$ codex exec --full-auto "update dependencies"
+$ hermes cron create "0 9 * * *" "daily standup digest" --deliver telegram</pre>
+<h3 class="sec-title" id="s5_4">5.4 每条命令都能「查看注释」</h3>
+<p>右下角「查看注释」会按当前演示逐条解释：功能、适用场景，以及这条命令在其他 Agent 里的等价写法——通用的标「通用」，不通用的直接给出 codex、claude、gemini 的对应命令。等于每天随机学一行命令行。</p>
+<h3 class="sec-title" id="s5_5">5.5 注释分页与呼吸暂停</h3>
+<p>注释一次只展示前 3 条，加「下一页」；打开注释时终端暂停呼吸浮动，按钮变成「关闭注释」。移动端干脆取消注释内部滚动，直接撑开打字框——页面上只有一根滚动条，就不会误触。</p>
+</section>
+
+<section class="chapter" id="ch6"><h2 class="ch-title">六、 背景：银河、星座与你在哪里</h2>
+<h3 class="sec-title" id="s6_1">6.1 星空到银河</h3>
+<p>背景从粒子星空升级成整片银河：星云、黑洞、深浅不一的星点，所有页面共用同一套 canvas 背景。</p>
+<h3 class="sec-title" id="s6_2">6.2 星座相对位置与悬停命名</h3>
+<p>星座在银河里按真实相对位置排布，每次刷新只出现一个；鼠标悬停才显示名字，中文界面显示「天蝎座 · Scorpius」双语，英文界面只显示英文。硬性要求只有一个：永远不要和文字重叠。</p>
+<h3 class="sec-title" id="s6_3">6.3 「I'm watching you」</h3>
+<p>PC 首屏底部有一条地球弧线，根据访问者的 IP 显示地理位置（能精确到街道级别），点击发光点才会出现「I'm watching you」。滚动时弧线逐渐淡出，只在首屏存在。一个很小但很「互联网」的彩蛋。</p>
+</section>
+
+<section class="chapter" id="ch7"><h2 class="ch-title">七、 彩蛋与细节</h2>
+<h3 class="sec-title" id="s7_1">7.1 永远点不中的「联系我」</h3>
+<p>页脚上方的「联系我」按钮是个彩蛋：鼠标靠近它就会随机弹走，永远点不中，PC 端限定。它最初保留了真实 mailto，后来发现总有人能点到，就把真实功能彻底去掉了——<strong>点不中的按钮，就不要有真功能</strong>。</p>
+<h3 class="sec-title" id="s7_2">7.2 Apple 风格的按钮与卡片</h3>
+<p>所有按钮、卡片、导航、搜索框都按 Apple 的设计原则重构过一遍：克制、拟物、动效有物理感。悬停不再抖动，点击有真实的反馈。</p>
+<h3 class="sec-title" id="s7_3">7.3 注释打开时地球让位</h3>
+<p>PC 端打开注释后，底部地球弧线会自动隐藏——注释面板变长会与它重叠。小细节，但移动端和桌面端都要各自优雅。</p>
+</section>
+
+<section class="chapter" id="ch8"><h2 class="ch-title">八、 试错：粒子消散的来与去</h2>
+<h3 class="sec-title" id="s8_1">8.1 灭霸响指的实现</h3>
+<p>有一版做过「滚动时首屏像沙一样散开」的粒子效果：把标题、副标题、按钮逐像素采样成几千个粒子，滚动时被风吹散，滚回来时归位复原。实现本身挺酷，每个粒子都有自己的颜色、大小和飘散轨迹。</p>
+<h3 class="sec-title" id="s8_2">8.2 为什么删掉了</h3>
+<p>效果上线后我反复看，最终决定删除。原因很朴素：它抢戏。首屏本来的任务是「三秒讲清楚我是谁」，粒子消散让视线全被动效吸走，信息反而变模糊。删掉后页面安静下来，才是它该有的样子。</p>
+<h3 class="sec-title" id="s8_3">8.3 取舍才是设计</h3>
+<p>「能不能做」和「该不该做」是两件事。这个网站的所有效果都遵循同一套标准：<strong>如果它让内容更清楚，留下；如果它让内容更热闹，删掉。</strong></p>
+</section>
+
+<section class="chapter" id="ch9"><h2 class="ch-title">九、 一些感悟</h2>
+<h3 class="sec-title" id="s9_1">9.1 与 Agent 一起做网站</h3>
+<p>这一整轮改造几乎都是和 Agent 用对话完成的：克隆、适配、修 bug、写双语、调动效，甚至这篇博客。流程是「先报告、待批准、再执行」，大型改动先在本地呼吸几天。工具没有替我做决定，但它把我从重复劳动里解放出来，让我有余力去抠那 4px。</p>
+<h3 class="sec-title" id="s9_2">9.2 工具的边界</h3>
+<p>网站依然是纯手写 HTML/CSS/JS，零框架、零外部请求。工具越来越强，网站反而越来越简单——因为复杂的部分被工具消化了，剩下的是判断和审美。这大概就是工具存在的意义。</p>
+</section>
+
+<section class="chapter" id="ch10"><h2 class="ch-title">结语</h2>
+<p>从一个「帮我克隆这个页面」的请求开始，我的网站长成了今天的样子：会打字的终端、双语、有银河、有彩蛋，也学会了对效果说不。</p>
+<blockquote>好的网站不是功能多，而是每一次滚动都有回应，每一次停留都舒服。</blockquote>
+</section>
+</main>
+</template>
+<template data-lang-body="en">
+<div class="toc-inline" id="tocInline"><p class="toc-ttl">Contents</p></div>
+
+<div class="article-layout">
+  <aside class="toc-side">
+    <p class="toc-ttl">Contents</p>
+    <nav class="toc-nav"><ul class="toc-list">
+      <li><a href="#ch1">1. Origin: a request to clone a page</a><ul class="toc-sub"><li><a href="#s1_1">1.1 I fell for a page, not its content</a></li><li><a href="#s1_2">1.2 Local demo first, launch later</a></li><li><a href="#s1_3">1.3 Copy the feeling, not the pixels</a></li></ul></li>
+      <li><a href="#ch2">2. Site-wide motion</a><ul class="toc-sub"><li><a href="#s2_1">2.1 A nav that shrinks</a></li><li><a href="#s2_2">2.2 Staggered entrances and gold glows</a></li><li><a href="#s2_3">2.3 Springy hands</a></li></ul></li>
+      <li><a href="#ch3">3. Mobile-first polish</a><ul class="toc-sub"><li><a href="#s3_1">3.1 The root cause of a broken scroll</a></li><li><a href="#s3_2">3.2 Whitespace and button proportions</a></li><li><a href="#s3_3">3.3 WeChat vs Safari</a></li></ul></li>
+      <li><a href="#ch4">4. Bilingual and the language switch</a><ul class="toc-sub"><li><a href="#s4_1">4.1 English by default, one tap to switch</a></li><li><a href="#s4_2">4.2 Homepage-only switch</a></li><li><a href="#s4_3">4.3 Pixel-level centering</a></li></ul></li>
+      <li><a href="#ch5">5. The typewriter: from cloned code to 8 agent CLIs</a><ul class="toc-sub"><li><a href="#s5_1">5.1 Delete the cloned code</a></li><li><a href="#s5_2">5.2 1000 demos and four commands</a></li><li><a href="#s5_3">5.3 From DOS to 8 agent CLIs</a></li><li><a href="#s5_4">5.4 Per-command notes</a></li><li><a href="#s5_5">5.5 Pagination and pausing the breath</a></li></ul></li>
+      <li><a href="#ch6">6. Background: galaxy, constellations, and where you are</a><ul class="toc-sub"><li><a href="#s6_1">6.1 From starfield to galaxy</a></li><li><a href="#s6_2">6.2 Constellations with relative positions</a></li><li><a href="#s6_3">6.3 "I'm watching you"</a></li></ul></li>
+      <li><a href="#ch7">7. Easter eggs and details</a><ul class="toc-sub"><li><a href="#s7_1">7.1 The button you can never click</a></li><li><a href="#s7_2">7.2 Apple-style buttons and cards</a></li><li><a href="#s7_3">7.3 The earth steps aside</a></li></ul></li>
+      <li><a href="#ch8">8. Trial and error: the particle dissolve that came and went</a><ul class="toc-sub"><li><a href="#s8_1">8.1 A Thanos snap, implemented</a></li><li><a href="#s8_2">8.2 Why it was deleted</a></li><li><a href="#s8_3">8.3 Trade-offs are the design</a></li></ul></li>
+      <li><a href="#ch9">9. Some reflections</a><ul class="toc-sub"><li><a href="#s9_1">9.1 Building a site with an agent</a></li><li><a href="#s9_2">9.2 The boundary of tools</a></li></ul></li>
+      <li><a href="#ch10">Closing</a></li>
+    </ul></nav>
+  </aside>
+  <main class="article-body">
+
+<section class="chapter" id="ch1"><h2 class="ch-title">1. Origin: a request to clone a page</h2>
+<h3 class="sec-title" id="s1_1">1.1 I fell for a page, not its content</h3>
+<p>On 14 August 2026 I opened DeepSeek's Harness developer preview. My first reaction wasn't "what does this product do" — it was <strong>"these buttons feel great."</strong> The liquid-fill glow, the staggered entrance, the springy easing: it turned an AI product page into something you want to scroll again and again.</p>
+<p>So I gave my agent a stubborn instruction: clone every element of this page into my site, local demo first. Cloning a website isn't about stealing content — it's about stealing the feel.</p>
+<h3 class="sec-title" id="s1_2">1.2 Local demo first, launch later</h3>
+<p>The first version ran as a local demo: particle starfield, liquid-fill buttons, a staggered hero entrance, a rotating outlined CTA. Only then did we talk about adapting it. See it first, decide later — that became the default workflow for every effect. Each one breathes locally for a few days before it's allowed on stage.</p>
+<h3 class="sec-title" id="s1_3">1.3 Copy the feeling, not the pixels</h3>
+<p>True adaptation isn't porting DeepSeek's code. It's putting my content into its breathing rhythm. The structure is completely different, but the pacing — important things surfacing one by one — survived.</p>
+<blockquote>Feelings migrate; pixels don't.</blockquote>
+</section>
+
+<section class="chapter" id="ch2"><h2 class="ch-title">2. Site-wide motion</h2>
+<h3 class="sec-title" id="s2_1">2.1 A nav that shrinks</h3>
+<p>The nav became a floating glass pill that elastically narrows from 1120px to 880px as you scroll, using a springy <code>cubic-bezier(.34,1.56,.64,1)</code>. Applied to all 16 pages. That little "tuck" makes scrolling feel answered — you're looking down, and it steps back.</p>
+<h3 class="sec-title" id="s2_2">2.2 Staggered entrances and gold glows</h3>
+<p>Every page header now reveals itself in sequence, 0.02s to 0.36s apart: back link, eyebrow, title, description, meta. Cards pick up a gold glow on hover. No new design language — the dark warm-gold system just gained depth.</p>
+<h3 class="sec-title" id="s2_3">2.3 Springy hands</h3>
+<p>The most valuable thing in a motion system is the easing curve. Linear feels like "moved"; springy feels like "alive." Every button, panel and switch now shares that hand-feel. Visitors may not name it, but they feel it — "this site just feels smooth."</p>
+</section>
+
+<section class="chapter" id="ch3"><h2 class="ch-title">3. Mobile-first polish</h2>
+<h3 class="sec-title" id="s3_1">3.1 The root cause of a broken scroll</h3>
+<p>Long articles lost mouse-wheel scrolling in Chrome. The culprit: <code>html{overflow-x:clip}</code> combined with <code>overflow-x:hidden</code> on the body broke the root scroller. Remove one line, and the world is fine again.</p>
+<p>In the same pass the mobile hero was rebuilt: centered content, real whitespace, <code>clamp()</code> typography. The first screen stopped feeling crowded.</p>
+<h3 class="sec-title" id="s3_2">3.2 Whitespace and button proportions</h3>
+<p>The two hero buttons shrank to wrap their text and sit side by side. The logo got smaller; the language switch and search button got proper spacing. On mobile, elegance is mostly whitespace.</p>
+<h3 class="sec-title" id="s3_3">3.3 WeChat vs Safari</h3>
+<p>WeChat's WebView zooms pages according to font-size settings, unlike mobile Safari. The fix: <code>maximum-scale=1.0, user-scalable=no</code> on the viewport, plus <code>text-size-adjust:100%</code>. Now both ends look identical.</p>
+</section>
+
+<section class="chapter" id="ch4"><h2 class="ch-title">4. Bilingual and the language switch</h2>
+<h3 class="sec-title" id="s4_1">4.1 English by default, one tap to switch</h3>
+<p>The whole site was translated, English by default, with a skeuomorphic toggle in the corner to switch back to Chinese. The choice is remembered. All 18 pages, every long-form article and the search index are bilingual.</p>
+<h3 class="sec-title" id="s4_2">4.2 Homepage-only switch</h3>
+<p>Subpages don't need the switch — language is global, switching anywhere works everywhere. So the toggle appears only on the homepage, and the nav re-aligns itself. One fewer control, one fewer decision.</p>
+<h3 class="sec-title" id="s4_3">4.3 Pixel-level centering</h3>
+<p>The EN and 中 labels had to sit exactly at the slider's center. Fixed left/right offsets left 中 about 4px off; switching to knob-relative positioning zeroed the error. That kind of 4px obsession is probably the real joy of a personal site.</p>
+</section>
+
+<section class="chapter" id="ch5"><h2 class="ch-title">5. The typewriter: from cloned code to 8 agent CLIs</h2>
+<h3 class="sec-title" id="s5_1">5.1 Delete the cloned code</h3>
+<p>The homepage typewriter originally typed out code from the cloned repo. We deleted all of it and replaced it with 1000 randomly generated demos, different on every refresh.</p>
+<h3 class="sec-title" id="s5_2">5.2 1000 demos and four commands</h3>
+<p>Line counts went from 3-4, to 6-8, and finally settled on exactly 4 commands plus a comment line. The cursor follows the characters, newlines keep breathing room, and mobile no longer jitters. Every refresh now types four distinct real commands.</p>
+<h3 class="sec-title" id="s5_3">5.3 From DOS to 8 agent CLIs</h3>
+<p>The demos started as DOS, PowerShell and Agent Skill, then became mainstream agent CLIs: Hermes, DeepSeek Harness (dsh), OpenAI Codex, Claude Code, Gemini, OpenClaw, OpenCode and Aider. Every command comes from official docs, for example:</p>
+<pre class="code">$ dsh --profile headless "run the tests"
+$ codex exec --full-auto "update dependencies"
+$ hermes cron create "0 9 * * *" "daily standup digest" --deliver telegram</pre>
+<h3 class="sec-title" id="s5_4">5.4 Per-command notes</h3>
+<p>The "view notes" button now explains the current demo command by command: what it does, when to use it, and whether other agents have the same thing. Universal commands get flagged; non-universal ones show the equivalent codex, claude or gemini command. It's like learning a command line a day.</p>
+<h3 class="sec-title" id="s5_5">5.5 Pagination and pausing the breath</h3>
+<p>Notes show 3 items per page with a "next" button; opening notes pauses the terminal's floating animation and turns the button into "close notes." On mobile the internal scrollbar was removed entirely — the terminal just grows, so the page has only one scrollbar and nothing to mis-tap.</p>
+</section>
+
+<section class="chapter" id="ch6"><h2 class="ch-title">6. Background: galaxy, constellations, and where you are</h2>
+<h3 class="sec-title" id="s6_1">6.1 From starfield to galaxy</h3>
+<p>The background grew from a particle starfield into a full galaxy: nebulae, black holes, stars of varying brightness — one canvas shared across every page.</p>
+<h3 class="sec-title" id="s6_2">6.2 Constellations with relative positions</h3>
+<p>Constellations sit in the galaxy at their real relative positions; only one appears per refresh, and their names show on hover — bilingual on Chinese pages, English-only on English. One hard rule: they never overlap the text.</p>
+<h3 class="sec-title" id="s6_3">6.3 "I'm watching you"</h3>
+<p>On desktop, a thin earth arc sits at the bottom of the first screen, geolocating the visitor (street-level precision when available). Click the glowing dot and "I'm watching you" appears. The arc fades away as you scroll — first screen only. A small, very internet easter egg.</p>
+</section>
+
+<section class="chapter" id="ch7"><h2 class="ch-title">7. Easter eggs and details</h2>
+<h3 class="sec-title" id="s7_1">7.1 The button you can never click</h3>
+<p>The "contact me" button near the footer is an easter egg: it dodges the cursor, PC only. It originally kept a real mailto link, but people still managed to click it — so we removed the real function entirely. <strong>A button you can't click shouldn't pretend to work.</strong></p>
+<h3 class="sec-title" id="s7_2">7.2 Apple-style buttons and cards</h3>
+<p>Every button, card, nav and search box was rebuilt against Apple's design principles: restraint, tactility, motion with physics. Nothing jitters on hover, and clicks give real feedback.</p>
+<h3 class="sec-title" id="s7_3">7.3 The earth steps aside</h3>
+<p>On desktop, opening the notes hides the earth arc — the growing note panel would overlap it. Small detail, but both mobile and desktop should stay graceful.</p>
+</section>
+
+<section class="chapter" id="ch8"><h2 class="ch-title">8. Trial and error: the particle dissolve that came and went</h2>
+<h3 class="sec-title" id="s8_1">8.1 A Thanos snap, implemented</h3>
+<p>At one point we built a scroll-driven dissolve: the hero title, subtitle and buttons were sampled into thousands of pixels, blown away like sand on scroll, and reassembled on the way back. The implementation was genuinely cool — every particle had its own color, size and drifting path.</p>
+<h3 class="sec-title" id="s8_2">8.2 Why it was deleted</h3>
+<p>After shipping, I kept looking at it and finally deleted it. The reason is plain: it stole the show. The hero's job is to explain who I am in three seconds; the dissolve pulled every eye toward the motion and blurred the message. Once it was gone, the page went quiet — which is how it should be.</p>
+<h3 class="sec-title" id="s8_3">8.3 Trade-offs are the design</h3>
+<p>"Can we build it" and "should we build it" are different questions. Every effect on this site follows one standard: <strong>if it makes the content clearer, keep it; if it makes the content louder, cut it.</strong></p>
+</section>
+
+<section class="chapter" id="ch9"><h2 class="ch-title">9. Some reflections</h2>
+<h3 class="sec-title" id="s9_1">9.1 Building a site with an agent</h3>
+<p>Almost this entire rebuild happened through conversations with an agent: cloning, adapting, fixing bugs, bilingual text, motion tuning, and even this article. The workflow is "report first, approve, then execute," and big changes breathe locally for days. The tool didn't make decisions for me — it freed me from repetitive work so I had energy for that 4px.</p>
+<h3 class="sec-title" id="s9_2">9.2 The boundary of tools</h3>
+<p>The site is still hand-written HTML/CSS/JS — no framework, no external requests. Tools got stronger while the site got simpler, because the complex parts are digested by the tool, and what's left is judgment and taste. That's probably what tools are for.</p>
+</section>
+
+<section class="chapter" id="ch10"><h2 class="ch-title">Closing</h2>
+<p>It started with "help me clone this page." Today the site is a typewriter that types, bilingual, with a galaxy, easter eggs — and the discipline to say no to effects.</p>
+<blockquote>A good site isn't one with more features. It's one where every scroll gets a response, and every pause feels right.</blockquote>
+</section>
+</main>
+</template>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <p class="big" data-i18n-html data-en='Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>' data-zh='有任何想法？<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a>'>Got an idea?<br><a data-mailto href="mailto:hi@ninkoro.com">hi@ninkoro.com</a></p>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> NINKORO.COM</span>
+    </div>
+  </div>
+</footer>
+
+<div class="search-overlay" data-search-overlay aria-hidden="true">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" data-i18n-aria data-en="Site-wide search" data-zh="全站搜索" aria-label="Site-wide search">
+    <div class="search-bar">
+      <span class="ico ico-search" aria-hidden="true"></span>
+      <input type="search" class="search-input" data-i18n-placeholder data-en="Search works, thoughts, shares, tools…" data-zh="搜索作品、想法、书影音、工具…" placeholder="Search works, thoughts, shares, tools…" autocomplete="off" spellcheck="false" data-i18n-aria data-en="Search site content" data-zh="搜索全站内容" aria-label="Search site content">
+      <button type="button" class="search-esc" data-search-close data-i18n-aria data-en="Close search" data-zh="关闭搜索" aria-label="Close search">ESC</button>
+    </div>
+    <div class="search-hints">
+      <span data-i18n data-en="↑↓ Navigate" data-zh="↑↓ 选择">↑↓ Navigate</span><span data-i18n data-en="Enter Open" data-zh="Enter 打开">Enter Open</span><span data-i18n data-en="Esc Close" data-zh="Esc 关闭">Esc Close</span><span data-i18n data-en="Ctrl+K anytime" data-zh="Ctrl+K 随时呼出">Ctrl+K anytime</span>
+    </div>
+    <div class="search-results" data-search-results></div>
+  </div>
+</div>
+<script src="assets/js/main.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/stars.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/i18n.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/content.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/search.js?v=__BUILD_HASH__" defer></script>
+<script src="assets/js/handbook.js?v=__BUILD_HASH__" defer></script>
+</body>
+</html>
