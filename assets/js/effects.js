@@ -852,6 +852,8 @@
   var noteToggle = document.getElementById("noteToggle");
   var noteBox = document.getElementById("demoNote");
   var noteOpen = false;
+  var NOTE_PAGE_SIZE = 3;
+  var notePage = 0;
   function lineDoc(theme, line) {
     var doc = (DOCS[theme.id] || {})[line] || null;
     var cat = null;
@@ -895,8 +897,15 @@
     var html = '<p class="note-lang"><b>' + (zh ? "语言" : "LANGUAGE") + "</b> " +
       (zh ? CURRENT_META.lang.zh : CURRENT_META.lang.en) +
       '<span class="note-sum">' + (zh ? CURRENT_META.desc.zh : CURRENT_META.desc.en) + "</span></p>";
+    var cmds = [];
     CURRENT_DEMO.forEach(function (line) {
-      if (line.c !== "ln-cmd" || line.en.indexOf("# ") === 0) return;
+      if (line.c === "ln-cmd" && line.en.indexOf("# ") !== 0) cmds.push(line);
+    });
+    var pages = Math.max(1, Math.ceil(cmds.length / NOTE_PAGE_SIZE));
+    if (notePage >= pages) notePage = pages - 1;
+    if (notePage < 0) notePage = 0;
+    var start = notePage * NOTE_PAGE_SIZE;
+    cmds.slice(start, start + NOTE_PAGE_SIZE).forEach(function (line) {
       var d = lineDoc(CURRENT_THEME, line.en);
       var eqHtml;
       if (d.eq === "universal" || (d.eq && !EQ[d.eq] && d.eq !== "unique" && !Array.isArray(d.eq))) {
@@ -916,14 +925,27 @@
         '<span class="ni-line"><b>' + (zh ? "适用场景" : "WHEN") + "</b> " + (zh ? d.use.zh : d.use.en) + "</span>" +
         '<span class="ni-line ni-other"><b>' + (zh ? "其他 Agent" : "OTHER AGENTS") + "</b> " + eqHtml + "</span></p>";
     });
+    if (pages > 1) {
+      html += '<div class="note-pager">' +
+        (notePage > 0 ? '<button class="note-pg" data-note-pg="prev">' + (zh ? "上一页" : "Prev") + "</button>" : "") +
+        '<span class="note-pg-info">' + (zh ? "第 " + (notePage + 1) + " / " + pages + " 页" : "Page " + (notePage + 1) + " / " + pages) + "</span>" +
+        (notePage < pages - 1 ? '<button class="note-pg" data-note-pg="next">' + (zh ? "下一页" : "Next") + "</button>" : "") +
+        "</div>";
+    }
     noteBox.innerHTML = html;
+    noteBox.querySelectorAll("[data-note-pg]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        notePage += btn.getAttribute("data-note-pg") === "next" ? 1 : -1;
+        renderNote();
+      });
+    });
   }
   if (noteToggle) {
     noteToggle.addEventListener("click", function () {
       noteOpen = !noteOpen;
       noteBox.classList.toggle("show", noteOpen);
       noteToggle.classList.toggle("is-open", noteOpen);
-      if (noteOpen) renderNote();
+      if (noteOpen) { notePage = 0; renderNote(); }
     });
   }
   document.addEventListener("ninkoro:langchange", function () {
@@ -932,7 +954,7 @@
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     typeLayer.innerHTML = "";
     typeStart();
-    if (noteOpen) renderNote();
+    if (noteOpen) { notePage = 0; renderNote(); }
   });
 
   /* ---------- 磁吸按钮 + 入口卡 3D 倾斜（精细指针设备） ---------- */

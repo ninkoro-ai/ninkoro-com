@@ -1207,11 +1207,25 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .demo-note .note-item .ni-eq-lbl { color: var(--ink-dim); }
 .demo-note .note-item .ni-unique { color: var(--ink-dim); }
+.demo-note .note-pager {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(211, 162, 74, .18);
+}
+.demo-note .note-pg {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+  color: var(--ink-faint); border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 13px; background: rgba(237, 232, 222, .03);
+  transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.demo-note .note-pg:hover { color: var(--accent); border-color: rgba(211, 162, 74, .5); background: rgba(211, 162, 74, .06); }
+.demo-note .note-pg:active { transform: scale(.96); }
+.demo-note .note-pg-info { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-dim); }
 
 @media (max-width: 760px) {
   .note-toggle { font-size: 10.5px; padding: 6px 13px; margin-top: 10px; }
   .demo-note p { font-size: 11px; line-height: 1.65; }
   .demo-note.show { max-height: 480px; }
+  .demo-note .note-pg { padding: 5px 11px; }
 }
 
 @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
