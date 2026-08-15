@@ -8,6 +8,9 @@
 (function () {
   "use strict";
 
+  /* 移动端恢复修改前样式：不渲染全屏银河/星空画布 */
+  if (window.matchMedia && window.matchMedia("(max-width: 760px)").matches) return;
+
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var isHome = document.body && document.body.getAttribute("data-page") === "home";
 
@@ -88,9 +91,9 @@
   }
 
   function layout() {
-    galaxy.x = W * 0.5;
-    galaxy.y = H * 0.42;
-    galaxy.r = Math.min(W, H) * 0.55;
+    galaxy.x = W * 0.58;
+    galaxy.y = H * 0.40;
+    galaxy.r = Math.min(W, H) * 0.62;
     nebulas = [
       { x: W * 0.84, y: H * 0.20, r: Math.min(W, H) * 0.34, c: "211,162,74", sx: 0.003, sy: 0.002 },
       { x: W * 0.18, y: H * 0.72, r: Math.min(W, H) * 0.30, c: "122,142,210", sx: 0.002, sy: 0.003 },
@@ -117,11 +120,11 @@
   function initArms() {
     arms = [];
     var n = Math.floor(galaxy.r * 1.5);
-    var turns = 2.6;
+    var turns = 2.8;
     for (var i = 0; i < n; i++) {
       var t = Math.random();
       var theta = t * Math.PI * 2 * turns;
-      var r = galaxy.r * (0.10 + t * 0.82) * (0.85 + Math.random() * 0.3);
+      var r = galaxy.r * (0.08 + t * 0.92) * (0.8 + Math.random() * 0.4);
       var arm = (i % 2) * Math.PI;
       var p = Math.random();
       arms.push({
@@ -178,7 +181,7 @@
     });
   }
 
-  function drawGalaxy(time) {
+  function drawGalaxy() {
     arms.forEach(function (p) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -194,26 +197,6 @@
     ctx.beginPath();
     ctx.arc(galaxy.x, galaxy.y, galaxy.r * 0.5, 0, Math.PI * 2);
     ctx.fill();
-    // 黑洞 + 吸积盘
-    var pulse = 0.85 + 0.15 * Math.sin(time * 0.0012);
-    var rot = -0.45 + time * 0.00015;
-    ctx.save();
-    ctx.translate(galaxy.x, galaxy.y);
-    ctx.strokeStyle = "rgba(232,176,96," + (0.5 * pulse) + ")";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.ellipse(0, 0, galaxy.r * 0.21, galaxy.r * 0.06, rot, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.strokeStyle = "rgba(255,212,145," + (0.6 * pulse) + ")";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.ellipse(0, 0, galaxy.r * 0.145, galaxy.r * 0.04, rot, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.fillStyle = "#070707";
-    ctx.beginPath();
-    ctx.arc(0, 0, galaxy.r * 0.105, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
   }
 
   function drawConstellation(c) {
@@ -245,10 +228,15 @@
     });
     var maxY = 0;
     pts.forEach(function (p) { if (p[1] > maxY) maxY = p[1]; });
-    ctx.font = "11px 'SF Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "rgba(211,162,74,.78)";
-    ctx.fillText(c.data.name.en, x0 + s / 2, y0 + maxY * s + 18);
+    /* 名称：鼠标悬停到星座上方才显示 */
+    var hover = mouse.x >= x0 - 26 && mouse.x <= x0 + s + 26 &&
+                mouse.y >= y0 - 26 && mouse.y <= y0 + s + 26;
+    if (hover) {
+      ctx.font = "11px 'SF Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "rgba(211,162,74,.85)";
+      ctx.fillText(c.data.name.en, x0 + s / 2, y0 + maxY * s + 18);
+    }
   }
 
   function frame() {

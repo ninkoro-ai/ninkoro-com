@@ -1521,7 +1521,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   100% { transform: scale(2.4); opacity: 0; }
 }
 .earth-info {
-  position: absolute; left: 50%; bottom: 102px;
+  position: absolute; left: 50%; bottom: 160px;
   transform: translateX(-50%);
   text-align: center; z-index: 2;
   pointer-events: none;
