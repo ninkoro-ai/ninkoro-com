@@ -1323,7 +1323,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* ---------- 语言切换开关 ---------- */
 .lang-toggle {
-  --lt-w: 52px; --lt-h: 31px; --lt-k: 27px;
+  --lt-w: 52px; --lt-h: 31px; --lt-k: 27px; --lt-r: calc(2px + var(--lt-k) / 2);
   position: relative;
   width: var(--lt-w); height: var(--lt-h); margin-left: 5px;
   border-radius: 999px;
@@ -1357,8 +1357,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   z-index: 3; pointer-events: none;
   transition: color .25s;
 }
-.lang-toggle .lt-en { left: 8px; color: #17130a; }
-.lang-toggle .lt-zh { right: 8px; color: rgba(255, 255, 255, .9); }
+.lang-toggle .lt-en { left: var(--lt-r); transform: translateX(-50%) translateY(-50%); color: #17130a; }
+.lang-toggle .lt-zh { right: var(--lt-r); transform: translateX(50%) translateY(-50%); color: rgba(255, 255, 255, .9); }
 .lang-toggle.is-zh .lt-en { color: rgba(255, 255, 255, .9); }
 .lang-toggle.is-zh .lt-zh { color: #17130a; }
 
@@ -1472,14 +1472,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (max-width: 760px) {
   .lang-toggle { --lt-w: 48px; --lt-h: 29px; --lt-k: 25px; margin-left: 2px; text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
   .lang-toggle .lt-label { font-size: 8.5px; letter-spacing: 0; }
-  .lang-toggle .lt-en { left: 6px; }
-  .lang-toggle .lt-zh { right: 6px; }
 }
 @media (max-width: 360px) {
   .lang-toggle { --lt-w: 45px; --lt-h: 27px; --lt-k: 23px; }
   .lang-toggle .lt-label { font-size: 8px; }
-  .lang-toggle .lt-en { left: 6px; }
-  .lang-toggle .lt-zh { right: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
