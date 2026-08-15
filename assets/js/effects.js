@@ -335,9 +335,9 @@
   /* ---------- 彩蛋：CTA「联系我」按钮在框内闪躲鼠标 ---------- */
   var ctaContact = document.getElementById("ctaContact");
   if (ctaContact && finePointer && !reduceMotion) {
-    ctaContact.classList.add("cta-dodge-active");
     var ctaInner = ctaContact.closest(".cta-inner");
     function dodge() {
+      if (!ctaContact.classList.contains("cta-dodge-active")) ctaContact.classList.add("cta-dodge-active");
       var box = ctaInner || ctaContact.parentElement;
       var br = box.getBoundingClientRect();
       var bw = ctaContact.offsetWidth || 130;
@@ -349,7 +349,6 @@
       ctaContact.style.top = (pad + Math.random() * Math.max(1, maxY - pad)) + "px";
       ctaContact.style.transform = "rotate(" + (Math.random() * 10 - 5).toFixed(1) + "deg)";
     }
-    dodge();
     ctaContact.addEventListener("pointerover", dodge);
     if (ctaInner) {
       ctaInner.addEventListener("mousemove", function (e) {
