@@ -342,7 +342,7 @@
       var rc = randomCoord();
       place(rc.lat, rc.lon, null);
     }
-    if (window.fetch) {
+    if (window.fetch && /^https?:$/.test(location.protocol)) {
       fetch("/cdn-cgi/trace", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (txt) {
         if (settled) return;
         settled = true;
