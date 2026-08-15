@@ -233,7 +233,7 @@
       var text = i < uptoLine ? lines[i].en : (i === uptoLine ? lines[i].en.slice(0, uptoChar) : "");
       html += '<span class="' + lines[i].c + '">' + esc(text) + "</span>";
       var isLast = (i === lines.length - 1);
-      if (!isLast && (i < uptoLine || (i === uptoLine && uptoChar >= lines[i].en.length))) html += "\n\n";
+      if (!isLast && (i < uptoLine || (i === uptoLine && uptoChar >= lines[i].en.length))) html += "\n";
     }
     return html;
   }
