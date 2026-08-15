@@ -210,24 +210,6 @@
   /* ---------- 磁吸按钮 + 入口卡 3D 倾斜（精细指针设备） ---------- */
   var finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   if (finePointer && !reduceMotion) {
-    document.querySelectorAll(".hero-actions .btn, .cta-actions .btn").forEach(function (btn) {
-      btn.addEventListener("mousemove", function (e) {
-        var r = btn.getBoundingClientRect();
-        var dx = e.clientX - (r.left + r.width / 2);
-        var dy = e.clientY - (r.top + r.height / 2);
-        var mx = Math.max(-6, Math.min(6, dx * 0.22));
-        var my = Math.max(-6, Math.min(6, dy * 0.32));
-        btn.style.setProperty("--mx", mx.toFixed(1) + "px");
-        btn.style.setProperty("--my", my.toFixed(1) + "px");
-        btn.classList.add("magnet-in");
-      });
-      btn.addEventListener("mouseleave", function () {
-        btn.classList.remove("magnet-in");
-        btn.style.removeProperty("--mx");
-        btn.style.removeProperty("--my");
-      });
-    });
-
     document.querySelectorAll(".entry-card").forEach(function (card) {
       card.addEventListener("mousemove", function (e) {
         var r = card.getBoundingClientRect();
