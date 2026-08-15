@@ -119,7 +119,7 @@
 
   function initArms() {
     arms = [];
-    var n = Math.floor(galaxy.r * 1.5);
+    var n = Math.floor(galaxy.r * 0.85);
     var turns = 2.8;
     for (var i = 0; i < n; i++) {
       var t = Math.random();
@@ -130,8 +130,8 @@
       arms.push({
         x: galaxy.x + Math.cos(theta + arm) * r,
         y: galaxy.y + Math.sin(theta + arm) * r * 0.72,
-        r: Math.random() * 1.1 + .4,
-        a: Math.random() * .45 + .2,
+        r: Math.random() * 0.9 + .3,
+        a: Math.random() * .22 + .08,
         c: p < .68 ? "241,235,219" : (p < .85 ? "211,162,74" : "158,180,228")
       });
     }

@@ -1320,33 +1320,44 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* ---------- 语言切换开关 ---------- */
 .lang-toggle {
-  --lt-w: 58px; --lt-h: 28px; --lt-k: 22px; --lt-k-top: 3px; --lt-k-left: 3px;
+  --lt-w: 52px; --lt-h: 31px; --lt-k: 27px;
   position: relative;
   width: var(--lt-w); height: var(--lt-h); margin-left: 5px;
-  border: 1px solid var(--line-strong); border-radius: 999px;
-  background: rgba(237, 232, 222, .06);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e0ad4e, #bd8a2e);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, .14),
+    inset 0 1px 4px rgba(0, 0, 0, .35),
+    0 1px 3px rgba(0, 0, 0, .28);
   flex: 0 0 auto;
-  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+  transition: box-shadow .25s var(--ease);
 }
-.lang-toggle:hover { border-color: rgba(211, 162, 74, .5); box-shadow: 0 0 14px rgba(211, 162, 74, .16); }
+.lang-toggle:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, .14),
+    inset 0 1px 4px rgba(0, 0, 0, .35),
+    0 1px 3px rgba(0, 0, 0, .28),
+    0 0 14px rgba(211, 162, 74, .4);
+}
 .lang-toggle .lt-knob {
-  position: absolute; top: var(--lt-k-top); left: var(--lt-k-left);
+  position: absolute; top: 2px; left: 2px;
   width: var(--lt-k); height: var(--lt-k); border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
-  transition: left .35s cubic-bezier(.34, 1.56, .64, 1), background .3s;
-  z-index: 1;
+  background: radial-gradient(circle at 35% 28%, #ffffff, #f3f3f3 55%, #dfdfdf);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .4), inset 0 -1px 2px rgba(0, 0, 0, .1);
+  transition: left .32s cubic-bezier(.34, 1.56, .64, 1);
+  z-index: 2;
 }
-.lang-toggle.is-zh .lt-knob { left: calc(100% - var(--lt-k) - var(--lt-k-left)); background: var(--ink); }
+.lang-toggle.is-zh .lt-knob { left: calc(100% - var(--lt-k) - 2px); }
 .lang-toggle .lt-label {
   position: absolute; top: 50%; transform: translateY(-50%);
-  font-family: var(--mono); font-size: 11px; letter-spacing: .02em;
-  z-index: 2; pointer-events: none;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .02em;
+  z-index: 3; pointer-events: none;
+  transition: color .25s;
 }
-.lang-toggle .lt-en { left: 8px; color: #17130a; opacity: 1; }
-.lang-toggle .lt-zh { right: 8px; color: var(--ink-faint); opacity: .55; }
-.lang-toggle.is-zh .lt-en { color: var(--ink-faint); opacity: .55; }
-.lang-toggle.is-zh .lt-zh { color: #17130a; opacity: 1; }
+.lang-toggle .lt-en { left: 8px; color: #17130a; }
+.lang-toggle .lt-zh { right: 8px; color: rgba(255, 255, 255, .9); }
+.lang-toggle.is-zh .lt-en { color: rgba(255, 255, 255, .9); }
+.lang-toggle.is-zh .lt-zh { color: #17130a; }
 
 /* 长文英文版说明条 */
 .lang-notice {
@@ -1379,7 +1390,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .article-body p, .longread p { font-size: 16px; line-height: 1.95; letter-spacing: .01em; }
   .longread .lede { font-size: 15px; line-height: 1.8; }
   .toc-inline { margin: 0 0 28px; padding: 14px 16px; }
-  .lang-toggle { height: 34px; padding: 0 9px; font-size: 11px; margin-left: 2px; }
 }
 
 /* ---------- 移动端导航头部紧凑优化（2026-08-15） ---------- */
@@ -1389,14 +1399,11 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .nav-logo { font-size: 15px; gap: 5px; flex: 0 0 auto; }
   .nav-logo::before { width: 16px; height: 16px; }
   .nav-logo em { display: none; }
-  .lang-toggle { height: 32px; padding: 0 8px; font-size: 11px; margin-left: 0; flex: 0 0 auto; }
   .nav-search { width: 40px; height: 40px; margin-left: 2px; flex: 0 0 auto; }
   .nav-burger { width: 40px; height: 40px; flex: 0 0 auto; }
 }
 @media (max-width: 360px) {
   .nav-inner { gap: 4px; padding-left: 12px; }
-  .lang-toggle { padding: 0 6px; font-size: 10px; height: 30px; }
-  .lang-toggle i { display: none; }
 }
 
 /* ============================================================
@@ -1466,12 +1473,12 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* 语言开关移动端尺寸 */
 @media (max-width: 760px) {
-  .lang-toggle { --lt-w: 54px; --lt-h: 26px; --lt-k: 20px; margin-left: 2px; height: var(--lt-h); }
-  .lang-toggle .lt-label { font-size: 10.5px; }
+  .lang-toggle { --lt-w: 48px; --lt-h: 29px; --lt-k: 25px; margin-left: 2px; }
+  .lang-toggle .lt-label { font-size: 9.5px; }
 }
 @media (max-width: 360px) {
-  .lang-toggle { --lt-w: 50px; --lt-h: 24px; --lt-k: 18px; }
-  .lang-toggle .lt-label { font-size: 10px; }
+  .lang-toggle { --lt-w: 45px; --lt-h: 27px; --lt-k: 23px; }
+  .lang-toggle .lt-label { font-size: 9px; }
   .lang-toggle .lt-en { left: 6px; }
   .lang-toggle .lt-zh { right: 6px; }
 }
@@ -1537,8 +1544,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   text-shadow: 0 0 18px rgba(211, 162, 74, .45);
 }
 @keyframes watch-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .earth-coords {
   margin-top: 6px;
