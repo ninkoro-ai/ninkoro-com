@@ -1521,20 +1521,20 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   100% { transform: scale(2.4); opacity: 0; }
 }
 .earth-info {
+  display: none;
   position: absolute; left: 50%; bottom: 160px;
   transform: translateX(-50%);
   text-align: center; z-index: 2;
   pointer-events: none;
 }
+.earth-info.is-active {
+  display: block;
+  animation: watch-in .45s var(--ease);
+}
 .earth-watch {
-  display: none;
   font-family: var(--mono); font-size: 13px; letter-spacing: .22em;
   color: var(--accent);
   text-shadow: 0 0 18px rgba(211, 162, 74, .45);
-}
-.earth-watch.is-active {
-  display: block;
-  animation: watch-in .45s var(--ease);
 }
 @keyframes watch-in {
   from { opacity: 0; transform: translateY(5px); }

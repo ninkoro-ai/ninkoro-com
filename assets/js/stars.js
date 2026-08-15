@@ -145,7 +145,7 @@
       var j = Math.floor(Math.random() * (i + 1));
       var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
     }
-    var count = 5 + Math.floor(Math.random() * 2);
+    var count = 1;
     var idx = 0, attempts = 0;
     while (consts.length < count && idx < pool.length && attempts < 80) {
       var data = pool[idx]; idx++;

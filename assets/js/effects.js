@@ -307,36 +307,36 @@
     ];
     /* Cloudflare 边缘节点 → 城市（访客 IP 就近的 PoP） */
     var COLO = {
-      SIN: { name: "Singapore", lat: 1.35, lon: 103.82 }, HKG: { name: "Hong Kong", lat: 22.32, lon: 114.17 },
-      TPE: { name: "Taipei", lat: 25.03, lon: 121.57 }, ICN: { name: "Seoul", lat: 37.57, lon: 126.98 },
-      NRT: { name: "Tokyo", lat: 35.69, lon: 139.69 }, HND: { name: "Tokyo", lat: 35.55, lon: 139.78 },
-      KIX: { name: "Osaka", lat: 34.69, lon: 135.50 }, BKK: { name: "Bangkok", lat: 13.76, lon: 100.50 },
-      KUL: { name: "Kuala Lumpur", lat: 3.14, lon: 101.69 }, SGN: { name: "Ho Chi Minh City", lat: 10.82, lon: 106.63 },
-      CGK: { name: "Jakarta", lat: -6.21, lon: 106.85 }, BOM: { name: "Mumbai", lat: 19.08, lon: 72.88 },
-      DEL: { name: "Delhi", lat: 28.61, lon: 77.21 }, MAA: { name: "Chennai", lat: 13.08, lon: 80.27 },
-      BLR: { name: "Bengaluru", lat: 12.97, lon: 77.59 }, DXB: { name: "Dubai", lat: 25.20, lon: 55.27 },
-      AUH: { name: "Abu Dhabi", lat: 24.45, lon: 54.38 }, JED: { name: "Jeddah", lat: 21.49, lon: 39.19 },
-      IST: { name: "Istanbul", lat: 41.01, lon: 28.98 }, WAW: { name: "Warsaw", lat: 52.23, lon: 21.01 },
-      PRG: { name: "Prague", lat: 50.08, lon: 14.44 }, VIE: { name: "Vienna", lat: 48.21, lon: 16.37 },
-      FRA: { name: "Frankfurt", lat: 50.11, lon: 8.68 }, AMS: { name: "Amsterdam", lat: 52.37, lon: 4.90 },
-      BRU: { name: "Brussels", lat: 50.85, lon: 4.35 }, LHR: { name: "London", lat: 51.51, lon: -0.13 },
-      MAN: { name: "Manchester", lat: 53.48, lon: -2.24 }, CDG: { name: "Paris", lat: 48.86, lon: 2.35 },
-      MAD: { name: "Madrid", lat: 40.42, lon: -3.70 }, BCN: { name: "Barcelona", lat: 41.39, lon: 2.17 },
-      MXP: { name: "Milan", lat: 45.46, lon: 9.19 }, FCO: { name: "Rome", lat: 41.90, lon: 12.50 },
-      ZRH: { name: "Zurich", lat: 47.38, lon: 8.54 }, CPH: { name: "Copenhagen", lat: 55.68, lon: 12.57 },
-      ARN: { name: "Stockholm", lat: 59.33, lon: 18.07 }, HEL: { name: "Helsinki", lat: 60.17, lon: 24.94 },
-      GRU: { name: "São Paulo", lat: -23.55, lon: -46.63 }, GIG: { name: "Rio de Janeiro", lat: -22.91, lon: -43.17 },
-      EZE: { name: "Buenos Aires", lat: -34.60, lon: -58.38 }, MEX: { name: "Mexico City", lat: 19.43, lon: -99.13 },
-      YYZ: { name: "Toronto", lat: 43.65, lon: -79.38 }, YVR: { name: "Vancouver", lat: 49.28, lon: -123.12 },
-      SEA: { name: "Seattle", lat: 47.61, lon: -122.33 }, SJC: { name: "San Jose", lat: 37.34, lon: -121.89 },
-      LAX: { name: "Los Angeles", lat: 34.05, lon: -118.24 }, PHX: { name: "Phoenix", lat: 33.45, lon: -112.07 },
-      DEN: { name: "Denver", lat: 39.74, lon: -104.99 }, DFW: { name: "Dallas", lat: 32.78, lon: -96.80 },
-      ORD: { name: "Chicago", lat: 41.88, lon: -87.63 }, MSP: { name: "Minneapolis", lat: 44.98, lon: -93.27 },
-      IAD: { name: "Ashburn", lat: 39.04, lon: -77.49 }, JFK: { name: "New York", lat: 40.64, lon: -73.78 },
-      BOS: { name: "Boston", lat: 42.36, lon: -71.06 }, ATL: { name: "Atlanta", lat: 33.75, lon: -84.39 },
-      MIA: { name: "Miami", lat: 25.76, lon: -80.19 }, SYD: { name: "Sydney", lat: -33.87, lon: 151.21 },
-      MEL: { name: "Melbourne", lat: -37.81, lon: 144.96 }, PER: { name: "Perth", lat: -31.95, lon: 115.86 },
-      AKL: { name: "Auckland", lat: -36.85, lon: 174.76 }, JNB: { name: "Johannesburg", lat: -26.20, lon: 28.05 }
+      SIN: { name: "Singapore", lat: 1.3521, lon: 103.8198 }, HKG: { name: "Hong Kong", lat: 22.3193, lon: 114.1694 },
+      TPE: { name: "Taipei", lat: 25.0330, lon: 121.5654 }, ICN: { name: "Seoul", lat: 37.5665, lon: 126.9780 },
+      NRT: { name: "Tokyo", lat: 35.6762, lon: 139.6503 }, HND: { name: "Tokyo", lat: 35.6762, lon: 139.6503 },
+      KIX: { name: "Osaka", lat: 34.6937, lon: 135.5023 }, BKK: { name: "Bangkok", lat: 13.7563, lon: 100.5018 },
+      KUL: { name: "Kuala Lumpur", lat: 3.1390, lon: 101.6869 }, SGN: { name: "Ho Chi Minh City", lat: 10.8231, lon: 106.6297 },
+      CGK: { name: "Jakarta", lat: -6.2088, lon: 106.8456 }, BOM: { name: "Mumbai", lat: 19.0760, lon: 72.8777 },
+      DEL: { name: "Delhi", lat: 28.6139, lon: 77.2090 }, MAA: { name: "Chennai", lat: 13.0827, lon: 80.2707 },
+      BLR: { name: "Bengaluru", lat: 12.9716, lon: 77.5946 }, DXB: { name: "Dubai", lat: 25.2048, lon: 55.2708 },
+      AUH: { name: "Abu Dhabi", lat: 24.4539, lon: 54.3773 }, JED: { name: "Jeddah", lat: 21.4858, lon: 39.1925 },
+      IST: { name: "Istanbul", lat: 41.0082, lon: 28.9784 }, WAW: { name: "Warsaw", lat: 52.2297, lon: 21.0122 },
+      PRG: { name: "Prague", lat: 50.0755, lon: 14.4378 }, VIE: { name: "Vienna", lat: 48.2082, lon: 16.3738 },
+      FRA: { name: "Frankfurt", lat: 50.1109, lon: 8.6821 }, AMS: { name: "Amsterdam", lat: 52.3676, lon: 4.9041 },
+      BRU: { name: "Brussels", lat: 50.8503, lon: 4.3517 }, LHR: { name: "London", lat: 51.5074, lon: -0.1278 },
+      MAN: { name: "Manchester", lat: 53.4808, lon: -2.2426 }, CDG: { name: "Paris", lat: 48.8566, lon: 2.3522 },
+      MAD: { name: "Madrid", lat: 40.4168, lon: -3.7038 }, BCN: { name: "Barcelona", lat: 41.3874, lon: 2.1686 },
+      MXP: { name: "Milan", lat: 45.4642, lon: 9.1900 }, FCO: { name: "Rome", lat: 41.9028, lon: 12.4964 },
+      ZRH: { name: "Zurich", lat: 47.3769, lon: 8.5417 }, CPH: { name: "Copenhagen", lat: 55.6761, lon: 12.5683 },
+      ARN: { name: "Stockholm", lat: 59.3293, lon: 18.0686 }, HEL: { name: "Helsinki", lat: 60.1699, lon: 24.9384 },
+      GRU: { name: "São Paulo", lat: -23.5505, lon: -46.6333 }, GIG: { name: "Rio de Janeiro", lat: -22.9068, lon: -43.1729 },
+      EZE: { name: "Buenos Aires", lat: -34.6037, lon: -58.3816 }, MEX: { name: "Mexico City", lat: 19.4326, lon: -99.1332 },
+      YYZ: { name: "Toronto", lat: 43.6532, lon: -79.3832 }, YVR: { name: "Vancouver", lat: 49.2827, lon: -123.1207 },
+      SEA: { name: "Seattle", lat: 47.6062, lon: -122.3321 }, SJC: { name: "San Jose", lat: 37.3382, lon: -121.8863 },
+      LAX: { name: "Los Angeles", lat: 34.0522, lon: -118.2437 }, PHX: { name: "Phoenix", lat: 33.4484, lon: -112.0740 },
+      DEN: { name: "Denver", lat: 39.7392, lon: -104.9903 }, DFW: { name: "Dallas", lat: 32.7767, lon: -96.7970 },
+      ORD: { name: "Chicago", lat: 41.8781, lon: -87.6298 }, MSP: { name: "Minneapolis", lat: 44.9778, lon: -93.2650 },
+      IAD: { name: "Ashburn", lat: 39.0438, lon: -77.4874 }, JFK: { name: "New York", lat: 40.7128, lon: -74.0060 },
+      BOS: { name: "Boston", lat: 42.3601, lon: -71.0589 }, ATL: { name: "Atlanta", lat: 33.7490, lon: -84.3880 },
+      MIA: { name: "Miami", lat: 25.7617, lon: -80.1918 }, SYD: { name: "Sydney", lat: -33.8688, lon: 151.2093 },
+      MEL: { name: "Melbourne", lat: -37.8136, lon: 144.9631 }, PER: { name: "Perth", lat: -31.9505, lon: 115.8605 },
+      AKL: { name: "Auckland", lat: -36.8509, lon: 174.7645 }, JNB: { name: "Johannesburg", lat: -26.2041, lon: 28.0473 }
     };
     function findCountry(code) {
       for (var i = 0; i < COUNTRY.length; i++) {
@@ -346,7 +346,9 @@
     }
     function fmt(lat, lon) {
       var ns = lat >= 0 ? "N" : "S", ew = lon >= 0 ? "E" : "W";
-      return Math.abs(lat).toFixed(2) + "° " + ns + ", " + Math.abs(lon).toFixed(2) + "° " + ew;
+      var la = (+Math.abs(lat).toFixed(4)).toString();
+      var lo = (+Math.abs(lon).toFixed(4)).toString();
+      return la + "° " + ns + ", " + lo + "° " + ew;
     }
     function place(lat, lon, ip, placeName) {
       var t = (lon + 180) / 360;
@@ -403,10 +405,10 @@
     }
     /* 点击发光点 → 显示 I'm watching you */
     var earthHit = document.getElementById("earthDotHit");
-    var earthWatch = earthArc.querySelector(".earth-watch");
-    if (earthHit && earthWatch) {
+    var earthInfo = earthArc.querySelector(".earth-info");
+    if (earthHit && earthInfo) {
       earthHit.addEventListener("click", function () {
-        earthWatch.classList.toggle("is-active");
+        earthInfo.classList.toggle("is-active");
       });
     }
   }
