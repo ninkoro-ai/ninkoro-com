@@ -1485,6 +1485,8 @@ body[data-page="home"] .lang-toggle { display: inline-block; }
   50% { transform: translateY(-8px); }
 }
 .hero-stage .terminal { animation: float-slow 7s ease-in-out infinite; }
+/* 注释打开时暂停终端呼吸浮动，便于阅读 */
+.terminal.note-open { animation-play-state: paused; }
 
 /* 入口卡 3D 倾斜（JS 注入 --rx/--ry，仅精细指针设备） */
 @media (hover: hover) and (pointer: fine) {

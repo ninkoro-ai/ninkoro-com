@@ -847,9 +847,15 @@
   /* ---------- 查看注释：终端右下角按钮 + 框内展开 ---------- */
   var noteToggle = document.getElementById("noteToggle");
   var noteBox = document.getElementById("demoNote");
+  var terminalBox = typeLayer ? typeLayer.closest(".terminal") : null;
   var noteOpen = false;
   var NOTE_PAGE_SIZE = 3;
   var notePage = 0;
+  function updateNoteToggle() {
+    if (!noteToggle) return;
+    var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
+    noteToggle.textContent = noteOpen ? (zh ? "关闭注释" : "Close notes") : (zh ? "查看注释" : "View notes");
+  }
   function lineDoc(theme, line) {
     var doc = (DOCS[theme.id] || {})[line] || null;
     var cat = null;
@@ -941,6 +947,8 @@
       noteOpen = !noteOpen;
       noteBox.classList.toggle("show", noteOpen);
       noteToggle.classList.toggle("is-open", noteOpen);
+      if (terminalBox) terminalBox.classList.toggle("note-open", noteOpen);
+      updateNoteToggle();
       if (noteOpen) { notePage = 0; renderNote(); }
     });
   }
@@ -950,6 +958,8 @@
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     typeLayer.innerHTML = "";
     typeStart();
+    if (terminalBox) terminalBox.classList.toggle("note-open", noteOpen);
+    updateNoteToggle();
     if (noteOpen) { notePage = 0; renderNote(); }
   });
 
