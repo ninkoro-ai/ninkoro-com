@@ -281,30 +281,63 @@
     var earthRing = document.getElementById("earthDotRing");
     var earthCoords = document.getElementById("earthCoords");
     var COUNTRY = [
-      { c: "CN", lat: 35.86, lon: 104.19 }, { c: "US", lat: 39.83, lon: -98.58 },
-      { c: "JP", lat: 36.20, lon: 138.25 }, { c: "SG", lat: 1.35, lon: 103.82 },
-      { c: "HK", lat: 22.32, lon: 114.17 }, { c: "TW", lat: 23.70, lon: 121.00 },
-      { c: "KR", lat: 36.50, lon: 127.90 }, { c: "DE", lat: 51.10, lon: 10.40 },
-      { c: "GB", lat: 55.40, lon: -3.40 }, { c: "FR", lat: 46.20, lon: 2.20 },
-      { c: "NL", lat: 52.10, lon: 5.30 }, { c: "RU", lat: 61.50, lon: 105.30 },
-      { c: "AU", lat: -25.30, lon: 133.80 }, { c: "CA", lat: 56.10, lon: -106.30 },
-      { c: "IN", lat: 20.60, lon: 78.90 }, { c: "BR", lat: -14.20, lon: -51.90 },
-      { c: "ID", lat: -0.80, lon: 113.90 }, { c: "IT", lat: 42.80, lon: 12.80 },
-      { c: "ES", lat: 40.50, lon: -3.70 }, { c: "SE", lat: 60.10, lon: 18.60 },
-      { c: "CH", lat: 46.80, lon: 8.20 }, { c: "UA", lat: 48.40, lon: 31.20 },
-      { c: "PL", lat: 52.10, lon: 19.40 }, { c: "TR", lat: 38.96, lon: 35.24 },
-      { c: "TH", lat: 15.87, lon: 100.99 }, { c: "VN", lat: 16.00, lon: 108.00 },
-      { c: "MY", lat: 4.20, lon: 101.90 }, { c: "PH", lat: 12.90, lon: 121.90 },
-      { c: "NZ", lat: -40.90, lon: 174.90 }, { c: "MX", lat: 23.60, lon: -102.50 },
-      { c: "AR", lat: -34.00, lon: -64.00 }, { c: "ZA", lat: -29.00, lon: 24.00 },
-      { c: "EG", lat: 26.80, lon: 30.80 }, { c: "SA", lat: 23.90, lon: 45.10 },
-      { c: "AE", lat: 24.00, lon: 54.00 }, { c: "IL", lat: 31.40, lon: 35.20 },
-      { c: "FI", lat: 61.90, lon: 25.70 }, { c: "NO", lat: 60.50, lon: 8.50 },
-      { c: "DK", lat: 56.26, lon: 9.50 }, { c: "BE", lat: 50.50, lon: 4.50 },
-      { c: "AT", lat: 47.50, lon: 14.50 }, { c: "PT", lat: 39.50, lon: -8.00 },
-      { c: "GR", lat: 39.00, lon: 22.00 }, { c: "IE", lat: 53.40, lon: -8.20 },
-      { c: "CZ", lat: 49.80, lon: 15.50 }, { c: "RO", lat: 45.90, lon: 25.00 }
+      { c: "CN", name: "China", lat: 35.86, lon: 104.19 }, { c: "US", name: "United States", lat: 39.83, lon: -98.58 },
+      { c: "JP", name: "Japan", lat: 36.20, lon: 138.25 }, { c: "SG", name: "Singapore", lat: 1.35, lon: 103.82 },
+      { c: "HK", name: "Hong Kong", lat: 22.32, lon: 114.17 }, { c: "TW", name: "Taiwan", lat: 23.70, lon: 121.00 },
+      { c: "KR", name: "South Korea", lat: 36.50, lon: 127.90 }, { c: "DE", name: "Germany", lat: 51.10, lon: 10.40 },
+      { c: "GB", name: "United Kingdom", lat: 55.40, lon: -3.40 }, { c: "FR", name: "France", lat: 46.20, lon: 2.20 },
+      { c: "NL", name: "Netherlands", lat: 52.10, lon: 5.30 }, { c: "RU", name: "Russia", lat: 61.50, lon: 105.30 },
+      { c: "AU", name: "Australia", lat: -25.30, lon: 133.80 }, { c: "CA", name: "Canada", lat: 56.10, lon: -106.30 },
+      { c: "IN", name: "India", lat: 20.60, lon: 78.90 }, { c: "BR", name: "Brazil", lat: -14.20, lon: -51.90 },
+      { c: "ID", name: "Indonesia", lat: -0.80, lon: 113.90 }, { c: "IT", name: "Italy", lat: 42.80, lon: 12.80 },
+      { c: "ES", name: "Spain", lat: 40.50, lon: -3.70 }, { c: "SE", name: "Sweden", lat: 60.10, lon: 18.60 },
+      { c: "CH", name: "Switzerland", lat: 46.80, lon: 8.20 }, { c: "UA", name: "Ukraine", lat: 48.40, lon: 31.20 },
+      { c: "PL", name: "Poland", lat: 52.10, lon: 19.40 }, { c: "TR", name: "Turkey", lat: 38.96, lon: 35.24 },
+      { c: "TH", name: "Thailand", lat: 15.87, lon: 100.99 }, { c: "VN", name: "Vietnam", lat: 16.00, lon: 108.00 },
+      { c: "MY", name: "Malaysia", lat: 4.20, lon: 101.90 }, { c: "PH", name: "Philippines", lat: 12.90, lon: 121.90 },
+      { c: "NZ", name: "New Zealand", lat: -40.90, lon: 174.90 }, { c: "MX", name: "Mexico", lat: 23.60, lon: -102.50 },
+      { c: "AR", name: "Argentina", lat: -34.00, lon: -64.00 }, { c: "ZA", name: "South Africa", lat: -29.00, lon: 24.00 },
+      { c: "EG", name: "Egypt", lat: 26.80, lon: 30.80 }, { c: "SA", name: "Saudi Arabia", lat: 23.90, lon: 45.10 },
+      { c: "AE", name: "United Arab Emirates", lat: 24.00, lon: 54.00 }, { c: "IL", name: "Israel", lat: 31.40, lon: 35.20 },
+      { c: "FI", name: "Finland", lat: 61.90, lon: 25.70 }, { c: "NO", name: "Norway", lat: 60.50, lon: 8.50 },
+      { c: "DK", name: "Denmark", lat: 56.26, lon: 9.50 }, { c: "BE", name: "Belgium", lat: 50.50, lon: 4.50 },
+      { c: "AT", name: "Austria", lat: 47.50, lon: 14.50 }, { c: "PT", name: "Portugal", lat: 39.50, lon: -8.00 },
+      { c: "GR", name: "Greece", lat: 39.00, lon: 22.00 }, { c: "IE", name: "Ireland", lat: 53.40, lon: -8.20 },
+      { c: "CZ", name: "Czechia", lat: 49.80, lon: 15.50 }, { c: "RO", name: "Romania", lat: 45.90, lon: 25.00 }
     ];
+    /* Cloudflare 边缘节点 → 城市（访客 IP 就近的 PoP） */
+    var COLO = {
+      SIN: { name: "Singapore", lat: 1.35, lon: 103.82 }, HKG: { name: "Hong Kong", lat: 22.32, lon: 114.17 },
+      TPE: { name: "Taipei", lat: 25.03, lon: 121.57 }, ICN: { name: "Seoul", lat: 37.57, lon: 126.98 },
+      NRT: { name: "Tokyo", lat: 35.69, lon: 139.69 }, HND: { name: "Tokyo", lat: 35.55, lon: 139.78 },
+      KIX: { name: "Osaka", lat: 34.69, lon: 135.50 }, BKK: { name: "Bangkok", lat: 13.76, lon: 100.50 },
+      KUL: { name: "Kuala Lumpur", lat: 3.14, lon: 101.69 }, SGN: { name: "Ho Chi Minh City", lat: 10.82, lon: 106.63 },
+      CGK: { name: "Jakarta", lat: -6.21, lon: 106.85 }, BOM: { name: "Mumbai", lat: 19.08, lon: 72.88 },
+      DEL: { name: "Delhi", lat: 28.61, lon: 77.21 }, MAA: { name: "Chennai", lat: 13.08, lon: 80.27 },
+      BLR: { name: "Bengaluru", lat: 12.97, lon: 77.59 }, DXB: { name: "Dubai", lat: 25.20, lon: 55.27 },
+      AUH: { name: "Abu Dhabi", lat: 24.45, lon: 54.38 }, JED: { name: "Jeddah", lat: 21.49, lon: 39.19 },
+      IST: { name: "Istanbul", lat: 41.01, lon: 28.98 }, WAW: { name: "Warsaw", lat: 52.23, lon: 21.01 },
+      PRG: { name: "Prague", lat: 50.08, lon: 14.44 }, VIE: { name: "Vienna", lat: 48.21, lon: 16.37 },
+      FRA: { name: "Frankfurt", lat: 50.11, lon: 8.68 }, AMS: { name: "Amsterdam", lat: 52.37, lon: 4.90 },
+      BRU: { name: "Brussels", lat: 50.85, lon: 4.35 }, LHR: { name: "London", lat: 51.51, lon: -0.13 },
+      MAN: { name: "Manchester", lat: 53.48, lon: -2.24 }, CDG: { name: "Paris", lat: 48.86, lon: 2.35 },
+      MAD: { name: "Madrid", lat: 40.42, lon: -3.70 }, BCN: { name: "Barcelona", lat: 41.39, lon: 2.17 },
+      MXP: { name: "Milan", lat: 45.46, lon: 9.19 }, FCO: { name: "Rome", lat: 41.90, lon: 12.50 },
+      ZRH: { name: "Zurich", lat: 47.38, lon: 8.54 }, CPH: { name: "Copenhagen", lat: 55.68, lon: 12.57 },
+      ARN: { name: "Stockholm", lat: 59.33, lon: 18.07 }, HEL: { name: "Helsinki", lat: 60.17, lon: 24.94 },
+      GRU: { name: "São Paulo", lat: -23.55, lon: -46.63 }, GIG: { name: "Rio de Janeiro", lat: -22.91, lon: -43.17 },
+      EZE: { name: "Buenos Aires", lat: -34.60, lon: -58.38 }, MEX: { name: "Mexico City", lat: 19.43, lon: -99.13 },
+      YYZ: { name: "Toronto", lat: 43.65, lon: -79.38 }, YVR: { name: "Vancouver", lat: 49.28, lon: -123.12 },
+      SEA: { name: "Seattle", lat: 47.61, lon: -122.33 }, SJC: { name: "San Jose", lat: 37.34, lon: -121.89 },
+      LAX: { name: "Los Angeles", lat: 34.05, lon: -118.24 }, PHX: { name: "Phoenix", lat: 33.45, lon: -112.07 },
+      DEN: { name: "Denver", lat: 39.74, lon: -104.99 }, DFW: { name: "Dallas", lat: 32.78, lon: -96.80 },
+      ORD: { name: "Chicago", lat: 41.88, lon: -87.63 }, MSP: { name: "Minneapolis", lat: 44.98, lon: -93.27 },
+      IAD: { name: "Ashburn", lat: 39.04, lon: -77.49 }, JFK: { name: "New York", lat: 40.64, lon: -73.78 },
+      BOS: { name: "Boston", lat: 42.36, lon: -71.06 }, ATL: { name: "Atlanta", lat: 33.75, lon: -84.39 },
+      MIA: { name: "Miami", lat: 25.76, lon: -80.19 }, SYD: { name: "Sydney", lat: -33.87, lon: 151.21 },
+      MEL: { name: "Melbourne", lat: -37.81, lon: 144.96 }, PER: { name: "Perth", lat: -31.95, lon: 115.86 },
+      AKL: { name: "Auckland", lat: -36.85, lon: 174.76 }, JNB: { name: "Johannesburg", lat: -26.20, lon: 28.05 }
+    };
     function findCountry(code) {
       for (var i = 0; i < COUNTRY.length; i++) {
         if (COUNTRY[i].c === code) return COUNTRY[i];
@@ -315,7 +348,7 @@
       var ns = lat >= 0 ? "N" : "S", ew = lon >= 0 ? "E" : "W";
       return Math.abs(lat).toFixed(2) + "° " + ns + ", " + Math.abs(lon).toFixed(2) + "° " + ew;
     }
-    function place(lat, lon, ip) {
+    function place(lat, lon, ip, placeName) {
       var t = (lon + 180) / 360;
       var x = 1200 * t;
       var y = 220 - 520 * t + 520 * t * t;
@@ -323,7 +356,10 @@
       earthDot.setAttribute("cy", y);
       earthRing.setAttribute("cx", x);
       earthRing.setAttribute("cy", y);
-      var txt = "≈ " + fmt(lat, lon);
+      var hit = document.getElementById("earthDotHit");
+      if (hit) { hit.setAttribute("cx", x); hit.setAttribute("cy", y); }
+      var txt = placeName ? placeName + " · " : "";
+      txt += "≈ " + fmt(lat, lon);
       if (ip) txt += " · IP " + ip;
       earthCoords.textContent = txt;
     }
@@ -340,7 +376,7 @@
       if (settled) return;
       settled = true;
       var rc = randomCoord();
-      place(rc.lat, rc.lon, null);
+      place(rc.lat, rc.lon, null, null);
     }
     if (window.fetch && /^https?:$/.test(location.protocol)) {
       fetch("/cdn-cgi/trace", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (txt) {
@@ -348,18 +384,30 @@
         settled = true;
         var m = /^ip=(.*)$/m.exec(txt);
         var ip = m ? m[1] : null;
+        m = /^colo=(.*)$/m.exec(txt);
+        var colo = m ? m[1] : null;
         m = /^loc=(.*)$/m.exec(txt);
         var loc = m ? m[1] : null;
+        var city = colo ? COLO[colo] : null;
         var cc = loc ? findCountry(loc) : null;
-        if (cc) place(cc.lat, cc.lon, ip);
+        if (city) place(city.lat, city.lon, ip, city.name);
+        else if (cc) place(cc.lat, cc.lon, ip, cc.name);
         else {
           var rc = randomCoord();
-          place(rc.lat, rc.lon, ip);
+          place(rc.lat, rc.lon, ip, null);
         }
       }).catch(fallback);
       window.setTimeout(fallback, 4000);
     } else {
       fallback();
+    }
+    /* 点击发光点 → 显示 I'm watching you */
+    var earthHit = document.getElementById("earthDotHit");
+    var earthWatch = earthArc.querySelector(".earth-watch");
+    if (earthHit && earthWatch) {
+      earthHit.addEventListener("click", function () {
+        earthWatch.classList.toggle("is-active");
+      });
     }
   }
 })();

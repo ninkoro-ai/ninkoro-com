@@ -27,41 +27,49 @@
   var CONSTELLATIONS = [
     {
       name: { zh: "大熊座", en: "Ursa Major" },
+      pos: { r: 0.82, a: 55 },
       stars: [[0.05, 0.62], [0.2, 0.5], [0.36, 0.47], [0.5, 0.55], [0.58, 0.72], [0.7, 0.85], [0.88, 0.82]],
       lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]]
     },
     {
       name: { zh: "猎户座", en: "Orion" },
+      pos: { r: 0.52, a: 125 },
       stars: [[0.5, 0.05], [0.88, 0.1], [0.44, 0.55], [0.55, 0.5], [0.66, 0.45], [0.3, 0.92], [0.76, 0.9]],
       lines: [[0, 1], [0, 2], [1, 4], [2, 3], [3, 4], [2, 5], [4, 6]]
     },
     {
       name: { zh: "仙后座", en: "Cassiopeia" },
+      pos: { r: 0.30, a: 15 },
       stars: [[0.05, 0.62], [0.28, 0.18], [0.5, 0.72], [0.72, 0.18], [0.95, 0.62]],
       lines: [[0, 1], [1, 2], [2, 3], [3, 4]]
     },
     {
       name: { zh: "天鹅座", en: "Cygnus" },
+      pos: { r: 0.46, a: 265 },
       stars: [[0.5, 0.05], [0.5, 0.95], [0.5, 0.5], [0.18, 0.6], [0.82, 0.42]],
       lines: [[0, 2], [2, 1], [3, 2], [2, 4]]
     },
     {
       name: { zh: "天蝎座", en: "Scorpius" },
+      pos: { r: 0.74, a: 225 },
       stars: [[0.12, 0.22], [0.28, 0.32], [0.42, 0.48], [0.55, 0.58], [0.68, 0.68], [0.82, 0.74], [0.95, 0.62], [0.9, 0.42]],
       lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]]
     },
     {
       name: { zh: "狮子座", en: "Leo" },
+      pos: { r: 0.85, a: 345 },
       stars: [[0.1, 0.42], [0.16, 0.18], [0.36, 0.08], [0.56, 0.18], [0.52, 0.44], [0.3, 0.54], [0.4, 0.78], [0.78, 0.72]],
       lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [5, 6], [6, 7]]
     },
     {
       name: { zh: "天琴座", en: "Lyra" },
+      pos: { r: 0.34, a: 305 },
       stars: [[0.5, 0.1], [0.28, 0.42], [0.52, 0.48], [0.42, 0.78], [0.18, 0.7], [0.6, 0.86]],
       lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 1], [2, 5]]
     },
     {
       name: { zh: "金牛座", en: "Taurus" },
+      pos: { r: 0.58, a: 165 },
       stars: [[0.14, 0.72], [0.3, 0.55], [0.46, 0.5], [0.62, 0.55], [0.78, 0.72], [0.36, 0.24], [0.62, 0.2]],
       lines: [[0, 1], [1, 2], [2, 3], [3, 4], [2, 5], [2, 6]]
     }
@@ -80,9 +88,9 @@
   }
 
   function layout() {
-    galaxy.x = W * 0.78;
-    galaxy.y = H * 0.34;
-    galaxy.r = Math.min(W, H) * 0.20;
+    galaxy.x = W * 0.5;
+    galaxy.y = H * 0.42;
+    galaxy.r = Math.min(W, H) * 0.55;
     nebulas = [
       { x: W * 0.84, y: H * 0.20, r: Math.min(W, H) * 0.34, c: "211,162,74", sx: 0.003, sy: 0.002 },
       { x: W * 0.18, y: H * 0.72, r: Math.min(W, H) * 0.30, c: "122,142,210", sx: 0.002, sy: 0.003 },
@@ -126,28 +134,25 @@
     }
   }
 
-  /* 星座只放在内容两侧的安全边栏（桌面端），避免压到文字 */
+  /* 星座按相对位置分布在银河盘面内（距核心的半径 + 角度） */
   function placeConstellations() {
     consts = [];
-    var gutter = Math.max(0, (W - 1120) / 2);
-    if (gutter < 100) return;
-    var avoidBottom = isHome ? 250 : 90;
     var pool = CONSTELLATIONS.slice();
     for (var i = pool.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
     }
-    var count = Math.random() < 0.5 ? 2 : 3;
+    var count = 5 + Math.floor(Math.random() * 2);
     var idx = 0, attempts = 0;
-    while (consts.length < count && idx < pool.length && attempts < 60) {
+    while (consts.length < count && idx < pool.length && attempts < 80) {
       var data = pool[idx]; idx++;
-      var left = (consts.length % 2 === 0);
-      var maxW = gutter - 26;
-      var s = Math.min(maxW, 150) * (0.85 + Math.random() * 0.3);
-      var x = left
-        ? 12 + Math.random() * Math.max(1, maxW - s)
-        : W - 12 - s - Math.random() * Math.max(1, maxW - s);
-      var y = 120 + Math.random() * Math.max(1, H - avoidBottom - 120 - s * 0.9);
+      if (data.pos.r < 0.24) { attempts++; continue; }
+      var rad = data.pos.a * Math.PI / 180;
+      var dist = data.pos.r * galaxy.r;
+      var s = Math.min(W, H) * 0.10 * (0.9 + Math.random() * 0.25);
+      var x = galaxy.x + Math.cos(rad) * dist - s / 2;
+      var y = galaxy.y + Math.sin(rad) * dist * 0.72 - s * 0.45;
+      if (x < 30 || x + s > W - 30 || y < 110 || y + s > H - 50) { attempts++; continue; }
       var box = { x: x, y: y, w: s, h: s * 0.9 };
       var overlap = consts.some(function (c) {
         return !(box.x + box.w < c.x || box.x > c.x + c.w || box.y + box.h < c.y || box.y > c.y + c.h);
@@ -243,7 +248,7 @@
     ctx.font = "11px 'SF Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace";
     ctx.textAlign = "center";
     ctx.fillStyle = "rgba(211,162,74,.78)";
-    ctx.fillText(c.data.name.zh + " · " + c.data.name.en, x0 + s / 2, y0 + maxY * s + 18);
+    ctx.fillText(c.data.name.en, x0 + s / 2, y0 + maxY * s + 18);
   }
 
   function frame() {
@@ -292,7 +297,7 @@
   window.NINKORO_STARS = {
     get count() { return consts.length; },
     get starCount() { return stars.length + arms.length; },
-    get names() { return consts.map(function (c) { return c.data.name.zh + " · " + c.data.name.en; }); },
+    get names() { return consts.map(function (c) { return c.data.name.en; }); },
     get boxes() { return consts.map(function (c) { return { x: Math.round(c.x), y: Math.round(c.y), w: Math.round(c.s), h: Math.round(c.s * 0.9) }; }); }
   };
 })();
