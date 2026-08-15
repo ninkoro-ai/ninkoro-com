@@ -94,71 +94,103 @@
     ioStars.observe(hero);
   }
 
-  /* ---------- 终端打字 ---------- */
-  var typeLayer = document.getElementById("typeLayer");
-  var TYPED_LINES_ZH = [
-    { t: "$ git clone https://github.com/ninkoro-ai/ninkoro-com", c: "ln-cmd" },
-    { t: "$ cd ninkoro-com && python -m http.server 8080", c: "ln-cmd" },
-    { t: "→ 你好，我是 Ninkoro", c: "ln-out" },
-    { t: "$ open https://ninkoro.com", c: "ln-cmd" },
-    { t: "→ 心桥 · 股权穿透 · 我ai学习", c: "ln-ok" }
-  ];
-  var TYPED_LINES_EN = [
-    { t: "$ git clone https://github.com/ninkoro-ai/ninkoro-com", c: "ln-cmd" },
-    { t: "$ cd ninkoro-com && python -m http.server 8080", c: "ln-cmd" },
-    { t: "→ Hi, I'm Ninkoro", c: "ln-out" },
-    { t: "$ open https://ninkoro.com", c: "ln-cmd" },
-    { t: "→ Xinqiao · Equity Penetration · AI Study", c: "ln-ok" }
-  ];
-  function typedLines() {
-    return (window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh") ? TYPED_LINES_ZH : TYPED_LINES_EN;
+  /* ---------- 随机炫酷代码演示（1000 种，每次刷新随机一段，3-4 行） ---------- */
+  var CMD = ["build", "launch", "orbit", "dream", "sync", "boost", "weave", "pilot", "pulse", "signal"];
+  var NAMES = ["agent", "mind", "core", "engine", "pilot", "ghost", "echo", "node"];
+  var TYPES = ["Agent", "Model", "Planner", "Memory", "Tool", "Orchestrator", "Dream", "Pulse"];
+  var KEYS = ["autonomy", "memory", "focus", "mode", "depth", "loop", "signal", "taste"];
+  var VALS = ["true", "42", "'deep'", "1.618", "0.42", "'auto'", "'gold'"];
+  var METHODS = ["plan()", "execute()", "remember()", "think()", "learn()", "orbit()", "pulse()", "wake()"];
+  var ARGS = ["goal", "dream", "data", "next", "schema", "signal"];
+  var CONDS = ["model.focus > 0.8", "loop < 7", "trust == true", "signal.ok", "memory.has('idea')", "phase === 'deep'"];
+  var NUMS = [7, 13, 21, 42, 100];
+  var PHRASES_EN = ["hello, world", "all systems nominal", "thinking…", "less is more", "wake up", "neural ping", "deep work", "stay curious"];
+  var PHRASES_ZH = ["你好，世界", "一切系统正常", "思考中…", "少即是多", "唤醒", "神经脉冲", "深度工作", "保持好奇"];
+  var OUT_EN = ["mind online", "ready", "orbit locked", "dream compiled", "memory synced", "signal found", "loop closed", "gold ready"];
+  var OUT_ZH = ["思维在线", "就绪", "轨道锁定", "梦境已编译", "记忆已同步", "信号已捕获", "闭环完成", "金色就绪"];
+  var OK_EN = ["tasks done", "neurons wired", "nodes linked", "paths traced", "layers deep"];
+  var OK_ZH = ["个任务完成", "个神经元已连接", "个节点已连接", "条路径已穿透", "层深度"];
+
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function mkLine(c, en, zh) { return { c: c, en: en, zh: zh || en }; }
+
+  function makeDemo() {
+    var n = 3 + Math.floor(Math.random() * 2);
+    var lines = [];
+    lines.push(mkLine("ln-cmd", "$ npx ninkoro " + pick(CMD)));
+    var used = {};
+    while (lines.length < n) {
+      var kind = Math.floor(Math.random() * 6);
+      var line;
+      if (kind === 0) line = mkLine("ln-cmd", "const " + pick(NAMES) + " = new " + pick(TYPES) + "({ " + pick(KEYS) + ": " + pick(VALS) + " })");
+      else if (kind === 1) line = mkLine("ln-cmd", "await " + pick(NAMES) + "." + pick(METHODS) + "(" + pick(ARGS) + ")");
+      else if (kind === 2) line = mkLine("ln-cmd", "if (" + pick(CONDS) + ") { " + pick(NAMES) + ".go() }");
+      else if (kind === 3) line = mkLine("ln-cmd", "# " + pick(PHRASES_EN), "# " + pick(PHRASES_ZH));
+      else if (kind === 4) line = mkLine("ln-out", "→ " + pick(OUT_EN), "→ " + pick(OUT_ZH));
+      else line = mkLine("ln-ok", "✓ " + pick(NUMS) + " " + pick(OK_EN), "✓ " + pick(NUMS) + " " + pick(OK_ZH));
+      if (!used[line.en]) { used[line.en] = true; lines.push(line); }
+    }
+    return lines;
   }
-  var TYPED_LINES = typedLines();
+
+  var DEMO_POOL = [];
+  var seen = {};
+  while (DEMO_POOL.length < 1000) {
+    var d = makeDemo();
+    var key = d.map(function (l) { return l.en; }).join("|");
+    if (!seen[key]) { seen[key] = 1; DEMO_POOL.push(d); }
+  }
+  var CURRENT_DEMO = DEMO_POOL[Math.floor(Math.random() * DEMO_POOL.length)];
+
+  function lineText(line) {
+    var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
+    return zh ? (line.zh || line.en) : line.en;
+  }
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function buildTypeHTML(uptoLine, uptoChar) {
+  function buildTypeHTML(lines, uptoLine, uptoChar) {
     var html = "";
-    for (var i = 0; i < TYPED_LINES.length; i++) {
-      var text = i < uptoLine ? TYPED_LINES[i].t : (i === uptoLine ? TYPED_LINES[i].t.slice(0, uptoChar) : "");
-      html += '<span class="' + TYPED_LINES[i].c + '">' + esc(text) + "</span>";
-      if (i < uptoLine || (i === uptoLine && uptoChar >= TYPED_LINES[i].t.length)) html += "\n";
+    for (var i = 0; i < lines.length; i++) {
+      var text = i < uptoLine ? lineText(lines[i]) : (i === uptoLine ? lineText(lines[i]).slice(0, uptoChar) : "");
+      html += '<span class="' + lines[i].c + '">' + esc(text) + "</span>";
+      if (i < uptoLine || (i === uptoLine && uptoChar >= lineText(lines[i]).length)) html += "\n";
     }
     return html;
   }
 
+  var typeLayer = document.getElementById("typeLayer");
+  var typeToken = 0, typeTimer = null;
   function typeStart() {
     if (!typeLayer) return;
-    TYPED_LINES = typedLines();
+    var lines = CURRENT_DEMO;
+    var token = ++typeToken;
+    if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     var body = typeLayer.parentElement;
     function paint(uptoLine, uptoChar, typing) {
-      typeLayer.innerHTML = buildTypeHTML(uptoLine, uptoChar) + '<span class="cursor" aria-hidden="true"></span>';
+      typeLayer.innerHTML = buildTypeHTML(lines, uptoLine, uptoChar) + '<span class="cursor" aria-hidden="true"></span>';
       if (body) body.classList.toggle("is-typing", typing);
     }
-    if (reduceMotion) {
-      paint(TYPED_LINES.length, 0, false);
-      return;
-    }
+    if (reduceMotion) { paint(lines.length, 0, false); return; }
     var li = 0, ci = 0;
     function tick() {
-      if (li >= TYPED_LINES.length) { paint(TYPED_LINES.length, 0, false); return; }
+      if (token !== typeToken) return;
+      if (li >= lines.length) { paint(lines.length, 0, false); return; }
       paint(li, ci, true);
       ci++;
-      if (ci > TYPED_LINES[li].t.length) {
-        li++; ci = 0;
-        window.setTimeout(tick, 420);
-        return;
-      }
-      window.setTimeout(tick, 34 + Math.random() * 28);
+      if (ci > lineText(lines[li]).length) { li++; ci = 0; typeTimer = setTimeout(tick, 300); return; }
+      typeTimer = setTimeout(tick, 30 + Math.random() * 26);
     }
-    window.setTimeout(tick, 600);
+    typeTimer = setTimeout(tick, 500);
   }
 
   typeStart();
   document.addEventListener("ninkoro:langchange", function () {
     if (!typeLayer) return;
+    ++typeToken;
+    if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     typeLayer.innerHTML = "";
     typeStart();
   });
