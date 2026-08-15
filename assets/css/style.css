@@ -1470,12 +1470,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 /* 语言开关移动端尺寸 */
 @media (max-width: 760px) {
-  .lang-toggle { --lt-w: 48px; --lt-h: 29px; --lt-k: 25px; margin-left: 2px; }
-  .lang-toggle .lt-label { font-size: 9.5px; }
+  .lang-toggle { --lt-w: 48px; --lt-h: 29px; --lt-k: 25px; margin-left: 2px; text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+  .lang-toggle .lt-label { font-size: 8.5px; letter-spacing: 0; }
+  .lang-toggle .lt-en { left: 6px; }
+  .lang-toggle .lt-zh { right: 6px; }
 }
 @media (max-width: 360px) {
   .lang-toggle { --lt-w: 45px; --lt-h: 27px; --lt-k: 23px; }
-  .lang-toggle .lt-label { font-size: 9px; }
+  .lang-toggle .lt-label { font-size: 8px; }
   .lang-toggle .lt-en { left: 6px; }
   .lang-toggle .lt-zh { right: 6px; }
 }

@@ -217,14 +217,15 @@
     });
     var maxY = 0;
     pts.forEach(function (p) { if (p[1] > maxY) maxY = p[1]; });
-    /* 名称：鼠标悬停到星座上方才显示 */
+    /* 名称：鼠标悬停到星座上方才显示；中文页双语，英文页仅英文 */
     var hover = mouse.x >= x0 - 26 && mouse.x <= x0 + s + 26 &&
                 mouse.y >= y0 - 26 && mouse.y <= y0 + s + 26;
     if (hover) {
+      var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
       ctx.font = "11px 'SF Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace";
       ctx.textAlign = "center";
       ctx.fillStyle = "rgba(211,162,74,.85)";
-      ctx.fillText(c.data.name.en, x0 + s / 2, y0 + maxY * s + 18);
+      ctx.fillText(zh ? c.data.name.zh + " · " + c.data.name.en : c.data.name.en, x0 + s / 2, y0 + maxY * s + 18);
     }
   }
 
@@ -275,6 +276,12 @@
     get count() { return consts.length; },
     get starCount() { return stars.length + arms.length; },
     get names() { return consts.map(function (c) { return c.data.name.en; }); },
+    get label() {
+      if (!consts.length) return "";
+      var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
+      var c = consts[0].data;
+      return zh ? c.name.zh + " · " + c.name.en : c.name.en;
+    },
     get boxes() { return consts.map(function (c) { return { x: Math.round(c.x), y: Math.round(c.y), w: Math.round(c.s), h: Math.round(c.s * 0.9) }; }); }
   };
 })();
