@@ -147,6 +147,41 @@
   }
   var CURRENT_DEMO = DEMO_POOL[Math.floor(Math.random() * DEMO_POOL.length)];
 
+  /* 每段演示的元信息：语言 / 功能 / 适用场景 */
+  function buildMeta(lines) {
+    var hasConst = false, hasAwait = false, hasIf = false, hasComment = false, hasOut = false, hasOk = false;
+    lines.forEach(function (l) {
+      if (/^const /.test(l.en)) hasConst = true;
+      else if (/^await /.test(l.en)) hasAwait = true;
+      else if (/^if \(/.test(l.en)) hasIf = true;
+      else if (/^# /.test(l.en)) hasComment = true;
+      else if (/^→ /.test(l.en)) hasOut = true;
+      else if (/^✓ /.test(l.en)) hasOk = true;
+    });
+    var partsEn = [], partsZh = [];
+    if (hasConst) { partsEn.push("creates an instance"); partsZh.push("创建实例"); }
+    if (hasAwait) { partsEn.push("awaits async calls"); partsZh.push("异步调用"); }
+    if (hasIf) { partsEn.push("checks conditions"); partsZh.push("条件判断"); }
+    if (hasComment) { partsEn.push("leaves notes"); partsZh.push("注释说明"); }
+    if (hasOut) { partsEn.push("prints output"); partsZh.push("输出结果"); }
+    if (hasOk) { partsEn.push("confirms results"); partsZh.push("确认结果"); }
+    return {
+      lang: {
+        en: "JavaScript / Shell (pseudo-code)",
+        zh: "JavaScript / Shell（伪代码）"
+      },
+      desc: {
+        en: "A tiny Agent demo in pseudo-JavaScript with a Shell kickoff: " + partsEn.join(", ") + ". It shows the everyday loop of a small AI agent — start, act, check, report.",
+        zh: "一段 Agent 风格的伪代码演示（JavaScript 语法 + Shell 启动），展示了" + partsZh.join("、") + "。它复现了一个小型 AI Agent 的日常循环——启动、执行、判断、汇报。"
+      },
+      use: {
+        en: "Good for understanding Agent architecture, prototyping an AI product, or a daily coding warm-up.",
+        zh: "理解 Agent 架构、AI 产品原型演示、每日代码练习。"
+      }
+    };
+  }
+  var CURRENT_META = buildMeta(CURRENT_DEMO);
+
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -187,12 +222,33 @@
   }
 
   typeStart();
+  /* ---------- 查看注释：终端右下角按钮 + 框内展开 ---------- */
+  var noteToggle = document.getElementById("noteToggle");
+  var noteBox = document.getElementById("demoNote");
+  var noteOpen = false;
+  function renderNote() {
+    if (!noteBox || !CURRENT_META) return;
+    var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
+    noteBox.innerHTML =
+      '<p class="note-lang"><b>' + (zh ? "语言" : "LANGUAGE") + " / </b>" + (zh ? CURRENT_META.lang.zh : CURRENT_META.lang.en) + "</p>" +
+      '<p class="note-desc"><b>' + (zh ? "功能" : "WHAT IT DOES") + " / </b>" + (zh ? CURRENT_META.desc.zh : CURRENT_META.desc.en) + "</p>" +
+      '<p class="note-use"><b>' + (zh ? "适用场景" : "WHEN TO USE") + " / </b>" + (zh ? CURRENT_META.use.zh : CURRENT_META.use.en) + "</p>";
+  }
+  if (noteToggle) {
+    noteToggle.addEventListener("click", function () {
+      noteOpen = !noteOpen;
+      noteBox.classList.toggle("show", noteOpen);
+      noteToggle.classList.toggle("is-open", noteOpen);
+      if (noteOpen) renderNote();
+    });
+  }
   document.addEventListener("ninkoro:langchange", function () {
     if (!typeLayer) return;
     ++typeToken;
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     typeLayer.innerHTML = "";
     typeStart();
+    if (noteOpen) renderNote();
   });
 
   /* ---------- 磁吸按钮 + 入口卡 3D 倾斜（精细指针设备） ---------- */

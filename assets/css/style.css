@@ -1130,6 +1130,53 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   animation: blink 1.1s steps(1) infinite;
 }
 
+/* 查看注释按钮（终端右下角外侧） */
+.hero-stage { display: flex; flex-direction: column; }
+.note-toggle {
+  align-self: flex-end;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px;
+  padding: 7px 15px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
+  color: var(--ink-faint);
+  border: 1px solid var(--line); border-radius: 999px;
+  background: rgba(237, 232, 222, .03);
+  transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease), box-shadow .3s var(--ease);
+}
+.note-toggle:hover { color: var(--ink); border-color: rgba(211, 162, 74, .45); }
+.note-toggle.is-open {
+  color: var(--accent); border-color: rgba(211, 162, 74, .6);
+  background: rgba(211, 162, 74, .08);
+  box-shadow: 0 0 12px rgba(211, 162, 74, .12);
+}
+
+/* 框内注释（点击展开） */
+.demo-note {
+  max-height: 0; opacity: 0; overflow: hidden;
+  margin-top: 0; padding: 0 2px;
+  border-top: 1px dashed transparent;
+  transition: max-height .45s var(--ease), opacity .3s, margin-top .45s var(--ease), border-color .3s;
+}
+.demo-note.show {
+  max-height: 340px; opacity: 1;
+  margin-top: 14px; padding-top: 12px;
+  border-top-color: var(--line-strong);
+}
+.demo-note p {
+  font-family: var(--sans); font-size: 11.5px; line-height: 1.7;
+  color: var(--ink-faint); margin-bottom: 7px;
+}
+.demo-note p:last-child { margin-bottom: 0; }
+.demo-note p b {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: .08em; color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .note-toggle { font-size: 10.5px; padding: 6px 13px; margin-top: 10px; }
+  .demo-note p { font-size: 11px; line-height: 1.65; }
+}
+
 @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
 
 /* ---------- 入口卡升级：图标 + 光晕 ---------- */
