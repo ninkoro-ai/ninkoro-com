@@ -393,5 +393,18 @@
         earthInfo.classList.toggle("is-active");
       });
     }
+    /* 首屏内随滚动逐渐淡化消失（回到顶部恢复） */
+    function fadeEarthOnScroll() {
+      var hero = earthArc.closest(".hero");
+      var heroH = hero ? hero.offsetHeight : window.innerHeight;
+      var y = window.scrollY;
+      var t = heroH > 0 ? y / (heroH * 0.6) : 1;
+      t = Math.max(0, Math.min(1, t));
+      earthArc.style.opacity = (1 - t).toFixed(3);
+      earthArc.style.transform = "translateY(" + (t * 36).toFixed(1) + "px)";
+      earthArc.style.pointerEvents = t >= 1 ? "none" : "";
+    }
+    window.addEventListener("scroll", fadeEarthOnScroll, { passive: true });
+    fadeEarthOnScroll();
   }
 })();
