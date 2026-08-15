@@ -1322,6 +1322,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 /* ---------- 语言切换开关 ---------- */
+/* 语言开关仅首页展示，子页面隐藏（2026-08-16） */
+.lang-toggle { display: none; }
+body[data-page="home"] .lang-toggle { display: inline-block; }
 .lang-toggle {
   --lt-w: 52px; --lt-h: 31px; --lt-k: 27px; --lt-r: calc(2px + var(--lt-k) / 2);
   position: relative;
@@ -1630,7 +1633,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .nav { padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-left: 12px; padding-right: 12px; }
   .nav-inner { justify-content: flex-start; gap: 8px; padding-left: 16px; padding-right: 8px; }
   .nav-inner .lang-toggle { margin-left: auto; }
-  .nav-inner .nav-search { margin-right: 0; margin-left: 2px; }
+  .nav-inner .nav-search { margin-right: 0; margin-left: auto; }
+  body[data-page="home"] .nav-inner .nav-search { margin-left: 2px; }
 }
 @media (max-width: 360px) {
   .nav-inner { gap: 6px; padding-left: 14px; }
