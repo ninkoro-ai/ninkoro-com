@@ -1307,3 +1307,20 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .toc-inline { margin: 0 0 28px; padding: 14px 16px; }
   .lang-toggle { height: 34px; padding: 0 9px; font-size: 11px; margin-left: 2px; }
 }
+
+/* ---------- 移动端导航头部紧凑优化（2026-08-15） ---------- */
+@media (max-width: 760px) {
+  .nav { padding-top: 8px; padding-left: 10px; padding-right: 10px; }
+  .nav-inner { padding: 7px 7px 7px 14px; gap: 5px; }
+  .nav-logo { font-size: 15px; gap: 5px; flex: 0 0 auto; }
+  .nav-logo::before { width: 16px; height: 16px; }
+  .nav-logo em { display: none; }
+  .lang-toggle { height: 32px; padding: 0 8px; font-size: 11px; margin-left: 0; flex: 0 0 auto; }
+  .nav-search { width: 40px; height: 40px; margin-left: 2px; flex: 0 0 auto; }
+  .nav-burger { width: 40px; height: 40px; flex: 0 0 auto; }
+}
+@media (max-width: 360px) {
+  .nav-inner { gap: 4px; padding-left: 12px; }
+  .lang-toggle { padding: 0 6px; font-size: 10px; height: 30px; }
+  .lang-toggle i { display: none; }
+}
