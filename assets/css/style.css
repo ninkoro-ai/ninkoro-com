@@ -1487,3 +1487,8 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .hero-stage .terminal { animation: none; }
   .aurora { animation: none; }
 }
+/* 全站星空画布：置于所有内容之下（stars.js） */
+#starfield {
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none;
+}
