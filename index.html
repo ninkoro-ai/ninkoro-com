@@ -73,6 +73,24 @@
       <button class="note-toggle" id="noteToggle" data-i18n data-en="View notes" data-zh="查看注释">View notes</button>
     </div>
   </div>
+  <div class="earth-arc" id="earthArc" aria-hidden="false">
+    <svg class="earth-svg" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="earthFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="rgba(211,162,74,.10)"/>
+          <stop offset="1" stop-color="rgba(211,162,74,.02)"/>
+        </linearGradient>
+      </defs>
+      <path class="earth-body" d="M0 220 Q 600 -40 1200 220 L1200 220 L0 220 Z" fill="url(#earthFill)"/>
+      <path class="earth-curve" d="M0 220 Q 600 -40 1200 220" fill="none"/>
+      <circle class="earth-dot-ring" id="earthDotRing" cx="600" cy="90" r="5"/>
+      <circle class="earth-dot" id="earthDot" cx="600" cy="90" r="5"/>
+    </svg>
+    <div class="earth-info">
+      <p class="earth-watch" data-i18n data-en="I'm watching you" data-zh="我在看着你">I'm watching you</p>
+      <p class="earth-coords" id="earthCoords">locating…</p>
+    </div>
+  </div>
   <div class="hero-ornament"></div>
   <div class="scroll-hint">SCROLL</div>
 </header>

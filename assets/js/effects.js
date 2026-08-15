@@ -273,4 +273,93 @@
       });
     }
   }
+
+  /* ---------- 彩蛋：PC 首屏底部地球弧线 + 访客坐标（IP 定位） ---------- */
+  var earthArc = document.getElementById("earthArc");
+  if (earthArc) {
+    var earthDot = document.getElementById("earthDot");
+    var earthRing = document.getElementById("earthDotRing");
+    var earthCoords = document.getElementById("earthCoords");
+    var COUNTRY = [
+      { c: "CN", lat: 35.86, lon: 104.19 }, { c: "US", lat: 39.83, lon: -98.58 },
+      { c: "JP", lat: 36.20, lon: 138.25 }, { c: "SG", lat: 1.35, lon: 103.82 },
+      { c: "HK", lat: 22.32, lon: 114.17 }, { c: "TW", lat: 23.70, lon: 121.00 },
+      { c: "KR", lat: 36.50, lon: 127.90 }, { c: "DE", lat: 51.10, lon: 10.40 },
+      { c: "GB", lat: 55.40, lon: -3.40 }, { c: "FR", lat: 46.20, lon: 2.20 },
+      { c: "NL", lat: 52.10, lon: 5.30 }, { c: "RU", lat: 61.50, lon: 105.30 },
+      { c: "AU", lat: -25.30, lon: 133.80 }, { c: "CA", lat: 56.10, lon: -106.30 },
+      { c: "IN", lat: 20.60, lon: 78.90 }, { c: "BR", lat: -14.20, lon: -51.90 },
+      { c: "ID", lat: -0.80, lon: 113.90 }, { c: "IT", lat: 42.80, lon: 12.80 },
+      { c: "ES", lat: 40.50, lon: -3.70 }, { c: "SE", lat: 60.10, lon: 18.60 },
+      { c: "CH", lat: 46.80, lon: 8.20 }, { c: "UA", lat: 48.40, lon: 31.20 },
+      { c: "PL", lat: 52.10, lon: 19.40 }, { c: "TR", lat: 38.96, lon: 35.24 },
+      { c: "TH", lat: 15.87, lon: 100.99 }, { c: "VN", lat: 16.00, lon: 108.00 },
+      { c: "MY", lat: 4.20, lon: 101.90 }, { c: "PH", lat: 12.90, lon: 121.90 },
+      { c: "NZ", lat: -40.90, lon: 174.90 }, { c: "MX", lat: 23.60, lon: -102.50 },
+      { c: "AR", lat: -34.00, lon: -64.00 }, { c: "ZA", lat: -29.00, lon: 24.00 },
+      { c: "EG", lat: 26.80, lon: 30.80 }, { c: "SA", lat: 23.90, lon: 45.10 },
+      { c: "AE", lat: 24.00, lon: 54.00 }, { c: "IL", lat: 31.40, lon: 35.20 },
+      { c: "FI", lat: 61.90, lon: 25.70 }, { c: "NO", lat: 60.50, lon: 8.50 },
+      { c: "DK", lat: 56.26, lon: 9.50 }, { c: "BE", lat: 50.50, lon: 4.50 },
+      { c: "AT", lat: 47.50, lon: 14.50 }, { c: "PT", lat: 39.50, lon: -8.00 },
+      { c: "GR", lat: 39.00, lon: 22.00 }, { c: "IE", lat: 53.40, lon: -8.20 },
+      { c: "CZ", lat: 49.80, lon: 15.50 }, { c: "RO", lat: 45.90, lon: 25.00 }
+    ];
+    function findCountry(code) {
+      for (var i = 0; i < COUNTRY.length; i++) {
+        if (COUNTRY[i].c === code) return COUNTRY[i];
+      }
+      return null;
+    }
+    function fmt(lat, lon) {
+      var ns = lat >= 0 ? "N" : "S", ew = lon >= 0 ? "E" : "W";
+      return Math.abs(lat).toFixed(2) + "° " + ns + ", " + Math.abs(lon).toFixed(2) + "° " + ew;
+    }
+    function place(lat, lon, ip) {
+      var t = (lon + 180) / 360;
+      var x = 1200 * t;
+      var y = 220 - 520 * t + 520 * t * t;
+      earthDot.setAttribute("cx", x);
+      earthDot.setAttribute("cy", y);
+      earthRing.setAttribute("cx", x);
+      earthRing.setAttribute("cy", y);
+      var txt = "≈ " + fmt(lat, lon);
+      if (ip) txt += " · IP " + ip;
+      earthCoords.textContent = txt;
+    }
+    function randomCoord() {
+      return {
+        lat: Math.round((Math.random() * 130 - 60) * 100) / 100,
+        lon: Math.round((Math.random() * 360 - 180) * 100) / 100
+      };
+    }
+    var zhInit = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
+    earthCoords.textContent = zhInit ? "定位中…" : "locating…";
+    var settled = false;
+    function fallback() {
+      if (settled) return;
+      settled = true;
+      var rc = randomCoord();
+      place(rc.lat, rc.lon, null);
+    }
+    if (window.fetch) {
+      fetch("/cdn-cgi/trace", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (txt) {
+        if (settled) return;
+        settled = true;
+        var m = /^ip=(.*)$/m.exec(txt);
+        var ip = m ? m[1] : null;
+        m = /^loc=(.*)$/m.exec(txt);
+        var loc = m ? m[1] : null;
+        var cc = loc ? findCountry(loc) : null;
+        if (cc) place(cc.lat, cc.lon, ip);
+        else {
+          var rc = randomCoord();
+          place(rc.lat, rc.lon, ip);
+        }
+      }).catch(fallback);
+      window.setTimeout(fallback, 4000);
+    } else {
+      fallback();
+    }
+  }
 })();
