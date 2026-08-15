@@ -948,6 +948,8 @@
       noteBox.classList.toggle("show", noteOpen);
       noteToggle.classList.toggle("is-open", noteOpen);
       if (terminalBox) terminalBox.classList.toggle("note-open", noteOpen);
+      var earthArcEl = document.getElementById("earthArc");
+      if (earthArcEl) earthArcEl.classList.toggle("is-hidden", noteOpen);
       updateNoteToggle();
       if (noteOpen) { notePage = 0; renderNote(); }
     });
@@ -959,6 +961,8 @@
     typeLayer.innerHTML = "";
     typeStart();
     if (terminalBox) terminalBox.classList.toggle("note-open", noteOpen);
+    var earthArcEl = document.getElementById("earthArc");
+    if (earthArcEl) earthArcEl.classList.toggle("is-hidden", noteOpen);
     updateNoteToggle();
     if (noteOpen) { notePage = 0; renderNote(); }
   });
