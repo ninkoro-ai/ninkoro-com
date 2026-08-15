@@ -96,7 +96,6 @@
 
   /* ---------- 终端打字 ---------- */
   var typeLayer = document.getElementById("typeLayer");
-  var cursorEl = document.getElementById("cursor");
   var TYPED_LINES_ZH = [
     { t: "$ git clone https://github.com/ninkoro-ai/ninkoro-com", c: "ln-cmd" },
     { t: "$ cd ninkoro-com && python -m http.server 8080", c: "ln-cmd" },
@@ -131,22 +130,21 @@
   }
 
   function typeStart() {
-    if (!typeLayer || !cursorEl) return;
+    if (!typeLayer) return;
     TYPED_LINES = typedLines();
+    var body = typeLayer.parentElement;
+    function paint(uptoLine, uptoChar, typing) {
+      typeLayer.innerHTML = buildTypeHTML(uptoLine, uptoChar) + '<span class="cursor" aria-hidden="true"></span>';
+      if (body) body.classList.toggle("is-typing", typing);
+    }
     if (reduceMotion) {
-      typeLayer.innerHTML = buildTypeHTML(TYPED_LINES.length, 0);
+      paint(TYPED_LINES.length, 0, false);
       return;
     }
     var li = 0, ci = 0;
     function tick() {
-      if (li >= TYPED_LINES.length) {
-        cursorEl.style.animation = "blink 1.1s steps(1) infinite";
-        return;
-      }
-      typeLayer.innerHTML = buildTypeHTML(li, ci);
-      cursorEl.style.animation = "none";
-      void cursorEl.offsetWidth;
-      cursorEl.style.animation = "";
+      if (li >= TYPED_LINES.length) { paint(TYPED_LINES.length, 0, false); return; }
+      paint(li, ci, true);
       ci++;
       if (ci > TYPED_LINES[li].t.length) {
         li++; ci = 0;
