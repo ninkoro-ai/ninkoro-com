@@ -1560,3 +1560,65 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (prefers-reduced-motion: reduce) {
   .earth-dot-ring { animation: none; opacity: .4; }
 }
+
+/* ============================================================
+   Apple Design 重构（2026-08-15）
+   按钮与卡片：按下即时反馈 · 发丝描边 · 分层材质 · 顶部高光 · 克制阴影
+   现有动效（液态填充 / 光泽 / 磁吸 / 3D 倾斜 / 弹簧）全部保留
+   ============================================================ */
+
+/* ---------- 按钮 ---------- */
+.btn {
+  border-radius: 999px;
+  letter-spacing: -0.005em;
+  box-shadow: inset 0 0 0 .5px hsla(0,0%,100%,.05), 0 1px 2px rgba(0,0,0,.2);
+}
+.btn:active { filter: brightness(.93); }
+.btn.solid {
+  background: linear-gradient(180deg, #e1b158, #c8913b);
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.38), inset 0 -1px 0 rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.28), 0 8px 20px rgba(211,162,74,.16);
+}
+.btn.solid:hover {
+  background: linear-gradient(180deg, #e9bd67, #d29b42);
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.42), inset 0 -1px 0 rgba(0,0,0,.08), 0 3px 8px rgba(0,0,0,.3), 0 10px 26px rgba(211,162,74,.22);
+}
+.btn:not(.solid):not(.ghost) {
+  background: rgba(237,232,222,.05);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.06), inset 0 0 0 .5px hsla(0,0%,100%,.1), 0 1px 2px rgba(0,0,0,.18);
+}
+.btn.ghost { box-shadow: inset 0 0 0 .5px hsla(0,0%,100%,.04); }
+.note-toggle {
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.06), 0 1px 2px rgba(0,0,0,.18);
+}
+.note-toggle:active { transform: scale(.96); }
+
+/* ---------- 卡片：统一发丝描边 + 分层材质 + 顶部高光 ---------- */
+.entry-card, .work-card, .wiki-card, .link-card, .tool-block, .fact-card {
+  border-radius: 18px;
+  border: 1px solid hsla(0,0%,100%,.08);
+  background: linear-gradient(180deg, hsla(0,0%,100%,.045), hsla(0,0%,100%,.02));
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.05), 0 1px 2px rgba(0,0,0,.18), 0 8px 24px rgba(0,0,0,.12);
+  transition: transform .5s cubic-bezier(.22,.68,0,1), border-color .3s var(--ease), box-shadow .4s var(--ease), background .3s;
+}
+.work-card:hover, .wiki-card:hover, .link-card:hover, .tool-block:hover {
+  transform: translateY(-4px);
+  border-color: hsla(45,60%,65%,.28);
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.06), 0 4px 12px rgba(0,0,0,.2), 0 18px 40px rgba(0,0,0,.28);
+}
+.entry-card:hover {
+  border-color: hsla(45,60%,65%,.28);
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.06), 0 4px 12px rgba(0,0,0,.2), 0 18px 40px rgba(0,0,0,.28);
+}
+.entry-card:active, .work-card:active, .wiki-card:active, .link-card:active { transform: scale(.985); }
+.cta-block {
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.05), 0 8px 32px rgba(0,0,0,.3), 0 24px 60px rgba(0,0,0,.22);
+}
+
+/* 移动端统一圆角 */
+@media (max-width: 760px) {
+  .entry-card, .work-card, .wiki-card, .link-card, .tool-block, .fact-card { border-radius: 16px; }
+}

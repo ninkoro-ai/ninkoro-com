@@ -137,32 +137,21 @@
     }
   }
 
-  /* 星座按相对位置分布在银河盘面内（距核心的半径 + 角度） */
+  /* 星座只放在内容两侧安全边栏（永不压文字），银河盘面自然延伸到该区域 */
   function placeConstellations() {
     consts = [];
-    var pool = CONSTELLATIONS.slice();
-    for (var i = pool.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
-    }
-    var count = 1;
-    var idx = 0, attempts = 0;
-    while (consts.length < count && idx < pool.length && attempts < 80) {
-      var data = pool[idx]; idx++;
-      if (data.pos.r < 0.24) { attempts++; continue; }
-      var rad = data.pos.a * Math.PI / 180;
-      var dist = data.pos.r * galaxy.r;
-      var s = Math.min(W, H) * 0.10 * (0.9 + Math.random() * 0.25);
-      var x = galaxy.x + Math.cos(rad) * dist - s / 2;
-      var y = galaxy.y + Math.sin(rad) * dist * 0.72 - s * 0.45;
-      if (x < 30 || x + s > W - 30 || y < 110 || y + s > H - 50) { attempts++; continue; }
-      var box = { x: x, y: y, w: s, h: s * 0.9 };
-      var overlap = consts.some(function (c) {
-        return !(box.x + box.w < c.x || box.x > c.x + c.w || box.y + box.h < c.y || box.y > c.y + c.h);
-      });
-      if (overlap) { attempts++; continue; }
-      consts.push({ data: data, x: x, y: y, s: s });
-    }
+    var gutter = Math.max(0, (W - 1120) / 2);
+    if (gutter < 100) return;
+    var avoidBottom = isHome ? 250 : 90;
+    var data = CONSTELLATIONS[Math.floor(Math.random() * CONSTELLATIONS.length)];
+    var left = Math.random() < 0.5;
+    var maxW = gutter - 26;
+    var s = Math.min(maxW, 150) * (0.9 + Math.random() * 0.2);
+    var x = left
+      ? 12 + Math.random() * Math.max(1, maxW - s)
+      : W - 12 - s - Math.random() * Math.max(1, maxW - s);
+    var y = 120 + Math.random() * Math.max(1, H - avoidBottom - 120 - s * 0.9);
+    consts.push({ data: data, x: x, y: y, s: s });
   }
 
   function drawNebulas(time) {
