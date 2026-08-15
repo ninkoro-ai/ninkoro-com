@@ -1150,6 +1150,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   box-shadow: 0 0 12px rgba(211, 162, 74, .12);
 }
 
+/* 彩蛋：CTA「联系我」按钮闪躲 */
+#ctaContact.cta-dodge-active {
+  position: absolute; z-index: 3;
+  transition: left .18s cubic-bezier(.3, .8, .4, 1), top .18s cubic-bezier(.3, .8, .4, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  #ctaContact.cta-dodge-active { transition: none; }
+}
+
 /* 框内注释（点击展开） */
 .demo-note {
   max-height: 0; opacity: 0; overflow: hidden;

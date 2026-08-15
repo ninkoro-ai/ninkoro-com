@@ -331,4 +331,33 @@
       });
     });
   }
+
+  /* ---------- 彩蛋：CTA「联系我」按钮在框内闪躲鼠标 ---------- */
+  var ctaContact = document.getElementById("ctaContact");
+  if (ctaContact && finePointer && !reduceMotion) {
+    ctaContact.classList.add("cta-dodge-active");
+    var ctaInner = ctaContact.closest(".cta-inner");
+    function dodge() {
+      var box = ctaInner || ctaContact.parentElement;
+      var br = box.getBoundingClientRect();
+      var bw = ctaContact.offsetWidth || 130;
+      var bh = ctaContact.offsetHeight || 44;
+      var pad = 14;
+      var maxX = Math.max(pad, br.width - bw - pad);
+      var maxY = Math.max(pad, br.height - bh - pad);
+      ctaContact.style.left = (pad + Math.random() * Math.max(1, maxX - pad)) + "px";
+      ctaContact.style.top = (pad + Math.random() * Math.max(1, maxY - pad)) + "px";
+      ctaContact.style.transform = "rotate(" + (Math.random() * 10 - 5).toFixed(1) + "deg)";
+    }
+    dodge();
+    ctaContact.addEventListener("pointerover", dodge);
+    if (ctaInner) {
+      ctaInner.addEventListener("mousemove", function (e) {
+        var r = ctaContact.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width / 2);
+        var dy = e.clientY - (r.top + r.height / 2);
+        if (dx * dx + dy * dy < 90 * 90) dodge();
+      });
+    }
+  }
 })();
