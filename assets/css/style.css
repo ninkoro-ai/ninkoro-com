@@ -1626,3 +1626,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   .hero .hero-actions { flex-direction: row; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
   .hero .hero-actions .btn { width: auto; padding: 11px 20px; font-size: 14px; }
 }
+
+/* 移动端导航：logo 靠左，语言开关+搜索+汉堡成组右对齐，间距均匀（含微信安全区） */
+@media (max-width: 760px) {
+  .nav { padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-left: 12px; padding-right: 12px; }
+  .nav-inner { justify-content: flex-start; gap: 8px; padding-left: 16px; padding-right: 8px; }
+  .nav-inner .lang-toggle { margin-left: auto; }
+  .nav-inner .nav-search { margin-right: 0; margin-left: 2px; }
+}
+@media (max-width: 360px) {
+  .nav-inner { gap: 6px; padding-left: 14px; }
+}
