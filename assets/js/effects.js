@@ -94,93 +94,134 @@
     ioStars.observe(hero);
   }
 
-  /* ---------- 随机炫酷代码演示（1000 种，每次刷新随机一段，6-8 行，纯英文） ---------- */
-  var CMD = ["build", "launch", "orbit", "dream", "sync", "boost", "weave", "pilot", "pulse", "signal"];
-  var NAMES = ["agent", "mind", "core", "engine", "pilot", "ghost", "echo", "node"];
-  var TYPES = ["Agent", "Model", "Planner", "Memory", "Tool", "Orchestrator", "Dream", "Pulse"];
-  var KEYS = ["autonomy", "memory", "focus", "mode", "depth", "loop", "signal", "taste"];
-  var VALS = ["true", "42", "'deep'", "1.618", "0.42", "'auto'", "'gold'"];
-  var METHODS = ["plan()", "execute()", "remember()", "think()", "learn()", "orbit()", "pulse()", "wake()"];
-  var ARGS = ["goal", "dream", "data", "next", "schema", "signal"];
-  var CONDS = ["model.focus > 0.8", "loop < 7", "trust == true", "signal.ok", "memory.has('idea')", "phase === 'deep'"];
-  var NUMS = [7, 13, 21, 42, 100];
-  var PHRASES_EN = ["hello, world", "all systems nominal", "thinking…", "less is more", "wake up", "neural ping", "deep work", "stay curious"];
-  var OUT_EN = ["mind online", "ready", "orbit locked", "dream compiled", "memory synced", "signal found", "loop closed", "gold ready"];
-  var OK_EN = ["tasks done", "neurons wired", "nodes linked", "paths traced", "layers deep"];
-
+  /* ---------- 实用代码演示（CMD / PowerShell / Agent Skill，每次刷新随机，6-8 行，纯英文） ---------- */
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
   function mkLine(c, en) { return { c: c, en: en }; }
 
+  var THEMES = [
+    {
+      id: "dos",
+      name: { en: "CMD · Windows Command Prompt", zh: "CMD（Windows 命令提示符）" },
+      desc: {
+        en: "A practical Windows console workflow: listing and copying files, checking the network, managing processes.",
+        zh: "实用的 Windows 命令行操作：文件查看与复制、网络检查、进程管理。"
+      },
+      use: { en: "System administration, quick file operations, network troubleshooting.", zh: "系统管理、快速文件操作、网络排查。" },
+      comments: ["Windows cmd · daily ops", "CMD · quick system check", "DOS console · file & network"],
+      lines: [
+        "$ dir /b /s C:\\data\\*.csv",
+        "$ cd /d D:\\lifeOS && dir",
+        "$ ipconfig /all | findstr IPv4",
+        "$ ping -n 3 8.8.8.8",
+        "$ tasklist | findstr /i ninkoro",
+        "$ copy report.csv D:\\backup\\",
+        "$ tree /f D:\\docs",
+        "$ netstat -ano | findstr :8080",
+        "$ chcp 65001",
+        "$ set MODE=auto",
+        "$ type config.ini",
+        "$ mkdir logs && move *.log logs\\"
+      ],
+      outs: ["→ 42 files found", "→ IPv4: 192.168.1.8 · 4 replies", "✓ backup copied", "→ 3 processes match", "✓ logs moved"]
+    },
+    {
+      id: "ps",
+      name: { en: "PowerShell", zh: "PowerShell" },
+      desc: {
+        en: "A PowerShell automation workflow: inspecting processes and services, reading and exporting data.",
+        zh: "PowerShell 自动化工作流：查看进程与服务、读取数据、导出结果。"
+      },
+      use: { en: "Ops automation, batch processing, data export.", zh: "运维自动化、批处理、数据导出。" },
+      comments: ["PowerShell 7 · daily ops", "PS · automation script", "PowerShell · data pipeline"],
+      lines: [
+        "$ Get-Process | Sort-Object CPU -Descending | Select-Object -First 5",
+        "$ Get-Service | Where-Object Status -eq 'Running' | Select-Object -First 5",
+        "$ Invoke-WebRequest -Uri https://ninkoro.com/health -UseBasicParsing",
+        "$ Get-ChildItem -Recurse -Filter *.csv | Measure-Object",
+        "$ Get-Content .\\log.txt -Tail 20",
+        "$ Set-Content -Path .\\config.json -Value '{\"mode\":\"auto\"}'",
+        "$ $rows = Get-Content .\\data.json | ConvertFrom-Json",
+        "$ ConvertTo-Json $rows | Out-File .\\export.json",
+        "$ Get-Date -Format 'yyyy-MM-dd HH:mm'",
+        "$ Test-Connection -ComputerName 8.8.8.8 -Count 2"
+      ],
+      outs: ["→ 200 OK · 42ms", "→ 5 processes found", "✓ export.json written", "→ 18 csv files", "✓ 7 services running"]
+    },
+    {
+      id: "skill",
+      name: { en: "Agent Skill (CLI)", zh: "Agent Skill（命令行）" },
+      desc: {
+        en: "Calling agent skills from the command line: memory search, calendar booking, file access, web search.",
+        zh: "通过命令行调用 Agent 技能：记忆检索、日历预约、文件读取、网络搜索。"
+      },
+      use: { en: "AI-powered personal ops: reminders, research, automation.", zh: "AI 驱动的个人事务：提醒、调研、自动化。" },
+      comments: ["agent skill · memory & calendar", "ninkoro skills · run demo", "agent skills · daily workflow"],
+      lines: [
+        "$ skill:memory.search(\"last meeting\")",
+        "$ skill:calendar.book(\"course\", \"Thu 19:00\")",
+        "$ skill:file.read(\"data/equity.xlsx\")",
+        "$ skill:web.search(\"Ninkoro\", top=5)",
+        "$ skill:notion.append(\"daily-log\", $entry)",
+        "$ skill:mail.draft(\"client\", \"birthday\")",
+        "$ npx ninkoro skill run memory.recall --key latest",
+        "$ npx ninkoro skill list --filter productivity",
+        "$ skill:todo.add(\"review report\", due=tomorrow)",
+        "$ skill:calendar.remind(\"call\", $client.name)"
+      ],
+      outs: ["→ \"last meeting: 2026-08-01\"", "✓ 3 skills loaded", "→ 5 results · top 1: ninkoro.com", "✓ birthday reminder scheduled", "→ todo added · due tomorrow"]
+    },
+    {
+      id: "hybrid",
+      name: { en: "PowerShell + Agent Skill", zh: "PowerShell + Agent Skill" },
+      desc: {
+        en: "A realistic end-to-end workflow: PowerShell gathers today's data, then an agent skill takes the next action.",
+        zh: "真实端到端工作流：PowerShell 收集今日数据，Agent 技能接着执行下一步。"
+      },
+      use: { en: "Automating daily life tasks end-to-end.", zh: "端到端自动化日常事务。" },
+      comments: ["PS + skill · end-to-end", "daily automation · hybrid", "PowerShell → agent skill"],
+      lines: [
+        "$ $rows = Get-Content .\\clients.json | ConvertFrom-Json",
+        "$ $due = $rows | Where-Object { $_.birthday -eq (Get-Date -Format 'MM-dd') }",
+        "$ skill:mail.draft(\"happy-birthday\", $due)",
+        "$ skill:calendar.remind(\"call\", $due.name)",
+        "$ ConvertTo-Json $due | Out-File .\\today.json",
+        "$ Invoke-WebRequest -Uri https://api.ninkoro.com/sync -Method Post",
+        "$ Write-Host 'done' -ForegroundColor Green"
+      ],
+      outs: ["→ 8 clients due today", "✓ birthday reminder scheduled", "→ sync 200 OK", "✓ today.json written"]
+    }
+  ];
+
   function makeDemo() {
+    var theme = pick(THEMES);
     var n = 6 + Math.floor(Math.random() * 3);
     var lines = [];
-    var cmd = pick(CMD);
-    lines.push(mkLine("ln-cmd", "$ npx ninkoro " + cmd));
     var used = {};
+    lines.push(mkLine("ln-cmd", "# " + pick(theme.comments)));
+    used[lines[0].en] = true;
     while (lines.length < n) {
-      var kind = Math.floor(Math.random() * 6);
-      var line;
-      if (kind === 0) {
-        line = mkLine("ln-cmd", "const " + pick(NAMES) + " = new " + pick(TYPES) + "({ " + pick(KEYS) + ": " + pick(VALS) + " })");
-      } else if (kind === 1) {
-        line = mkLine("ln-cmd", "await " + pick(NAMES) + "." + pick(METHODS) + "(" + pick(ARGS) + ")");
-      } else if (kind === 2) {
-        line = mkLine("ln-cmd", "if (" + pick(CONDS) + ") { " + pick(NAMES) + ".go() }");
-      } else if (kind === 3) {
-        line = mkLine("ln-cmd", "# " + pick(PHRASES_EN));
-      } else if (kind === 4) {
-        line = mkLine("ln-out", "→ " + pick(OUT_EN));
-      } else {
-        line = mkLine("ln-ok", "✓ " + pick(NUMS) + " " + pick(OK_EN));
-      }
-      if (!used[line.en]) { used[line.en] = true; lines.push(line); }
+      var isOut = Math.random() < 0.24;
+      var pool = isOut ? theme.outs : theme.lines;
+      var t = pick(pool);
+      if (used[t]) continue;
+      used[t] = true;
+      var c = isOut ? (t.indexOf("✓") === 0 ? "ln-ok" : "ln-out") : "ln-cmd";
+      lines.push(mkLine(c, t));
     }
-    return lines;
+    return { lines: lines, theme: theme };
   }
 
   var DEMO_POOL = [];
   var seen = {};
   while (DEMO_POOL.length < 1000) {
     var d = makeDemo();
-    var key = d.map(function (l) { return l.en; }).join("|");
+    var key = d.lines.map(function (l) { return l.en; }).join("|");
     if (!seen[key]) { seen[key] = 1; DEMO_POOL.push(d); }
   }
-  var CURRENT_DEMO = DEMO_POOL[Math.floor(Math.random() * DEMO_POOL.length)];
-
-  /* 每段演示的元信息：语言 / 功能 / 适用场景 */
-  function buildMeta(lines) {
-    var hasConst = false, hasAwait = false, hasIf = false, hasComment = false, hasOut = false, hasOk = false;
-    lines.forEach(function (l) {
-      if (/^const /.test(l.en)) hasConst = true;
-      else if (/^await /.test(l.en)) hasAwait = true;
-      else if (/^if \(/.test(l.en)) hasIf = true;
-      else if (/^# /.test(l.en)) hasComment = true;
-      else if (/^→ /.test(l.en)) hasOut = true;
-      else if (/^✓ /.test(l.en)) hasOk = true;
-    });
-    var partsEn = [], partsZh = [];
-    if (hasConst) { partsEn.push("creates an instance"); partsZh.push("创建实例"); }
-    if (hasAwait) { partsEn.push("awaits async calls"); partsZh.push("异步调用"); }
-    if (hasIf) { partsEn.push("checks conditions"); partsZh.push("条件判断"); }
-    if (hasComment) { partsEn.push("leaves notes"); partsZh.push("注释说明"); }
-    if (hasOut) { partsEn.push("prints output"); partsZh.push("输出结果"); }
-    if (hasOk) { partsEn.push("confirms results"); partsZh.push("确认结果"); }
-    return {
-      lang: {
-        en: "JavaScript / Shell (pseudo-code)",
-        zh: "JavaScript / Shell（伪代码）"
-      },
-      desc: {
-        en: "A tiny Agent demo in pseudo-JavaScript with a Shell kickoff: " + partsEn.join(", ") + ". It shows the everyday loop of a small AI agent — start, act, check, report.",
-        zh: "一段 Agent 风格的伪代码演示（JavaScript 语法 + Shell 启动），展示了" + partsZh.join("、") + "。它复现了一个小型 AI Agent 的日常循环——启动、执行、判断、汇报。"
-      },
-      use: {
-        en: "Good for understanding Agent architecture, prototyping an AI product, or a daily coding warm-up.",
-        zh: "理解 Agent 架构、AI 产品原型演示、每日代码练习。"
-      }
-    };
-  }
-  var CURRENT_META = buildMeta(CURRENT_DEMO);
+  var picked = DEMO_POOL[Math.floor(Math.random() * DEMO_POOL.length)];
+  var CURRENT_DEMO = picked.lines;
+  var CURRENT_THEME = picked.theme;
+  var CURRENT_META = { lang: CURRENT_THEME.name, desc: CURRENT_THEME.desc, use: CURRENT_THEME.use };
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -204,15 +245,19 @@
     var token = ++typeToken;
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     var body = typeLayer.parentElement;
+    if (body) body.style.height = "";
     function paint(uptoLine, uptoChar, typing) {
       typeLayer.innerHTML = buildTypeHTML(lines, uptoLine, uptoChar) + '<span class="cursor" aria-hidden="true"></span>';
-      if (body) body.classList.toggle("is-typing", typing);
+      if (body) {
+        body.classList.toggle("is-typing", typing);
+        body.style.height = body.scrollHeight + "px";
+      }
     }
-    if (reduceMotion) { paint(lines.length, 0, false); return; }
+    if (reduceMotion) { paint(lines.length, 0, false); if (body) body.style.height = ""; return; }
     var li = 0, ci = 0;
     function tick() {
       if (token !== typeToken) return;
-      if (li >= lines.length) { paint(lines.length, 0, false); return; }
+      if (li >= lines.length) { paint(lines.length, 0, false); if (body) body.style.height = ""; return; }
       paint(li, ci, true);
       ci++;
       if (ci > lines[li].en.length) { li++; ci = 0; typeTimer = setTimeout(tick, 300); return; }
