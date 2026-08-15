@@ -1619,3 +1619,9 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (max-width: 760px) {
   .entry-card, .work-card, .wiki-card, .link-card, .tool-block, .fact-card { border-radius: 16px; }
 }
+
+/* 移动端首页 hero 按钮：包裹文字并排（仅首页 .hero，不影响关于页） */
+@media (max-width: 760px) {
+  .hero .hero-actions { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+  .hero .hero-actions .btn { width: auto; padding: 9px 16px; font-size: 13.5px; }
+}
