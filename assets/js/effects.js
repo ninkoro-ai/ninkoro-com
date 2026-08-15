@@ -8,7 +8,7 @@
 
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- 实用代码演示（CMD / PowerShell / Agent Skill，每次刷新随机，6-8 行，纯英文） ---------- */
+  /* ---------- 实用代码演示（8 大 Agent CLI，每次刷新随机，4 条命令 + 注释行，纯英文） ---------- */
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
   function mkLine(c, en) { return { c: c, en: en }; }
 
@@ -776,19 +776,15 @@
 
   function makeDemo() {
     var theme = pick(THEMES);
-    var n = 6 + Math.floor(Math.random() * 3);
     var lines = [];
     var used = {};
     lines.push(mkLine("ln-cmd", "# " + pick(theme.comments)));
     used[lines[0].en] = true;
-    while (lines.length < n) {
-      var isOut = Math.random() < 0.24;
-      var pool = isOut ? theme.outs : theme.lines;
-      var t = pick(pool);
+    while (lines.length < 5) {
+      var t = pick(theme.lines);
       if (used[t]) continue;
       used[t] = true;
-      var c = isOut ? (t.indexOf("✓") === 0 ? "ln-ok" : "ln-out") : "ln-cmd";
-      lines.push(mkLine(c, t));
+      lines.push(mkLine("ln-cmd", t));
     }
     return { lines: lines, theme: theme };
   }
