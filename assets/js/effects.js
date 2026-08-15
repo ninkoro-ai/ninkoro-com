@@ -94,7 +94,7 @@
     ioStars.observe(hero);
   }
 
-  /* ---------- 随机炫酷代码演示（1000 种，每次刷新随机一段，3-4 行） ---------- */
+  /* ---------- 随机炫酷代码演示（1000 种，每次刷新随机一段，6-8 行，纯英文） ---------- */
   var CMD = ["build", "launch", "orbit", "dream", "sync", "boost", "weave", "pilot", "pulse", "signal"];
   var NAMES = ["agent", "mind", "core", "engine", "pilot", "ghost", "echo", "node"];
   var TYPES = ["Agent", "Model", "Planner", "Memory", "Tool", "Orchestrator", "Dream", "Pulse"];
@@ -105,51 +105,33 @@
   var CONDS = ["model.focus > 0.8", "loop < 7", "trust == true", "signal.ok", "memory.has('idea')", "phase === 'deep'"];
   var NUMS = [7, 13, 21, 42, 100];
   var PHRASES_EN = ["hello, world", "all systems nominal", "thinking…", "less is more", "wake up", "neural ping", "deep work", "stay curious"];
-  var PHRASES_ZH = ["你好，世界", "一切系统正常", "思考中…", "少即是多", "唤醒", "神经脉冲", "深度工作", "保持好奇"];
   var OUT_EN = ["mind online", "ready", "orbit locked", "dream compiled", "memory synced", "signal found", "loop closed", "gold ready"];
-  var OUT_ZH = ["思维在线", "就绪", "轨道锁定", "梦境已编译", "记忆已同步", "信号已捕获", "闭环完成", "金色就绪"];
   var OK_EN = ["tasks done", "neurons wired", "nodes linked", "paths traced", "layers deep"];
-  var OK_ZH = ["个任务完成", "个神经元已连接", "个节点已连接", "条路径已穿透", "层深度"];
 
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-  function mkLine(c, en, zh, glEn, glZh) {
-    return { c: c, en: en, zh: zh || en, gl: { en: glEn, zh: glZh || glEn } };
-  }
+  function mkLine(c, en) { return { c: c, en: en }; }
 
   function makeDemo() {
-    var n = 3 + Math.floor(Math.random() * 2);
+    var n = 6 + Math.floor(Math.random() * 3);
     var lines = [];
     var cmd = pick(CMD);
-    lines.push(mkLine("ln-cmd", "$ npx ninkoro " + cmd, null,
-      "run the ninkoro " + cmd + " command", "运行 ninkoro 的 " + cmd + " 命令"));
+    lines.push(mkLine("ln-cmd", "$ npx ninkoro " + cmd));
     var used = {};
     while (lines.length < n) {
       var kind = Math.floor(Math.random() * 6);
       var line;
       if (kind === 0) {
-        var nm = pick(NAMES), tp = pick(TYPES), ky = pick(KEYS), vl = pick(VALS);
-        line = mkLine("ln-cmd", "const " + nm + " = new " + tp + "({ " + ky + ": " + vl + " })", null,
-          "create a new " + tp + " instance named \u201c" + nm + "\u201d", "创建一个名为 " + nm + " 的 " + tp + " 实例");
+        line = mkLine("ln-cmd", "const " + pick(NAMES) + " = new " + pick(TYPES) + "({ " + pick(KEYS) + ": " + pick(VALS) + " })");
       } else if (kind === 1) {
-        var nm2 = pick(NAMES), mt = pick(METHODS), ar = pick(ARGS);
-        line = mkLine("ln-cmd", "await " + nm2 + "." + mt + "(" + ar + ")", null,
-          "await the result of " + nm2 + "." + mt, "等待 " + nm2 + "." + mt + " 的结果");
+        line = mkLine("ln-cmd", "await " + pick(NAMES) + "." + pick(METHODS) + "(" + pick(ARGS) + ")");
       } else if (kind === 2) {
-        var cd = pick(CONDS);
-        line = mkLine("ln-cmd", "if (" + cd + ") { " + pick(NAMES) + ".go() }", null,
-          "only call go() when the condition holds", "条件成立时才调用 go()");
+        line = mkLine("ln-cmd", "if (" + pick(CONDS) + ") { " + pick(NAMES) + ".go() }");
       } else if (kind === 3) {
-        var phEn = pick(PHRASES_EN), phZh = pick(PHRASES_ZH);
-        line = mkLine("ln-cmd", "# " + phEn, "# " + phZh,
-          "a note to yourself: \u201c" + phEn + "\u201d", "一句给自己的注释：" + phZh);
+        line = mkLine("ln-cmd", "# " + pick(PHRASES_EN));
       } else if (kind === 4) {
-        var ouEn = pick(OUT_EN), ouZh = pick(OUT_ZH);
-        line = mkLine("ln-out", "→ " + ouEn, "→ " + ouZh,
-          "prints: \u201c" + ouEn + "\u201d", "输出：" + ouZh);
+        line = mkLine("ln-out", "→ " + pick(OUT_EN));
       } else {
-        var num = pick(NUMS), okEn = pick(OK_EN), okZh = pick(OK_ZH);
-        line = mkLine("ln-ok", "✓ " + num + " " + okEn, "✓ " + num + " " + okZh,
-          "confirms: " + num + " " + okEn, "确认：" + num + okZh);
+        line = mkLine("ln-ok", "✓ " + pick(NUMS) + " " + pick(OK_EN));
       }
       if (!used[line.en]) { used[line.en] = true; lines.push(line); }
     }
@@ -164,23 +146,6 @@
     if (!seen[key]) { seen[key] = 1; DEMO_POOL.push(d); }
   }
   var CURRENT_DEMO = DEMO_POOL[Math.floor(Math.random() * DEMO_POOL.length)];
-  var glossBox = document.getElementById("demoGloss");
-
-  function renderGloss() {
-    if (!glossBox || !CURRENT_DEMO) return;
-    var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
-    var html = '<p class="gloss-label">' + (zh ? "每日一代码 · 一行一注释" : "LEARN A LINE A DAY") + "</p><ul>";
-    CURRENT_DEMO.forEach(function (line, i) {
-      html += '<li><span class="g-no">' + (i + 1) + '</span><span class="g-text">' + esc(zh ? line.gl.zh : line.gl.en) + "</span></li>";
-    });
-    glossBox.innerHTML = html + "</ul>";
-  }
-  renderGloss();
-
-  function lineText(line) {
-    var zh = window.NINKORO_CMS && window.NINKORO_CMS.getLang && window.NINKORO_CMS.getLang() === "zh";
-    return zh ? (line.zh || line.en) : line.en;
-  }
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -189,9 +154,9 @@
   function buildTypeHTML(lines, uptoLine, uptoChar) {
     var html = "";
     for (var i = 0; i < lines.length; i++) {
-      var text = i < uptoLine ? lineText(lines[i]) : (i === uptoLine ? lineText(lines[i]).slice(0, uptoChar) : "");
+      var text = i < uptoLine ? lines[i].en : (i === uptoLine ? lines[i].en.slice(0, uptoChar) : "");
       html += '<span class="' + lines[i].c + '">' + esc(text) + "</span>";
-      if (i < uptoLine || (i === uptoLine && uptoChar >= lineText(lines[i]).length)) html += "\n";
+      if (i < uptoLine || (i === uptoLine && uptoChar >= lines[i].en.length)) html += "\n";
     }
     return html;
   }
@@ -215,7 +180,7 @@
       if (li >= lines.length) { paint(lines.length, 0, false); return; }
       paint(li, ci, true);
       ci++;
-      if (ci > lineText(lines[li]).length) { li++; ci = 0; typeTimer = setTimeout(tick, 300); return; }
+      if (ci > lines[li].en.length) { li++; ci = 0; typeTimer = setTimeout(tick, 300); return; }
       typeTimer = setTimeout(tick, 30 + Math.random() * 26);
     }
     typeTimer = setTimeout(tick, 500);
@@ -228,7 +193,6 @@
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     typeLayer.innerHTML = "";
     typeStart();
-    renderGloss();
   });
 
   /* ---------- 磁吸按钮 + 入口卡 3D 倾斜（精细指针设备） ---------- */
